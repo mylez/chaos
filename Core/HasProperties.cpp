@@ -1,7 +1,3 @@
-//
-// Created by Miles on 12/28/16.
-//
-
 #include "HasProperties.h"
 
 void HasProperties::setProperty(std::string name, int value)

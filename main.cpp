@@ -1,7 +1,11 @@
+#include <iostream>
 #include "Core/Game.h"
+#include "Dummy.h"
 
 int main()
 {
-    Game game;
-    game.loop();
+    Dummy dummy;
+
+    //Game game;
+    //game.loop();
 }

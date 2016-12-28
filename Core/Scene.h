@@ -4,14 +4,17 @@
 
 #include <vector>
 #include "GameObject.h"
+#include "HasInputEventListeners.h"
 
-class Scene
+class Scene:
+    public HasInputEventListeners
 {
 public:
 
 private:
 
     std::vector<GameObject> gameObjects;
+
 
 };
 

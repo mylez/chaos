@@ -1,7 +1,3 @@
-//
-// Created by Miles on 12/27/16.
-//
-
 #ifndef CHAOS_GAME_H
 #define CHAOS_GAME_H
 

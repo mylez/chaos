@@ -1,7 +1,3 @@
-//
-// Created by Miles on 12/28/16.
-//
-
 #ifndef CHAOS_HASPROPERTIES_H
 #define CHAOS_HASPROPERTIES_H
 

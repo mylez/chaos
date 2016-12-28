@@ -2,12 +2,13 @@
 #define CHAOS_GAMESTATE_H
 
 #include <SDL2/SDL.h>
+#include "InputEventListener.h"
 
-class GameState
+class GameState:
+    public InputEventListener
 {
 public:
     virtual void render(SDL_Renderer *) {};
-    virtual void handleInputEvent(SDL_Event *) {};
     virtual void update() {};
 };
 

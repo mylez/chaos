@@ -1,10 +1,5 @@
-//
-// Created by Miles on 12/27/16.
-//
-
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include <iostream>
 #include "Game.h"
 #include "SceneGameState.h"
 
