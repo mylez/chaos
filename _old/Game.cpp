@@ -35,11 +35,12 @@ void Game::loop()
 
 Game::Game()
 {
-    this->window = SDL_CreateWindow("Chaos", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 32 * World::WIDTH, 32 * World::HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+    this->window = SDL_CreateWindow("Chaos", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 32 * 15, 32 * 10, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
     this->renderer = SDL_CreateRenderer(this->window, -1, SDL_RENDERER_ACCELERATED);
 
-    this->worldRenderer = new World(this->renderer);
-    this->renderables.push_back((Renderable *)this->worldRenderer);
+    this->world = new World(this->renderer);
+
+    this->renderables.push_back((Renderable *)this->world);
 }
 
 
@@ -49,5 +50,5 @@ Game::~Game()
     SDL_DestroyRenderer(this->renderer);
     SDL_Quit();
 
-    delete this->worldRenderer;
+    delete this->world;
 }

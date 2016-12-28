@@ -1,0 +1,57 @@
+- Math, Physics and collision detection
+
+- Rendering the scene, lighting, shadows, animation, etc with a high frame rate
+
+- Network code for multiplayer
+
+- Game world management
+
+- GUI management
+
+- Game state management
+
+- Particle effects, sprite rendering, billboards, primitive geometry (points, lines, triangles, quads)
+
+- Importing assets, like sound files, textures, models, font files, shaders, etc. and managing them for me
+
+- Camera interfaces. A camera is a view into the game world. How do I make the camera do what I want it to do?
+
+- IO interfaces for creating log files, saving and loading game states, loading game data files, etc.
+
+- How to use the game engine to create a game (DLL file? stand alone IDE such as Unity? Source code include?). Who is
+  going to be using the game engine? What kind of documentation will they need to use it effectively? What happens if
+  they want to use a feature which isn't supported by the engine?
+
+- How do I create my game world? Do I use an external tool?
+
+
+class HasID {
+    const Id id;
+};
+class HasType {
+    Type& type;
+};
+class HasPosition {
+    Position position;
+};
+class HasSprite {
+    Sprite& sprite;
+};
+class CanMove {
+    Speed& move_speed;
+}
+class InvisibleObject : public HasID, public HasName, public HasType, public HasPosition {
+    // No sprite...
+};
+class DecorationObject: public HasID, public HasName, public HasType, public HasPosition, public HasSprite {
+    // Has a sprite so it's visible, but no type and ignored by most game logic stuff
+};
+class BasicObject: public HasID, public HasName, public HasType, public HasPosition, public HasSprite, public HasType, public HasScript {
+    // Like a lamp post
+};
+class DestructibleObject:  public HasID, public HasName, public HasType, public HasPosition, public HasSprite, public HasType, public HasScript, public HasHealth {
+    // Something you can attack, Like a chest, barrel, etc...
+};
+class Creature:  public HasID, public HasName, public HasType, public HasPosition, public HasSprite, public HasType, public HasScript, public HasHealth, public CanMove, public HasSize {
+
+};

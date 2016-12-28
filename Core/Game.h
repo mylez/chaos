@@ -1,36 +1,34 @@
 //
-// Created by Miles on 12/22/16.
+// Created by Miles on 12/27/16.
 //
 
 #ifndef CHAOS_GAME_H
 #define CHAOS_GAME_H
 
-#include <SDL2/SDL.h>
-#include <vector>
-#include "World.h"
+#include "GameState.h"
 
 class Game
 {
-
 public:
 
     Game();
 
     ~Game();
 
+    GameState defaultGameState;
+
+    GameState *gameState = &defaultGameState;
+
     void loop();
 
+    void pollEvents();
 private:
 
-    World *worldRenderer;
+    bool isRunning;
 
     SDL_Window *window;
 
     SDL_Renderer *renderer;
-
-    bool isRunning;
-
-    std::vector<Renderable *> renderables;
 };
 
 
