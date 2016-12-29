@@ -1,6 +1,6 @@
 #include "SpriteMap.h"
 
-SDL_Rect SpriteMap::getSrcRect(int sprite)
+SDL_Rect SpriteMap::getSourceRect(int sprite)
 {
     int xPos = sprite % this->numTilesX,
         yPos = (1 + sprite - xPos) / this->numTilesX;

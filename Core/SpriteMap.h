@@ -12,7 +12,7 @@ class SpriteMap
 
 public:
 
-    SDL_Rect getSrcRect(int sprite);
+    SDL_Rect getSourceRect(int sprite);
 
     void loadSpriteMapTexture(std::string name, std::string filePath, int tileHeight, int tileWidth, int numTilesX, int numTilesY);
 
