@@ -1,11 +1,14 @@
 #include <iostream>
-#include "Core/Game.h"
-#include "Dummy.h"
+#include "Chaos/Chaos.h""
+
+using namespace std;
 
 int main()
 {
-    Dummy dummy;
 
-    //Game game;
-    //game.loop();
+    Chaos chaos;
+
+    chaos.assetLibrary.loadTexture("fucker", "level-png/map-tile-32x32.png");
+
+    chaos.loop();
 }

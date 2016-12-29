@@ -5,6 +5,7 @@ project(chaos)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 include_directories("/usr/local/include")
+include_directories(".")
 link_directories("/usr/local/lib")
 
 file(GLOB chaos_SRC
@@ -12,10 +13,11 @@ file(GLOB chaos_SRC
     "*.cpp"
     "Core/*.h"
     "Core/*.cpp"
+    "Chaos/*.h"
+    "Chaos/*.cpp"
 )
 
 add_executable(chaos ${chaos_SRC})
 
 target_link_libraries(chaos SDL2)
 target_link_libraries(chaos SDL2_image)
-

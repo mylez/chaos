@@ -2,6 +2,8 @@
 #define CHAOS_GAME_H
 
 #include "GameState.h"
+#include "AssetLibrary.h"
+
 
 class Game
 {
@@ -11,13 +13,14 @@ public:
 
     ~Game();
 
-    GameState defaultGameState;
+    GameState defaultGameState, *gameState = &defaultGameState;
 
-    GameState *gameState = &defaultGameState;
+    AssetLibrary assetLibrary;
 
     void loop();
 
     void pollEvents();
+
 private:
 
     bool isRunning;

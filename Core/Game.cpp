@@ -11,6 +11,8 @@ void Game::loop()
     while (this->isRunning)
     {
         this->pollEvents();
+        this->gameState->update();
+        this->gameState->render(this->renderer);
         SDL_Delay(100);
     }
 }
@@ -24,8 +26,9 @@ void Game::pollEvents()
     {
         this->gameState->handleInputEvent(&event);
 
-        if (event.type == SDL_QUIT)
+        if (event.type == SDL_QUIT && this->isRunning)
         {
+            std::cout << "warning: hard quit" << std::endl;
             this->isRunning = false;
         }
     }
@@ -41,6 +44,7 @@ Game::Game()
 
     this->window = SDL_CreateWindow("", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 700, 500, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
     this->renderer = SDL_CreateRenderer(this->window, -1, SDL_RENDERER_ACCELERATED);
+    this->assetLibrary.setRenderer(this->renderer);
 }
 
 
