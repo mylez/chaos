@@ -14,7 +14,8 @@ public:
 
     SDL_Rect getSourceRect(int sprite);
 
-    void loadSpriteMapTexture(std::string name, std::string filePath, int tileHeight, int tileWidth, int numTilesX, int numTilesY);
+    //void loadTexture(std::string name, std::string filePath, int tileHeight, int tileWidth, int numTilesX,
+    //                 int numTilesY);
 
 private:
 

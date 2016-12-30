@@ -6,6 +6,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 include_directories("/usr/local/include")
 include_directories(".")
+include_directories("./include/jsoncpp/dist")
 link_directories("/usr/local/lib")
 
 file(GLOB chaos_SRC
@@ -15,6 +16,7 @@ file(GLOB chaos_SRC
     "Core/*.cpp"
     "Chaos/*.h"
     "Chaos/*.cpp"
+    "include/jsoncpp/dist/jsoncpp.cpp"
 )
 
 add_executable(chaos ${chaos_SRC})

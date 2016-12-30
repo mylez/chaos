@@ -1,7 +1,6 @@
 #ifndef CHAOS_HASPOSITION_H
 #define CHAOS_HASPOSITION_H
 
-
 class HasPosition
 {
 public:

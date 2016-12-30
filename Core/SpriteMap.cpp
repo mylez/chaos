@@ -13,16 +13,16 @@ SDL_Rect SpriteMap::getSourceRect(int sprite)
     };
 }
 
-void SpriteMap::loadSpriteMapTexture(std::string name, std::string filePath, int tileHeight, int tileWidth,
-                                     int numTilesX, int numTilesY)
-{
-    this->assetLibrary->loadTexture(name, filePath);
-    this->assetName = name;
-    this->tileHeight = tileHeight;
-    this->tileWidth = tileWidth;
-    this->numTilesX = numTilesX;
-    this->numTilesY = numTilesY;
-}
+// void SpriteMap::loadTexture(std::string name, std::string filePath, int tileHeight, int tileWidth,
+//                             int numTilesX, int numTilesY)
+// {
+//     this->assetLibrary->loadTexture(name, filePath);
+//     this->assetName = name;
+//     this->tileHeight = tileHeight;
+//     this->tileWidth = tileWidth;
+//     this->numTilesX = numTilesX;
+//     this->numTilesY = numTilesY;
+// }
 
 
 

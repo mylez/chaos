@@ -22,7 +22,7 @@ void HasInputEventListeners::handleInputEvent(SDL_Event *event)
     {
         if (inputEventListener == nullptr)
         {
-            std::cout << "error: inputEventListener is nullptr" << std::endl;
+            std::cout << "warning: inputEventListener is nullptr for event type: " << event->type << std::endl;
         }
         else
         {

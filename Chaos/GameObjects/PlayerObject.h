@@ -3,7 +3,8 @@
 
 #include "Core/GameObject.h"
 
-class PlayerObject: public GameObject
+class PlayerObject:
+    public GameObject
 {
 public:
     PlayerObject();
