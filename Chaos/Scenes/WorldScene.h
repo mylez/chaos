@@ -3,7 +3,8 @@
 
 #include "Core/Scene.h"
 
-class WorldScene: public Scene
+class WorldScene:
+    public Scene
 {
 public:
 

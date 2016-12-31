@@ -1,0 +1,11 @@
+#ifndef CHAOS_ENEMYGAMEOBJECT_H
+#define CHAOS_ENEMYGAMEOBJECT_H
+
+
+class EnemyGameObject
+{
+
+};
+
+
+#endif //CHAOS_ENEMYGAMEOBJECT_H

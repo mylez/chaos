@@ -3,6 +3,11 @@
 #include "AssetLibrary.h"
 
 
+/**
+ *
+ * @param name
+ * @param filePath
+ */
 void AssetLibrary::loadTexture(std::string name, std::string filePath)
 {
     SDL_Texture *texture = IMG_LoadTexture(this->renderer, (this->basePath + filePath).c_str());
@@ -10,6 +15,11 @@ void AssetLibrary::loadTexture(std::string name, std::string filePath)
 }
 
 
+/**
+ *
+ * @param name
+ * @param filePath
+ */
 void AssetLibrary::loadIntTable(std::string name, std::string filePath)
 {
     std::ifstream intTableFile;
@@ -44,19 +54,32 @@ void AssetLibrary::loadIntTable(std::string name, std::string filePath)
     intTableFile.close();
 }
 
-
+/**
+ *
+ * @param name
+ * @return
+ */
 SDL_Texture *AssetLibrary::getTextureAsset(std::string name)
 {
     return this->textures[name];
 }
 
 
+/**
+ *
+ * @param name
+ * @return
+ */
 std::vector< std::vector < int > > AssetLibrary::getIntTable(std::string name)
 {
     return this->intTables[name];
 }
 
 
+/**
+ *
+ * @param renderer
+ */
 void AssetLibrary::setRenderer(SDL_Renderer *renderer)
 {
     this->renderer = renderer;

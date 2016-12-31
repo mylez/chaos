@@ -13,7 +13,7 @@ void Game::loop()
         this->pollEvents();
         this->gameState->update();
         this->gameState->render(this->renderer);
-        SDL_Delay(100);
+        SDL_Delay(300);
     }
 }
 

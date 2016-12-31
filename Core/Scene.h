@@ -10,10 +10,10 @@ class Scene:
     public HasInputEventListeners
 {
 public:
-
+    std::vector<GameObject *> getGameObjects();
 private:
 
-    std::vector<GameObject> gameObjects;
+    std::vector<GameObject *> gameObjects;
 };
 
 

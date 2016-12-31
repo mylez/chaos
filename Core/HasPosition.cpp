@@ -2,8 +2,8 @@
 
 void HasPosition::queryPosition(double *x, double *y)
 {
-    *x = this->positionX;
-    *y = this->positionY;
+    if (x) *x = this->positionX;
+    if (y) *y = this->positionY;
 }
 
 void HasPosition::setPosition(double x, double y)

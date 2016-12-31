@@ -1,5 +1,10 @@
 #include "SpriteMap.h"
 
+/**
+ *
+ * @param sprite
+ * @return
+ */
 SDL_Rect SpriteMap::getSourceRect(int sprite)
 {
     int xPos = sprite % this->numTilesX,
