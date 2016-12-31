@@ -3,32 +3,6 @@
 #include "Game.h"
 #include "SceneGameState.h"
 
-/*
-void Game::loop()
-{
-    isRunning = true;
-
-    Uint32 time_framePrevious = SDL_GetTicks();
-
-    while (isRunning)
-    {
-        Uint32 time_frameStart = SDL_GetTicks();
-
-        pollEvents();
-        gameState_->update();
-
-        SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
-        SDL_RenderClear(renderer_);
-        gameState_->render(renderer_);
-        SDL_RenderPresent(renderer_);
-
-        int delay = 16 - ((int)SDL_GetTicks() - (int)time_frameStart);
-
-        SDL_Delay((Uint32)(delay > 0 ? delay : 0));
-    }
-}
-*/
-
 
 void Game::loop()
 {
@@ -37,10 +11,10 @@ void Game::loop()
         time_frameStart = 0,
         time_framePrevious = SDL_GetTicks();
 
-    isRunning_ = true;
-
     int cycle = 0,
         delay = 0;
+
+    isRunning_ = true;
 
     while (isRunning_)
     {
