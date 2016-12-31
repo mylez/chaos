@@ -13,6 +13,6 @@ SceneGameState::SceneGameState()
  */
 void SceneGameState::handleInputEvent(SDL_Event *event)
 {
-    this->scene->handleInputEvent(event);
+    this->scene_->handleInputEvent(event);
 }
 

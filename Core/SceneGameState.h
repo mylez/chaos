@@ -14,10 +14,8 @@ private:
     DefaultScene defaultScene;
 
 public:
-    Scene *scene = &defaultScene;
-
+    Scene *scene_ = &defaultScene;
     SceneGameState();
-
     void handleInputEvent(SDL_Event *event);
 };
 

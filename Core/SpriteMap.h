@@ -14,7 +14,7 @@ public:
 
     SDL_Rect getSourceRect(int sprite);
 
-    //void loadTexture(std::string name, std::string filePath, int tileHeight, int tileWidth, int numTilesX,
+    //void loadTexture(std::string name, std::string filePath, int tileHeight_, int tileWidth_, int numTilesX_,
     //                 int numTilesY);
 
 private:
@@ -23,9 +23,9 @@ private:
 
     std::string assetName;
 
-    int tileWidth = 0,
-        tileHeight = 0,
-        numTilesX = 0,
+    int tileWidth_ = 0,
+        tileHeight_ = 0,
+        numTilesX_ = 0,
         numTilesY = 0;
 };
 

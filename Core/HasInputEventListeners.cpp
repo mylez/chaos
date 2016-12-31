@@ -5,19 +5,19 @@
 
 void HasInputEventListeners::addInputEventListener(Uint32 eventType, InputEventListener *listener)
 {
-    this->inputEventListeners[eventType].push_back(listener);
+    inputEventListeners_[eventType].push_back(listener);
 }
 
 
-std::vector<InputEventListener *> &HasInputEventListeners::getInputEventListeners(Uint32 eventType)
+std::vector<InputEventListener *> &HasInputEventListeners::getInputEventListeners_(Uint32 eventType)
 {
-    return this->inputEventListeners[eventType];
+    return inputEventListeners_[eventType];
 }
 
 
 void HasInputEventListeners::handleInputEvent(SDL_Event *event)
 {
-    std::vector< InputEventListener * > listeners = this->getInputEventListeners(event->type);
+    std::vector< InputEventListener * > listeners = getInputEventListeners_(event->type);
     for (const auto &inputEventListener: listeners)
     {
         if (inputEventListener == nullptr)

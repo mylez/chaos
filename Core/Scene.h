@@ -11,9 +11,10 @@ class Scene:
 {
 public:
     std::vector<GameObject *> getGameObjects();
+    void addGameObject(GameObject *gameObject);
 private:
 
-    std::vector<GameObject *> gameObjects;
+    std::vector<GameObject *> gameObjects_;
 };
 
 

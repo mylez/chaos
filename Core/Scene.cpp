@@ -2,5 +2,10 @@
 
 std::vector<GameObject *> Scene::getGameObjects()
 {
-    return this->gameObjects;
+    return gameObjects_;
+}
+
+void Scene::addGameObject(GameObject *gameObject)
+{
+    gameObjects_.push_back(gameObject);
 }

@@ -13,9 +13,9 @@ public:
 
     ~Game();
 
-    GameState defaultGameState, *gameState = &defaultGameState;
+    GameState defaultGameState, *gameState_ = &defaultGameState;
 
-    AssetLibrary assetLibrary;
+    AssetLibrary assetLibrary_;
 
     void loop();
 
@@ -23,11 +23,11 @@ public:
 
 private:
 
-    bool isRunning;
+    bool isRunning_;
 
-    SDL_Window *window;
+    SDL_Window *window_;
 
-    SDL_Renderer *renderer;
+    SDL_Renderer *renderer_;
 };
 
 

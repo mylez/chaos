@@ -9,7 +9,7 @@ class WorldSceneGameState:
 public:
     WorldSceneGameState();
     void render(SDL_Renderer *renderer);
-    void update();
+    void update(double timeElapsed);
 };
 
 

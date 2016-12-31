@@ -4,12 +4,13 @@
 #include <SDL2/SDL.h>
 #include "InputEventListener.h"
 
+
 class GameState:
     public InputEventListener
 {
 public:
-    virtual void render(SDL_Renderer *) {};
-    virtual void update() {};
+    virtual void render(SDL_Renderer *renderer) {};
+    virtual void update(double timeElapsed) {};
 };
 
 

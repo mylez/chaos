@@ -21,12 +21,12 @@ public:
     void setRenderer(SDL_Renderer *renderer);
 
 private:
-    std::unordered_map< std::string, SDL_Texture * > textures;
-    std::unordered_map< std::string, std::vector< std::vector < int > > > intTables;
+    std::unordered_map< std::string, SDL_Texture * > textures_;
+    std::unordered_map< std::string, std::vector< std::vector < int > > > intTables_;
 
-    SDL_Renderer *renderer;
+    SDL_Renderer *renderer_;
 
-    const std::string basePath = "media/";
+    const std::string basePath_ = "media/";
 };
 
 

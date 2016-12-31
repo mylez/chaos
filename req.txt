@@ -12,7 +12,7 @@
 
 - Particle effects, sprite rendering, billboards, primitive geometry (points, lines, triangles, quads)
 
-- Importing assets, like sound files, textures, models, font files, shaders, etc. and managing them for me
+- Importing assets, like sound files, textures_, models, font files, shaders, etc. and managing them for me
 
 - Camera interfaces. A camera is a view into the game world. How do I make the camera do what I want it to do?
 

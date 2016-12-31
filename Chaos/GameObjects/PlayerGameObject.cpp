@@ -1,6 +1,9 @@
+#include <cstdlib>
 #include "PlayerGameObject.h"
 
 PlayerGameObject::PlayerGameObject()
 {
-    this->setProperty("name", "Puppy");
+    setPosition(rand() % 100, rand() % 100);
+
+    setProperty("name", "Puppy");
 }

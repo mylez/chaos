@@ -4,6 +4,6 @@
 Chaos::Chaos()
 {
     static WorldSceneGameState worldSceneGameState;
-    this->gameState = &worldSceneGameState;
+    gameState_ = &worldSceneGameState;
 }
 

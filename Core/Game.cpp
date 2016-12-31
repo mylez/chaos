@@ -3,17 +3,71 @@
 #include "Game.h"
 #include "SceneGameState.h"
 
+/*
+void Game::loop()
+{
+    isRunning = true;
+
+    Uint32 time_framePrevious = SDL_GetTicks();
+
+    while (isRunning)
+    {
+        Uint32 time_frameStart = SDL_GetTicks();
+
+        pollEvents();
+        gameState_->update();
+
+        SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
+        SDL_RenderClear(renderer_);
+        gameState_->render(renderer_);
+        SDL_RenderPresent(renderer_);
+
+        int delay = 16 - ((int)SDL_GetTicks() - (int)time_frameStart);
+
+        SDL_Delay((Uint32)(delay > 0 ? delay : 0));
+    }
+}
+*/
+
 
 void Game::loop()
 {
-    this->isRunning = true;
+    Uint32
+        time_elapsed = 0,
+        time_frameStart = 0,
+        time_framePrevious = SDL_GetTicks();
 
-    while (this->isRunning)
+    isRunning_ = true;
+
+    int cycle = 0,
+        delay = 0;
+
+    while (isRunning_)
     {
-        this->pollEvents();
-        this->gameState->update();
-        this->gameState->render(this->renderer);
-        SDL_Delay(300);
+        cycle ++;
+
+        time_frameStart = SDL_GetTicks();
+        time_elapsed = time_frameStart - time_framePrevious;
+        time_framePrevious = time_frameStart;
+
+        pollEvents();
+
+        gameState_->update((double) time_elapsed);
+
+        SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
+        SDL_RenderClear(renderer_);
+        gameState_->render(renderer_);
+        SDL_RenderPresent(renderer_);
+
+        delay = 16 - ((int)SDL_GetTicks() - (int)time_frameStart);
+        delay = delay > 0 ? delay : 0;
+
+        if (++cycle % 60 == 0)
+        {
+            std::cout << "delay: " << delay << "\n\n";
+        }
+
+        SDL_Delay((Uint32) delay);
     }
 }
 
@@ -21,15 +75,13 @@ void Game::loop()
 void Game::pollEvents()
 {
     SDL_Event event;
-
     while (SDL_PollEvent(&event))
     {
-        this->gameState->handleInputEvent(&event);
-
-        if (event.type == SDL_QUIT && this->isRunning)
+        gameState_->handleInputEvent(&event);
+        if (event.type == SDL_QUIT)
         {
             std::cout << "warning: hard quit" << std::endl;
-            this->isRunning = false;
+            isRunning_ = false;
         }
     }
 }
@@ -40,18 +92,18 @@ Game::Game()
     SDL_Init(SDL_INIT_EVERYTHING);
     IMG_Init(IMG_INIT_PNG);
 
-    this->gameState = new SceneGameState();
-
-    this->window = SDL_CreateWindow("", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 700, 500, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
-    this->renderer = SDL_CreateRenderer(this->window, -1, SDL_RENDERER_ACCELERATED);
-    this->assetLibrary.setRenderer(this->renderer);
+    gameState_ = new SceneGameState();
+    window_ = SDL_CreateWindow("", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 700, 500,
+                               SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+    renderer_ = SDL_CreateRenderer(window_, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
+    assetLibrary_.setRenderer(renderer_);
 }
 
 
 Game::~Game()
 {
-    SDL_DestroyRenderer(this->renderer);
-    SDL_DestroyWindow(this->window);
+    SDL_DestroyRenderer(renderer_);
+    SDL_DestroyWindow(window_);
 
     IMG_Quit();
     SDL_Quit();

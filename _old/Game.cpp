@@ -3,9 +3,9 @@
 
 void Game::loop()
 {
-    this->isRunning = true;
+    isRunning_ = true;
 
-    while (this->isRunning)
+    while (isRunning_)
     {
         // poll events
         //
@@ -14,7 +14,7 @@ void Game::loop()
         {
             if (event.type == SDL_QUIT)
             {
-                this->isRunning = false;
+                isRunning_ = false;
             }
         }
         // draw the renderables

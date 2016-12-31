@@ -7,26 +7,26 @@
  */
 SDL_Rect SpriteMap::getSourceRect(int sprite)
 {
-    int xPos = sprite % this->numTilesX,
-        yPos = (1 + sprite - xPos) / this->numTilesX;
+    int xPos = sprite % numTilesX_,
+        yPos = (1 + sprite - xPos) / numTilesX_;
 
     return SDL_Rect {
-        xPos * this->tileWidth,
-        yPos * this->tileHeight,
-        this->tileWidth,
-        this->tileHeight
+        xPos * tileWidth_,
+        yPos * tileHeight_,
+        tileWidth_,
+        tileHeight_
     };
 }
 
-// void SpriteMap::loadTexture(std::string name, std::string filePath, int tileHeight, int tileWidth,
-//                             int numTilesX, int numTilesY)
+// void SpriteMap::loadTexture(std::string name, std::string filePath, int tileHeight_, int tileWidth_,
+//                             int numTilesX_, int numTilesY)
 // {
-//     this->assetLibrary->loadTexture(name, filePath);
-//     this->assetName = name;
-//     this->tileHeight = tileHeight;
-//     this->tileWidth = tileWidth;
-//     this->numTilesX = numTilesX;
-//     this->numTilesY = numTilesY;
+//     assetLibrary->loadTexture(name, filePath);
+//     assetName = name;
+//     tileHeight_ = tileHeight_;
+//     tileWidth_ = tileWidth_;
+//     numTilesX_ = numTilesX_;
+//     numTilesY = numTilesY;
 // }
 
 
