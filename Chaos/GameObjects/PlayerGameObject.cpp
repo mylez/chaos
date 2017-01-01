@@ -8,6 +8,9 @@
  */
 PlayerGameObject::PlayerGameObject()
 {
+    red_ = (Uint8)(rand() % 256);
+    green_ = (Uint8)(rand() % 256);
+    blue_ = (Uint8)(rand() % 256);
     velocity_ = (double)(rand() % 105) / 100 + 0.1;
     setPosition(rand() % 1500, rand() % 1500);
     setProperty("name", "Puppy");
@@ -20,13 +23,9 @@ PlayerGameObject::PlayerGameObject()
  */
 void PlayerGameObject::render(SDL_Renderer *renderer)
 {
-    //SDL_Rect rect = {(int)getXPosition(), (int)getYPosition(), 64, 64};
-    //SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
-    //SDL_RenderFillRect(renderer, &rect);
-
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-    //SDL_RenderDrawRect(renderer, &rect);
-    SDL_RenderDrawPoint(renderer, (int)getXPosition(), (int)(getYPosition()));
+    SDL_Rect dest = {(int)getXPosition() - 75, (int)getYPosition() - 75, 75, 75};
+    SDL_SetRenderDrawColor(renderer, red_, green_, blue_, 50);
+    SDL_RenderFillRect(renderer, &dest);
 }
 
 

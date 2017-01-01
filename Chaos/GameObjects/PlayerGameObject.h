@@ -11,6 +11,8 @@ public:
 
     PlayerGameObject();
 
+    Uint8 red_, green_, blue_;
+
     void render(SDL_Renderer *renderer);
 
     void update(double timeElapsed);

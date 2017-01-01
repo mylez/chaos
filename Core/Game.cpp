@@ -18,12 +18,11 @@ void Game::loop()
 
     isRunning_ = true;
 
+    // todo - get rid of this stupid fps meter and put it somewhere proper
     TTF_Font *font = TTF_OpenFont("media/fonts/Bitstream-Vera-Sans-Mono/VeraMono.ttf", 12);
     int h, w, cycles = 0;
-
     SDL_Surface *textSurface = TTF_RenderText_Solid(font, "Shit...", SDL_Color{255, 255, 255, 255});
     SDL_Texture *textTexture = SDL_CreateTextureFromSurface(renderer_, textSurface);
-
 
     while (isRunning_)
     {
@@ -70,7 +69,6 @@ void Game::pollInputEvents()
         gameState_->handleInputEvent(&event);
         if (event.type == SDL_QUIT)
         {
-            std::cout << "warning: hard quit" << std::endl;
             isRunning_ = false;
         }
     }
@@ -91,6 +89,8 @@ Game::Game()
                                SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
     renderer_ = SDL_CreateRenderer(window_, -1,  SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
     assetLibrary_.setRenderer(renderer_);
+
+    SDL_SetRenderDrawBlendMode(renderer_, SDL_BLENDMODE_BLEND);
 }
 
 
