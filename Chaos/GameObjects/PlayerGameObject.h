@@ -7,7 +7,14 @@ class PlayerGameObject:
     public GameObject
 {
 public:
+    double velocity_, time_;
+
     PlayerGameObject();
+
+    void render(SDL_Renderer *renderer);
+
+    void update(double timeElapsed);
+
 };
 
 

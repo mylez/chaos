@@ -19,7 +19,7 @@ public:
 
     void loop();
 
-    void pollEvents();
+    void pollInputEvents();
 
 private:
 

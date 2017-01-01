@@ -2,9 +2,14 @@
 #define CHAOS_ENEMYGAMEOBJECT_H
 
 
-class EnemyGameObject
-{
+#include <Core/GameObject.h>
 
+class EnemyGameObject:
+    public GameObject
+{
+public:
+    void render(SDL_Renderer *renderer);
+    void update(double timeElapsed);
 };
 
 

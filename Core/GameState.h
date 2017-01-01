@@ -3,14 +3,16 @@
 
 #include <SDL2/SDL.h>
 #include "InputEventListener.h"
+#include "HasUpdate.h"
+#include "HasRender.h"
 
 
 class GameState:
-    public InputEventListener
+    public InputEventListener,
+    public HasUpdate,
+    public HasRender
 {
-public:
-    virtual void render(SDL_Renderer *renderer) {};
-    virtual void update(double timeElapsed) {};
+
 };
 
 

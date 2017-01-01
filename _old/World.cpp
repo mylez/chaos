@@ -22,7 +22,7 @@ void World::render(SDL_Renderer *renderer)
 
 World::World(SDL_Renderer *renderer)
 {
-    this->tileTexture = IMG_LoadTexture(renderer, "media/level-png/map-tile-island-8x8.png");
+    this->tileTexture = IMG_LoadTexture(renderer, "media/tile-sheets/Terrain.png");
     this->loadMapData("media/level-csv/island-terrain.csv", this->mapData);
 }
 

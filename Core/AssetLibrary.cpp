@@ -18,36 +18,16 @@ void AssetLibrary::loadTexture(std::string name, std::string filePath)
 /**
  *
  * @param name
- * @param filePath
- */
-void AssetLibrary::loadIntTable(std::string name, std::string filePath)
-{
-    // no csv
-}
-
-/**
- *
- * @param name
  * @return
  */
-SDL_Texture *AssetLibrary::getTextureAsset(std::string name)
+SDL_Texture *AssetLibrary::getTexture(std::string name)
 {
     return textures_[name];
 }
 
 
 /**
- *
- * @param name
- * @return
- */
-std::vector< std::vector < int > > AssetLibrary::getIntTable(std::string name)
-{
-    return intTables_[name];
-}
-
-
-/**
+ * set pointer to the renderer, used with loading textures and such
  *
  * @param renderer
  */

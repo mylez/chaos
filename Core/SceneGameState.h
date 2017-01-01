@@ -12,11 +12,14 @@ class SceneGameState:
 {
 private:
     DefaultScene defaultScene;
+    Scene *scene_ = &defaultScene;
 
 public:
-    Scene *scene_ = &defaultScene;
-    SceneGameState();
+    Scene *getScene();
+    void setScene(Scene *scene);
     void handleInputEvent(SDL_Event *event);
+    void update(double timeElapsed);
+    void render(SDL_Renderer *renderer);
 };
 
 

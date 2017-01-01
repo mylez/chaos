@@ -3,10 +3,14 @@
 
 #include "HasProperties.h"
 #include "HasPosition.h"
+#include "HasUpdate.h"
+#include "HasRender.h"
 
 class GameObject:
     public HasProperties,
-    public HasPosition
+    public HasPosition,
+    public HasUpdate,
+    public HasRender
 {
 
 };

@@ -7,7 +7,7 @@ class WorldScene:
     public Scene
 {
 public:
-
+    WorldScene();
 };
 
 

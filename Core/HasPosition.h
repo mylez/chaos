@@ -5,11 +5,17 @@ class HasPosition
 {
 public:
     void setPosition(double x, double y);
+    void queryPosition(double *x, double *y);
+
     void setXPosition(double x);
     void setYPosition(double y);
-    void queryPosition(double *x, double *y);
+
+    double getXPosition();
+    double getYPosition();
 private:
-    double posX_ = 0, posY_ = 0;
+    double
+        posX_ = 0,
+        posY_ = 0;
 };
 
 

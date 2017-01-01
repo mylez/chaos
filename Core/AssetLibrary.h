@@ -15,7 +15,7 @@ public:
 
     void loadIntTable(std::string name, std::string filePath);
 
-    SDL_Texture *getTextureAsset(std::string name);
+    SDL_Texture *getTexture(std::string name);
     std::vector< std::vector < int > > getIntTable(std::string name);
 
     void setRenderer(SDL_Renderer *renderer);
