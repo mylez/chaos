@@ -3,13 +3,21 @@
 #include "PlayerGameObject.h"
 
 
+/**
+ *
+ */
 PlayerGameObject::PlayerGameObject()
 {
-    velocity_ = (double)(rand() % 25) / 100 + .005;
+    velocity_ = (double)(rand() % 105) / 100 + 0.1;
     setPosition(rand() % 1500, rand() % 1500);
     setProperty("name", "Puppy");
 }
 
+
+/**
+ *
+ * @param renderer
+ */
 void PlayerGameObject::render(SDL_Renderer *renderer)
 {
     //SDL_Rect rect = {(int)getXPosition(), (int)getYPosition(), 64, 64};
@@ -22,6 +30,10 @@ void PlayerGameObject::render(SDL_Renderer *renderer)
 }
 
 
+/**
+ *
+ * @param timeElapsed
+ */
 void PlayerGameObject::update(double timeElapsed)
 {
     time_ += timeElapsed;

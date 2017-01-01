@@ -4,7 +4,7 @@
 
 WorldScene::WorldScene()
 {
-    for (int i = 0; i < 15000; i++)
+    for (int i = 0; i < 35000; i++)
     {
         addGameObject(new PlayerGameObject());
     }

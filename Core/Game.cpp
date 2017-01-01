@@ -25,9 +25,6 @@ void Game::loop()
     SDL_Texture *textTexture = SDL_CreateTextureFromSurface(renderer_, textSurface);
 
 
-    Uint32 fpsCheck_curr = 0,
-        fpsCheck_prev = 0;
-
     while (isRunning_)
     {
         timeCurrent = SDL_GetTicks();
@@ -35,9 +32,7 @@ void Game::loop()
         timePrevious = timeCurrent;
 
         pollInputEvents();
-
         gameState_->update((double) timeElapsed);
-
 
         SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
         SDL_RenderClear(renderer_);
@@ -45,24 +40,20 @@ void Game::loop()
 
         if (cycles++ % 10 == 0)
         {
+            Uint32 fpsCheck_curr,
+                fpsCheck_prev;
             fpsCheck_curr = SDL_GetTicks();
-
             double fps = 10 * (1000 / (double)(fpsCheck_curr - fpsCheck_prev));
-
             char thing[128];
-
-            snprintf(thing, 128, "fps: %3f\0", fps);
-
+            snprintf(thing, 128, "fps: %d\0", (int)fps);
             textSurface = TTF_RenderText_Solid(font, thing, SDL_Color{255, 255, 255, 255});
             textTexture = SDL_CreateTextureFromSurface(renderer_, textSurface);
             TTF_SizeText(font, thing, &h, &w);
-
             fpsCheck_prev = fpsCheck_curr;
         }
 
-        SDL_Rect rect{10, 10, h, w};
-        SDL_RenderCopy(renderer_, textTexture, NULL, &rect);
-
+        SDL_Rect fpsTextRect{10, 10, h, w};
+        SDL_RenderCopy(renderer_, textTexture, NULL, &fpsTextRect);
         SDL_RenderPresent(renderer_);
     }
 }
