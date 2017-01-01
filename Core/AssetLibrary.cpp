@@ -11,7 +11,7 @@
 void AssetLibrary::loadTexture(std::string name, std::string filePath)
 {
     SDL_Texture *texture = IMG_LoadTexture(renderer_, (basePath_ + filePath).c_str());
-    this->textures_[name] = texture;
+    textures_[name] = texture;
 }
 
 

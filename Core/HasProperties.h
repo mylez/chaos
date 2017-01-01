@@ -33,7 +33,7 @@ public:
     std::string getStringProperty(std::string name);
 
 private:
-    std::unordered_map<std::string, Property> properties;
+    std::unordered_map<std::string, Property> properties_;
 };
 
 

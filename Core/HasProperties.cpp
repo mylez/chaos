@@ -7,8 +7,8 @@
  */
 void HasProperties::setProperty(std::string name, int value)
 {
-    this->properties[name].type = Property::TYPE_INT;
-    this->properties[name]._int = value;
+    properties_[name].type = Property::TYPE_INT;
+    properties_[name]._int = value;
 }
 
 
@@ -19,8 +19,8 @@ void HasProperties::setProperty(std::string name, int value)
  */
 void HasProperties::setProperty(std::string name, double value)
 {
-    this->properties[name].type = Property::TYPE_DOUBLE;
-    this->properties[name]._double = value;
+    properties_[name].type = Property::TYPE_DOUBLE;
+    properties_[name]._double = value;
 }
 
 
@@ -31,8 +31,8 @@ void HasProperties::setProperty(std::string name, double value)
  */
 void HasProperties::setProperty(std::string name, std::string value)
 {
-    this->properties[name].type = Property::TYPE_STRING;
-    this->properties[name]._string = value;
+    properties_[name].type = Property::TYPE_STRING;
+    properties_[name]._string = value;
 }
 
 
@@ -43,7 +43,7 @@ void HasProperties::setProperty(std::string name, std::string value)
  */
 int HasProperties::getIntProperty(std::string name)
 {
-    return this->properties[name]._int;
+    return properties_[name]._int;
 }
 
 
@@ -54,7 +54,7 @@ int HasProperties::getIntProperty(std::string name)
  */
 double HasProperties::getDoubleProperties(std::string name)
 {
-    return this->properties[name]._double;
+    return properties_[name]._double;
 }
 
 
@@ -65,7 +65,7 @@ double HasProperties::getDoubleProperties(std::string name)
  */
 std::string HasProperties::getStringProperty(std::string name)
 {
-    return this->properties[name]._string;
+    return properties_[name]._string;
 }
 
 

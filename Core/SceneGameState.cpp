@@ -7,7 +7,7 @@
  */
 void SceneGameState::handleInputEvent(SDL_Event *event)
 {
-    this->scene_->handleInputEvent(event);
+    scene_->handleInputEvent(event);
 }
 
 /**

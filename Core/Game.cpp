@@ -13,24 +13,56 @@ void Game::loop()
 {
     Uint32
         timeElapsed = 0,
-        timeStart = 0,
+        timeCurrent = 0,
         timePrevious = SDL_GetTicks();
 
     isRunning_ = true;
 
+    TTF_Font *font = TTF_OpenFont("media/fonts/Bitstream-Vera-Sans-Mono/VeraMono.ttf", 12);
+    int h, w, cycles = 0;
+
+    SDL_Surface *textSurface = TTF_RenderText_Solid(font, "Shit...", SDL_Color{255, 255, 255, 255});
+    SDL_Texture *textTexture = SDL_CreateTextureFromSurface(renderer_, textSurface);
+
+
+    Uint32 fpsCheck_curr = 0,
+        fpsCheck_prev = 0;
+
     while (isRunning_)
     {
-        timeStart = SDL_GetTicks();
-        timeElapsed = timeStart - timePrevious;
-        timePrevious = timeStart;
+        timeCurrent = SDL_GetTicks();
+        timeElapsed = timeCurrent - timePrevious;
+        timePrevious = timeCurrent;
 
         pollInputEvents();
 
         gameState_->update((double) timeElapsed);
 
+
         SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
         SDL_RenderClear(renderer_);
         gameState_->render(renderer_);
+
+        if (cycles++ % 10 == 0)
+        {
+            fpsCheck_curr = SDL_GetTicks();
+
+            double fps = 10 * (1000 / (double)(fpsCheck_curr - fpsCheck_prev));
+
+            char thing[128];
+
+            snprintf(thing, 128, "fps: %3f\0", fps);
+
+            textSurface = TTF_RenderText_Solid(font, thing, SDL_Color{255, 255, 255, 255});
+            textTexture = SDL_CreateTextureFromSurface(renderer_, textSurface);
+            TTF_SizeText(font, thing, &h, &w);
+
+            fpsCheck_prev = fpsCheck_curr;
+        }
+
+        SDL_Rect rect{10, 10, h, w};
+        SDL_RenderCopy(renderer_, textTexture, NULL, &rect);
+
         SDL_RenderPresent(renderer_);
     }
 }
