@@ -13,17 +13,18 @@ class World: Renderable
 {
 
 public:
+
     void render(SDL_Renderer *renderer);
 
     World(SDL_Renderer *renderer);
 
     SDL_Texture *tileTexture;
 
-    void loadMapData(const char *file, std::vector< std::vector< int > > &vec);
+    void loadMapData(const char *file, std::vector<std::vector<int>> &vec);
 
 private:
 
-    std::vector< std::vector< int > > mapData;
+    std::vector<std::vector<int>> mapData;
 
     SDL_Rect tileRect(int);
 

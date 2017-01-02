@@ -8,9 +8,11 @@ class WorldSceneGameState:
     public SceneGameState
 {
 private:
-    WorldScene worldScene;
+    WorldScene worldScene_;
+
 public:
     WorldSceneGameState();
+    void render(SDL_Renderer *renderer);
 };
 
 

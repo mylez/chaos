@@ -10,6 +10,7 @@ void SceneGameState::handleInputEvent(SDL_Event *event)
     scene_->handleInputEvent(event);
 }
 
+
 /**
  * this method can be overridden in a custom SceneGameState
  *
@@ -46,6 +47,7 @@ Scene *SceneGameState::getScene()
 {
     return scene_;
 }
+
 
 /**
  *

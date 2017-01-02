@@ -8,6 +8,7 @@ class WorldScene:
 {
 public:
     WorldScene();
+    void render(SDL_Renderer *renderer);
 };
 
 

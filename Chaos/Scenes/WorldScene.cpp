@@ -3,9 +3,14 @@
 
 WorldScene::WorldScene()
 {
-    for (int i = 0; i < 400000; i++)
+    for (int i = 0; i < 40000; i++)
     {
         addGameObject(new PlayerGameObject());
     }
 
+}
+
+void WorldScene::render(SDL_Renderer *renderer)
+{
+    SDL_RenderDrawRect(renderer, )
 }
