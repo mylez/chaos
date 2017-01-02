@@ -5,17 +5,17 @@
  *
  * @return
  */
-std::vector<GameObject *> Scene::getGameObjects()
+std::vector<Entity *> Scene::getEntities()
 {
-    return gameObjects_;
+    return entities_;
 }
 
 
 /**
  *
- * @param gameObject
+ * @param entity
  */
-void Scene::addGameObject(GameObject *gameObject)
+void Scene::addEntity(Entity *entity)
 {
-    gameObjects_.push_back(gameObject);
+    entities_.push_back(entity);
 }

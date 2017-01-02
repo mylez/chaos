@@ -44,7 +44,7 @@ void Game::loop()
             fpsCheck_curr = SDL_GetTicks();
             double fps = 10 * (1000 / (double)(fpsCheck_curr - fpsCheck_prev));
             char thing[128];
-            snprintf(thing, 128, "fps: %d\0", (int)fps);
+            snprintf(thing, 128, "fps: %d", (int)fps);
             textSurface = TTF_RenderText_Solid(font, thing, SDL_Color{255, 255, 255, 255});
             textTexture = SDL_CreateTextureFromSurface(renderer_, textSurface);
             TTF_SizeText(font, thing, &h, &w);

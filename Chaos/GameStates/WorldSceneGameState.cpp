@@ -1,16 +1,28 @@
-#include <Chaos/GameObjects/PlayerGameObject.h>
+#include <Chaos/Entities/PlayerEntity.h>
 #include "WorldSceneGameState.h"
-#include <SDL2/SDL.h>
 
 
-WorldSceneGameState::WorldSceneGameState()
+WorldSceneGameState::WorldSceneGameState(AssetLibrary *assetLibrary)
 {
-    setScene(&worldScene_);
+    assetLibrary_ = assetLibrary;
+    addEntity(new PlayerEntity());
 }
 
 
 void WorldSceneGameState::render(SDL_Renderer *renderer)
 {
-    worldScene_.render(renderer);
+    for (const auto &entity: getEntities())
+    {
+        entity->render(renderer);
+    }
+}
+
+
+void WorldSceneGameState::update(double timeElapsed)
+{
+    for (const auto &entity: getEntities())
+    {
+        entity->update(timeElapsed);
+    }
 }
 

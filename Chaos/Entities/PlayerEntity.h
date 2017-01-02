@@ -1,15 +1,15 @@
 #ifndef CHAOS_PLAYERGAMEOBJECT_H
 #define CHAOS_PLAYERGAMEOBJECT_H
 
-#include "Core/GameObject.h"
+#include "Core/Entity.h"
 
-class PlayerGameObject:
-    public GameObject
+class PlayerEntity:
+    public Entity
 {
 public:
     double velocity_, time_;
 
-    PlayerGameObject();
+    PlayerEntity();
 
     Uint8 red_, green_, blue_;
 

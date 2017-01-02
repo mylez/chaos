@@ -1,18 +1,20 @@
 #ifndef CHAOS_WORLDSCENEGAMESTATE_H
 #define CHAOS_WORLDSCENEGAMESTATE_H
 
-#include <Chaos/Scenes/WorldScene.h>
 #include "Core/SceneGameState.h"
 
 class WorldSceneGameState:
-    public SceneGameState
+    public GameState,
+    public Scene
 {
-private:
-    WorldScene worldScene_;
 
 public:
-    WorldSceneGameState();
+    WorldSceneGameState(AssetLibrary *assetLibrary);
+    void update(double timeElapsed);
     void render(SDL_Renderer *renderer);
+
+private:
+    AssetLibrary *assetLibrary_;
 };
 
 

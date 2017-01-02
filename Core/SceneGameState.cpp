@@ -18,7 +18,7 @@ void SceneGameState::handleInputEvent(SDL_Event *event)
  */
 void SceneGameState::render(SDL_Renderer *renderer)
 {
-    for (const auto &gameObject: getScene()->getGameObjects())
+    for (const auto &gameObject: getScene()->getEntities())
     {
         gameObject->render(renderer);
     }
@@ -32,7 +32,7 @@ void SceneGameState::render(SDL_Renderer *renderer)
  */
 void SceneGameState::update(double timeElapsed)
 {
-    for (const auto &gameObject: getScene()->getGameObjects())
+    for (const auto &gameObject: getScene()->getEntities())
     {
         gameObject->update(timeElapsed);
     }

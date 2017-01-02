@@ -12,7 +12,7 @@ file(GLOB chaos_SRC
     "*.cpp"
     "Core/*.cpp"
     "Chaos/*.cpp"
-    "Chaos/GameObjects/*.cpp"
+    "Chaos/Entities/*.cpp"
     "Chaos/GameStates/*.cpp"
     "Chaos/Scenes/*.cpp"
     "include/jsoncpp/dist/jsoncpp.cpp"
@@ -23,5 +23,6 @@ add_executable(chaos ${chaos_SRC})
 target_link_libraries(chaos SDL2)
 target_link_libraries(chaos SDL2_image)
 target_link_libraries(chaos SDL2_ttf)
+
 
 

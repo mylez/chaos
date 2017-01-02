@@ -6,7 +6,7 @@
 #include "HasUpdate.h"
 #include "HasRender.h"
 
-class GameObject:
+class Entity:
     public HasProperties,
     public HasPosition,
     public HasUpdate,

@@ -1,12 +1,12 @@
 #include <cstdlib>
 #include <iostream>
-#include "PlayerGameObject.h"
+#include "PlayerEntity.h"
 
 
 /**
  *
  */
-PlayerGameObject::PlayerGameObject()
+PlayerEntity::PlayerEntity()
 {
     red_ = (Uint8)(rand() % 256);
     green_ = (Uint8)(rand() % 256);
@@ -20,11 +20,11 @@ PlayerGameObject::PlayerGameObject()
  *
  * @param renderer
  */
-void PlayerGameObject::render(SDL_Renderer *renderer)
+void PlayerEntity::render(SDL_Renderer *renderer)
 {
     int size = 25;
     SDL_Rect destination = {(int)getXPosition() - size, (int)getYPosition() - size, size, size};
-    SDL_SetRenderDrawColor(renderer, red_, green_, blue_, 25);
+    SDL_SetRenderDrawColor(renderer, red_, green_, blue_, 125);
     SDL_RenderFillRect(renderer, &destination);
 }
 
@@ -33,13 +33,13 @@ void PlayerGameObject::render(SDL_Renderer *renderer)
  *
  * @param timeElapsed
  */
-void PlayerGameObject::update(double timeElapsed)
+void PlayerEntity::update(double timeElapsed)
 {
     time_ += timeElapsed;
     double newX = getXPosition() + timeElapsed * velocity_ * pow(sin(time_ / 900), 2),
         newY = getYPosition() + timeElapsed * velocity_ * pow(sin(time_ / 800), 2);
 
-    setXPosition(newX < 3000 ? newX : newX - 3000);
-    setYPosition(newY < 1500 ? newY : newY - 1500);
+    setXPosition(newX < 800 ? newX : newX - 800);
+    setYPosition(newY < 800 ? newY : newY - 800);
 }
 

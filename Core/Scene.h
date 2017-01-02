@@ -3,18 +3,20 @@
 
 
 #include <vector>
-#include "GameObject.h"
+#include "Entity.h"
 #include "HasInputEventListeners.h"
+#include "AssetLibrary.h"
+
 
 class Scene:
     public HasInputEventListeners
 {
 public:
-    std::vector<GameObject *> getGameObjects();
-    void addGameObject(GameObject *gameObject);
-private:
+    std::vector<Entity *> getEntities();
+    void addEntity(Entity *entity);
 
-    std::vector<GameObject *> gameObjects_;
+private:
+    std::vector<Entity *> entities_;
 };
 
 

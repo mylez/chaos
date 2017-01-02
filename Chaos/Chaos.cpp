@@ -3,7 +3,7 @@
 
 Chaos::Chaos()
 {
-    static WorldSceneGameState worldSceneGameState;
+    static WorldSceneGameState worldSceneGameState(&assetLibrary_);
     gameState_ = &worldSceneGameState;
 }
 
