@@ -2,7 +2,6 @@
 
 AssetLibrary *GameState::getAssetLibrary()
 {
-    std::cout << " something " << assetLibrary_ << "\n\n";
     return assetLibrary_;
 }
 
