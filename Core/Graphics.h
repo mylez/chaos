@@ -18,6 +18,7 @@ private:
 public:
     void pushTransform(Vec2I offset, Vec2D scale);
     void popTransform();
+    Vec2I transformPosition(Vec2I pos);
     void setWindowAndRenderer(SDL_Window* window, SDL_Renderer *renderer);
     void setColor(int r, int g, int b, int a);
     void fillRect(Vec2I pos, Vec2I size);

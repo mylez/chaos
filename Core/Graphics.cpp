@@ -92,9 +92,19 @@ void Graphics::setWindowAndRenderer(SDL_Window *window, SDL_Renderer *renderer)
 /**
  *
  * @param pos
- * @param newPos
  */
-void Graphics::transformPosition(Vec2I pos, Vec2I *newPos)
+Vec2I Graphics::transformPosition(Vec2I pos)
 {
+    Vec2I sumOffset;
 
+    for (unsigned long i = 0; i < offset_.size(); i++)
+    {
+        sumOffset.x += offset_.at(i).x;
+        sumOffset.y += offset_.at(i).y;
+    }
+
+    return Vec2I(
+        pos.x + sumOffset.x,
+        pos.y + sumOffset.y
+    );
 }

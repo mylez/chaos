@@ -89,8 +89,6 @@ Game::Game()
     window_ = SDL_CreateWindow("", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 700, 500,
                                SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
     renderer_ = SDL_CreateRenderer(window_, -1,  SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
-    std::cout << "fucker ass " << renderer_ << "\n\n";
-
     graphics_.setWindowAndRenderer(window_, renderer_);
     assetLibrary_.setRenderer(renderer_);
 

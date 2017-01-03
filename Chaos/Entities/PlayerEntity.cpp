@@ -27,7 +27,6 @@ void PlayerEntity::render(Graphics *g)
     Vec2I
         pos(200, 200),
         size(25, 25);
-
     g->setColor(255, 0, 0, 255);
     g->fillRect(pos, size);
 }
