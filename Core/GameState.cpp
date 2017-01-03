@@ -8,6 +8,5 @@ AssetLibrary *GameState::getAssetLibrary()
 
 void GameState::setAssetLibrary(AssetLibrary *assetLibrary)
 {
-    std::cout << "ass hole " << assetLibrary << "\n\n";
     assetLibrary_ = assetLibrary;
 }
