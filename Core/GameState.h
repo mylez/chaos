@@ -5,6 +5,7 @@
 #include "InputEventListener.h"
 #include "HasUpdate.h"
 #include "HasRender.h"
+#include "AssetLibrary.h"
 
 
 class GameState:
@@ -12,7 +13,12 @@ class GameState:
     public HasUpdate,
     public HasRender
 {
-
+private:
+    AssetLibrary *assetLibrary_;
+    
+public:
+    void setAssetLibrary(AssetLibrary *assetLibrary);
+    AssetLibrary *getAssetLibrary();
 };
 
 

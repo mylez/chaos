@@ -6,26 +6,20 @@
 #include <string>
 #include <iostream>
 #include <vector>
-
+#include "Graphics.h"
 
 class AssetLibrary
 {
 public:
     void loadTexture(std::string name, std::string filePath);
 
-    void loadIntTable(std::string name, std::string filePath);
-
     SDL_Texture *getTexture(std::string name);
-    std::vector< std::vector < int > > getIntTable(std::string name);
 
     void setRenderer(SDL_Renderer *renderer);
 
 private:
     std::unordered_map< std::string, SDL_Texture * > textures_;
-    std::unordered_map< std::string, std::vector< std::vector < int > > > intTables_;
-
     SDL_Renderer *renderer_;
-
     const std::string basePath_ = "media/";
 };
 

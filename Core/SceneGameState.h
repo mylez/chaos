@@ -19,7 +19,7 @@ public:
     void setScene(Scene *scene);
     void handleInputEvent(SDL_Event *event);
     void update(double timeElapsed);
-    void render(SDL_Renderer *renderer);
+    void render(Graphics *g);
 };
 
 

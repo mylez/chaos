@@ -26,6 +26,7 @@ SDL_Texture *AssetLibrary::getTexture(std::string name)
 }
 
 
+
 /**
  * set pointer to the renderer, used with loading textures and such
  *

@@ -11,12 +11,11 @@ public:
 
     PlayerEntity();
 
-    Uint8 red_, green_, blue_;
+    int red_, green_, blue_;
 
-    void render(SDL_Renderer *renderer);
+    void render(Graphics *g);
 
     void update(double timeElapsed);
-
 };
 
 

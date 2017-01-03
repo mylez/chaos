@@ -4,19 +4,20 @@ project(chaos)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
+include_directories("/usr/local/include")
 include_directories(".")
-include_directories("./include/jsoncpp/dist")
+include_directories("./Core/include/jsoncpp/dist")
+
 link_directories("/usr/local/lib")
 
 file(GLOB chaos_SRC
-    "*.cpp"
-    "Core/*.cpp"
-    "Chaos/*.cpp"
-    "Chaos/Entities/*.cpp"
-    "Chaos/GameStates/*.cpp"
-    "Chaos/Scenes/*.cpp"
-    "include/jsoncpp/dist/jsoncpp.cpp"
-)
+        "*.cpp"
+        "Core/*.cpp"
+        "Chaos/*.cpp"
+        "Chaos/GameStates/*.cpp"
+        "Chaos/Entities/*.cpp"
+        "Core/include/jsoncpp/dist/jsoncpp.cpp"
+        )
 
 add_executable(chaos ${chaos_SRC})
 

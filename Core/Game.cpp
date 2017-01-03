@@ -35,7 +35,8 @@ void Game::loop()
 
         SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
         SDL_RenderClear(renderer_);
-        gameState_->render(renderer_);
+
+        gameState_->render(&graphics_);
 
         if (cycles++ % 10 == 0)
         {
@@ -88,6 +89,9 @@ Game::Game()
     window_ = SDL_CreateWindow("", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 700, 500,
                                SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
     renderer_ = SDL_CreateRenderer(window_, -1,  SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
+    std::cout << "fucker ass " << renderer_ << "\n\n";
+
+    graphics_.setWindowAndRenderer(window_, renderer_);
     assetLibrary_.setRenderer(renderer_);
 
     SDL_SetRenderDrawBlendMode(renderer_, SDL_BLENDMODE_BLEND);

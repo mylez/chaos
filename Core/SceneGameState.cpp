@@ -16,11 +16,11 @@ void SceneGameState::handleInputEvent(SDL_Event *event)
  *
  * @param renderer
  */
-void SceneGameState::render(SDL_Renderer *renderer)
+void SceneGameState::render(Graphics *g)
 {
     for (const auto &gameObject: getScene()->getEntities())
     {
-        gameObject->render(renderer);
+        gameObject->render(g);
     }
 }
 

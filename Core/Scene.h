@@ -5,11 +5,13 @@
 #include <vector>
 #include "Entity.h"
 #include "HasInputEventListeners.h"
+#include "HasTileData.h"
 #include "AssetLibrary.h"
 
 
 class Scene:
-    public HasInputEventListeners
+    public HasInputEventListeners,
+    public HasTileData
 {
 public:
     std::vector<Entity *> getEntities();

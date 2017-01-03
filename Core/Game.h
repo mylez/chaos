@@ -1,8 +1,10 @@
 #ifndef CHAOS_GAME_H
 #define CHAOS_GAME_H
 
+#include <SDL2/SDL.h>
 #include "GameState.h"
 #include "AssetLibrary.h"
+#include "Graphics.h"
 
 
 class Game
@@ -24,6 +26,8 @@ public:
 private:
 
     bool isRunning_;
+
+    Graphics graphics_;
 
     SDL_Window *window_;
 
