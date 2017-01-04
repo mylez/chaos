@@ -48,19 +48,23 @@ void WorldSceneGameState::drawWorld(Graphics *g)
             worldHeight - (int)(cameraPosition.y / tileSize.y)
         ),
         scrollOffset(
-            -(int)((cameraPosition.x)) % 32,
-            (int)(cameraSize.y + cameraPosition.y) % 32
+            -(int)((cameraPosition.x)) % tileSize.x,
+            (int)(cameraSize.y + cameraPosition.y) % tileSize.y
         );
-
     for (int x = topLeft.x; x < bottomRight.x + 1; x++)
     {
         for (int y = topLeft.y - 1; y < bottomRight.y; y++)
         {
+            Vec2I dstPos = Vec2I(
+                tileSize.x * (x - topLeft.x),
+                tileSize.y * (y - topLeft.y)
+            ).add(scrollOffset);
 
             Vec2I srcPos = tileData->tileSrcRectPosition(0, tileData->getTileTypeAt(0, x, y));
+
             g->copyTexture(texture_terrainTiles_,
-                           srcPos, Vec2I(32, 32),
-                           Vec2I(32 * (x - topLeft.x), 32 * (y - topLeft.y)).add(scrollOffset), Vec2I(32, 32)
+                           srcPos, tileSize,
+                           dstPos, tileSize
             );
         }
     }
@@ -89,7 +93,8 @@ void WorldSceneGameState::render(Graphics *g)
  */
 void WorldSceneGameState::update(double timeElapsed)
 {
-    double moveCam = timeElapsed * .01;
+    double moveCam = timeElapsed * 1;
+
     setCameraPosition(getCameraPosition().add(Vec2D(moveCam, moveCam)));
 
     for (const auto &entity: getEntities())
