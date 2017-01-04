@@ -15,7 +15,7 @@ WorldSceneGameState::WorldSceneGameState(AssetLibrary *assetLibrary)
     assetLibrary->loadTexture("WorldSceneGameState::Terrain", "tile-sheets/Terrain.png");
     texture_terrainTiles_ = assetLibrary->getTexture("WorldSceneGameState::Terrain");
 
-    for (int i = 0; i < 2; i++)
+    for (int i = 0; i < 15000; i++)
     {
         addEntity(new PlayerEntity());
     }
@@ -93,9 +93,13 @@ void WorldSceneGameState::render(Graphics *g)
  */
 void WorldSceneGameState::update(double timeElapsed)
 {
-    double moveCam = timeElapsed * 1;
+    static double time = 0;
+    time += timeElapsed;
 
-    setCameraPosition(getCameraPosition().add(Vec2D(moveCam, moveCam)));
+    setCameraPosition(Vec2D(
+        500 * (1 + cos(time / 13000)),
+        1000 * (1 + sin(time / 8000))
+    ));
 
     for (const auto &entity: getEntities())
     {

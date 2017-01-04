@@ -25,14 +25,16 @@ PlayerEntity::PlayerEntity()
  */
 void PlayerEntity::render(Graphics *g)
 {
-    Vec2I
-        pos((int)getXPosition() - 25, (int)getYPosition() - 25),
-        size(25, 25);
+    int boxSize = 10;
 
-    g->setColor(red_, green_, blue_, 100);
+    Vec2I
+        pos((int)getXPosition() - boxSize, (int)getYPosition() - boxSize),
+        size(boxSize, boxSize);
+
+    g->setColor(red_, green_, blue_, 125);
     g->fillRect(pos, size);
 
-    g->setColor(red_, green_, blue_, 255);
+    g->setColor(0, 0, 0, 255);
     g->drawRect(pos, size);
 }
 

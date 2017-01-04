@@ -14,13 +14,17 @@ void Game::loop()
     Uint32
         timeElapsed = 0,
         timeCurrent = 0,
-        timePrevious = SDL_GetTicks();
+        timePrevious = SDL_GetTicks(),
+
+        fpsCheck_curr = 0,
+        fpsCheck_prev = 0;
 
     isRunning_ = true;
 
     // todo - get rid of this stupid fps meter and put it somewhere proper
     TTF_Font *font = TTF_OpenFont("media/fonts/Bitstream-Vera-Sans-Mono/VeraMono.ttf", 12);
-    int h, w, cycles = 0;
+    int h = 0, w = 0, cycles = 0;
+
     SDL_Surface *textSurface = TTF_RenderText_Solid(font, "Shit...", SDL_Color{255, 255, 255, 255});
     SDL_Texture *textTexture = SDL_CreateTextureFromSurface(renderer_, textSurface);
 
@@ -35,15 +39,12 @@ void Game::loop()
 
         SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
         SDL_RenderClear(renderer_);
-
         gameState_->render(&graphics_);
 
-        if (cycles++ % 10 == 0)
+        if (cycles++ % 45 == 0)
         {
-            Uint32 fpsCheck_curr,
-                fpsCheck_prev;
             fpsCheck_curr = SDL_GetTicks();
-            double fps = 10 * (1000 / (double)(fpsCheck_curr - fpsCheck_prev));
+            double fps = 45 * (1000 / (double)(fpsCheck_curr - fpsCheck_prev));
             char thing[128];
             snprintf(thing, 128, "fps: %d", (int)fps);
             textSurface = TTF_RenderText_Solid(font, thing, SDL_Color{255, 255, 255, 255});
