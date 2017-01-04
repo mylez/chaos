@@ -9,6 +9,18 @@
  * @param pos
  * @param size
  */
+void Graphics::drawPoint(Vec2I pos)
+{
+    SDL_RenderDrawPoint(renderer_, pos.x, pos.y);
+}
+
+
+
+/**
+ *
+ * @param pos
+ * @param size
+ */
 void Graphics::drawRect(Vec2I pos, Vec2I size)
 {
     SDL_Rect rect = {

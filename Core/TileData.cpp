@@ -28,7 +28,11 @@ int TileData::getTileTypeAt(int layer, int x, int y)
  */
 int TileData::getTileTypeAt(int layer, int i)
 {
-    return tileData_["layers"][layer]["data"][i].asInt();
+    if (i >= 0)
+    {
+        return tileData_["layers"][layer]["data"][i].asInt();
+    }
+    return 207;
 }
 
 

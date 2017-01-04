@@ -35,7 +35,7 @@ void Game::loop()
         timePrevious = timeCurrent;
 
         pollInputEvents();
-        gameState_->update((double) timeElapsed);
+        gameState_->update(timeElapsed);
 
         SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
         SDL_RenderClear(renderer_);

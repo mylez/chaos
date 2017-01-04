@@ -1,7 +1,5 @@
 #include <iostream>
 #include "Core/Graphics.h"
-#include "Core/Vec2I.h"
-#include "Core/Vec2D.h"
 #include "PlayerEntity.h"
 
 /**
@@ -13,7 +11,7 @@ PlayerEntity::PlayerEntity()
     green_ = (Uint8)(rand() % 256);
     blue_ = (Uint8)(rand() % 256);
 
-    velocity_ = (double)(rand() % 40) / 100 + 0.1;
+    velocity_ = (double)(rand() % 30) / 100 + 0.1;
 
     setPosition(rand() % 1000, rand() % 1000);
 }
@@ -31,9 +29,8 @@ void PlayerEntity::render(Graphics *g)
         pos((int)getXPosition() - boxSize, (int)getYPosition() - boxSize),
         size(boxSize, boxSize);
 
-    g->setColor(red_, green_, blue_, 125);
+    g->setColor(red_, green_, blue_, 100);
     g->fillRect(pos, size);
-
     g->setColor(0, 0, 0, 255);
     g->drawRect(pos, size);
 }
