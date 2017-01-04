@@ -3,24 +3,20 @@
 
 
 #include <vector>
-#include "Entity.h"
+#include "AssetLibrary.h"
 #include "HasInputEventListeners.h"
 #include "HasTileData.h"
-#include "AssetLibrary.h"
+#include "HasEntities.h"
 #include "HasCamera.h"
 
 
 class Scene:
     public HasInputEventListeners,
     public HasTileData,
+    public HasEntities,
     public HasCamera
 {
-public:
-    std::vector<Entity *> getEntities();
-    void addEntity(Entity *entity);
 
-private:
-    std::vector<Entity *> entities_;
 };
 
 
