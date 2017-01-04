@@ -87,7 +87,7 @@ int TileData::getWidth(int layer)
  * @param tileType
  * @return
  */
-Vec2I TileData::tileSrcRectPosition(int tileSet, int tileType)
+Vec2I TileData::tileSourcePosition(int tileSet, int tileType)
 {
     Vec2I sheetSize = tileSetSheetSize(tileSet);
     return Vec2I(

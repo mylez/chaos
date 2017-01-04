@@ -60,7 +60,7 @@ void WorldSceneGameState::drawWorld(Graphics *g)
                 tileSize.y * (y - topLeft.y)
             ).add(scrollOffset);
 
-            Vec2I srcPos = tileData->tileSrcRectPosition(0, tileData->getTileTypeAt(0, x, y));
+            Vec2I srcPos = tileData->tileSourcePosition(0, tileData->getTileTypeAt(0, x, y));
 
             g->copyTexture(texture_terrainTiles_,
                            srcPos, tileSize,
