@@ -24,3 +24,4 @@ add_executable(chaos ${chaos_SRC})
 target_link_libraries(chaos SDL2)
 target_link_libraries(chaos SDL2_image)
 target_link_libraries(chaos SDL2_ttf)
+

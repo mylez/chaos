@@ -7,11 +7,13 @@
 #include "HasInputEventListeners.h"
 #include "HasTileData.h"
 #include "AssetLibrary.h"
+#include "HasCamera.h"
 
 
 class Scene:
     public HasInputEventListeners,
-    public HasTileData
+    public HasTileData,
+    public HasCamera
 {
 public:
     std::vector<Entity *> getEntities();

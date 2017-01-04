@@ -28,6 +28,7 @@ public:
     void fillRect(Vec2I pos, Vec2I size);
     void copyTexture(SDL_Texture *texture, Vec2I srcPos, Vec2I srcSize, Vec2I dstPos, Vec2I dstSize);
     void drawDebugText(std::string msg, int fontSize, Vec2I pos);
+    Vec2I getWindowSize();
 };
 
 

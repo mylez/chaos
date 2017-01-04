@@ -15,7 +15,7 @@ WorldSceneGameState::WorldSceneGameState(AssetLibrary *assetLibrary)
     assetLibrary->loadTexture("WorldSceneGameState::Terrain", "tile-sheets/Terrain.png");
     texture_terrainTiles_ = assetLibrary->getTexture("WorldSceneGameState::Terrain");
 
-    for (int i = 0; i < 20; i++)
+    for (int i = 0; i < 2; i++)
     {
         addEntity(new PlayerEntity());
     }
@@ -30,31 +30,40 @@ WorldSceneGameState::WorldSceneGameState(AssetLibrary *assetLibrary)
 void WorldSceneGameState::drawWorld(Graphics *g)
 {
     TileData *tileData = getTileData();
-    int height = tileData->getHeight(0);
-    int width = tileData->getLayerSize(0) / height;
 
-    int i = 0;
+    Vec2D
+        cameraPosition = getCameraPosition(),
+        cameraSize = Vec2D(g->getWindowSize());
 
+    int worldHeight = tileData->getHeight(0);
 
-    for (int x = 0; x < width; x++)
+    Vec2I
+        tileSize = tileData->tileSetTileSize(0),
+        topLeft(
+            (int)(cameraPosition.x / tileSize.x),
+            worldHeight - (int)((cameraSize.y + cameraPosition.y) / tileSize.y)
+        ),
+        bottomRight(
+            (int)((cameraPosition.x + cameraSize.x) / tileSize.x),
+            worldHeight - (int)(cameraPosition.y / tileSize.y)
+        ),
+        scrollOffset(
+            -(int)((cameraPosition.x)) % 32,
+            (int)(cameraSize.y + cameraPosition.y) % 32
+        );
+
+    for (int x = topLeft.x; x < bottomRight.x + 1; x++)
     {
-        for (int y = 0; y < height; y++)
+        for (int y = topLeft.y - 1; y < bottomRight.y; y++)
         {
-            g->setColor(0, 255, 0, 255);
 
-            int type = tileData->getTileTypeAt(0, i);
-            Vec2I srcPos = tileData->tileSrcRectPosition(0, type);
-
+            Vec2I srcPos = tileData->tileSrcRectPosition(0, tileData->getTileTypeAt(0, x, y));
             g->copyTexture(texture_terrainTiles_,
                            srcPos, Vec2I(32, 32),
-                           Vec2I(32 * y, 32 * x), Vec2I(32, 32)
+                           Vec2I(32 * (x - topLeft.x), 32 * (y - topLeft.y)).add(scrollOffset), Vec2I(32, 32)
             );
-
-            i++;
         }
     }
-
-    //std::cout << " - - - - - \n";
 }
 
 
@@ -65,15 +74,12 @@ void WorldSceneGameState::drawWorld(Graphics *g)
  */
 void WorldSceneGameState::render(Graphics *g)
 {
-    static double stupidMover = 0;
-    g->pushTransform(Vec2I(-(int)(400 * (1+sin(stupidMover))), -(int)(400 * (1+cos(stupidMover)))), Vec2D(1, 1));
     drawWorld(g);
+
     for (const auto &entity: getEntities())
     {
         entity->render(g);
     }
-    g->popTransform();
-    stupidMover += .005;
 }
 
 
@@ -83,17 +89,12 @@ void WorldSceneGameState::render(Graphics *g)
  */
 void WorldSceneGameState::update(double timeElapsed)
 {
+    double moveCam = timeElapsed * .01;
+    setCameraPosition(getCameraPosition().add(Vec2D(moveCam, moveCam)));
+
     for (const auto &entity: getEntities())
     {
         entity->update(timeElapsed);
     }
 }
-
-
-//void WorldSceneGameState::loadWorldTiles()
-//{
-//    std::string name = "WorldSceneGameState::Terrain";
-//    getAssetLibrary()->loadTexture(name, "media/tile-sheets/Terrain.png");
-//    texture_terrainTiles_ = getAssetLibrary()->getTexture(name);
-//}
 

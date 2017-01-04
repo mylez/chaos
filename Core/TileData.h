@@ -14,6 +14,7 @@ public:
     int getTileTypeAt(int layer, int x, int y);
     int getTileTypeAt(int layer, int i);
     int getHeight(int layer);
+    int getWidth(int layer);
     int getLayerSize(int layer);
     Vec2I tileSrcRectPosition(int layer, int tileType);
     Vec2I tileSetSheetSize(int tileSet);

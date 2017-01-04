@@ -26,11 +26,14 @@ PlayerEntity::PlayerEntity()
 void PlayerEntity::render(Graphics *g)
 {
     Vec2I
-        pos((int)getXPosition(), (int)getYPosition()),
+        pos((int)getXPosition() - 25, (int)getYPosition() - 25),
         size(25, 25);
 
-    g->setColor(red_, green_, blue_, 255);
+    g->setColor(red_, green_, blue_, 100);
     g->fillRect(pos, size);
+
+    g->setColor(red_, green_, blue_, 255);
+    g->drawRect(pos, size);
 }
 
 /**
@@ -45,7 +48,9 @@ void PlayerEntity::update(double timeElapsed)
         newX = getXPosition() + timeElapsed * velocity_ * pow(sin(time_ / 2000), 2),
         newY = getYPosition() + timeElapsed * velocity_ * pow(sin(time_ / 1000), 2);
 
-    setXPosition(newX < 800 ? newX : newX - 800);
-    setYPosition(newY < 800 ? newY : newY - 800);
+    int box = 2500;
+
+    setXPosition(newX < box ? newX : newX - box);
+    setYPosition(newY < box ? newY : newY - box);
 }
 

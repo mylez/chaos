@@ -44,7 +44,7 @@ void Graphics::fillRect(Vec2I pos, Vec2I size)
 void Graphics::pushTransform(Vec2I offset, Vec2D scale)
 {
     offset_ = offset_.add(offset);
-    scale_ = scale_.entryMult(scale_);
+    scale_ = scale_.entryMult(scale);
     offsetStack_.push_back(offset);
     scaleStack_.push_back(scale);
 }
@@ -149,4 +149,16 @@ Vec2I Graphics::transformPosition(Vec2I pos)
         scale_.x * pos.x + offset_.x,
         scale_.y * pos.y + offset_.y
     );
+}
+
+
+/**
+ *
+ * @param pos
+ */
+Vec2I Graphics::getWindowSize()
+{
+    int w = 0, h = 0;
+    SDL_GetWindowSize(window_, &w, &h);
+    return Vec2I(w, h);
 }

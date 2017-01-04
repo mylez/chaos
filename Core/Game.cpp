@@ -68,7 +68,7 @@ void Game::pollInputEvents()
     while (SDL_PollEvent(&event))
     {
         gameState_->handleInputEvent(&event);
-        if (event.type == SDL_QUIT)
+        if (event.type == SDL_QUIT || event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_q)
         {
             isRunning_ = false;
         }

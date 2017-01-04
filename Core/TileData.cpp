@@ -12,7 +12,11 @@
  */
 int TileData::getTileTypeAt(int layer, int x, int y)
 {
-    return -1;
+    int height = getHeight(layer),
+        layerSize = getLayerSize(layer),
+        i = x + (layerSize / height) * y;
+
+    return getTileTypeAt(layer, i);
 }
 
 
@@ -61,6 +65,15 @@ void TileData::setData(Json::Value tileData)
 int TileData::getHeight(int layer)
 {
     return tileData_["layers"][layer]["height"].asInt();
+}
+
+/**
+ *
+ * @return
+ */
+int TileData::getWidth(int layer)
+{
+    return tileData_["layers"][layer]["data"].size() / tileData_["layers"][layer]["height"].asInt();
 }
 
 
