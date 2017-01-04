@@ -97,8 +97,8 @@ void WorldSceneGameState::update(double timeElapsed)
     time += timeElapsed;
 
     setCameraPosition(Vec2D(
-        6000 * (1 + cos(time / 160000)),
-        6000 * (1 + sin(time / 200000))
+        2000 * (1 + cos(time / 25000)),
+        2000 * (1 + sin(time / 50000))
     ));
 
     for (const auto &entity: getEntities())
