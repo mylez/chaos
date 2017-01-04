@@ -11,7 +11,7 @@ class Vec2D;
  */
 WorldSceneGameState::WorldSceneGameState(AssetLibrary *assetLibrary)
 {
-    loadTileData("media/tile-data/level-huge.json");
+    loadTileData("media/tile-data/level.json");
     assetLibrary->loadTexture("WorldSceneGameState::Terrain", "tile-sheets/Terrain.png");
     texture_terrainTiles_ = assetLibrary->getTexture("WorldSceneGameState::Terrain");
 
