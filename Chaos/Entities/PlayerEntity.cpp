@@ -24,15 +24,17 @@ PlayerEntity::PlayerEntity()
 void PlayerEntity::render(Graphics *g)
 {
     int boxSize = 10;
+    static double time = 0;
 
     Vec2I
         pos((int)getXPosition() - boxSize, (int)getYPosition() - boxSize),
         size(boxSize, boxSize);
 
-    g->setColor(red_, green_, blue_, 100);
+    g->setColor((int)(red_*pow(sin(3 * velocity_ + time * 1), 2)), (int)(green_*pow(sin(velocity_ + time * 2), 2)), (int)(blue_*pow(2*velocity_ + sin(time * 3), 2)), 150);
     g->fillRect(pos, size);
     g->setColor(0, 0, 0, 255);
     g->drawRect(pos, size);
+    time += 0.00006;
 }
 
 /**
