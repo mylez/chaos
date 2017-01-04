@@ -17,6 +17,8 @@ public:
 
     GameState defaultGameState, *gameState_ = &defaultGameState;
 
+    Graphics graphics_;
+
     AssetLibrary assetLibrary_;
 
     void loop();
@@ -26,8 +28,6 @@ public:
 private:
 
     bool isRunning_;
-
-    Graphics graphics_;
 
     SDL_Window *window_;
 

@@ -6,7 +6,8 @@ class Vec2I
 {
 public:
     Vec2I();
-    Vec2I(int x, int y);
+    Vec2I(int _x, int _y);
+    Vec2I add(Vec2I a);
     int x, y;
 };
 

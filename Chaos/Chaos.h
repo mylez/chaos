@@ -6,8 +6,6 @@
 
 class Chaos: public Game
 {
-private:
-    AssetLibrary assetLibrary_;
 public:
     Chaos();
 };

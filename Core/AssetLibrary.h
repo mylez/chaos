@@ -17,9 +17,9 @@ public:
 
     void setRenderer(SDL_Renderer *renderer);
 
+    SDL_Renderer *renderer_;
 private:
     std::unordered_map< std::string, SDL_Texture * > textures_;
-    SDL_Renderer *renderer_;
     const std::string basePath_ = "media/";
 };
 

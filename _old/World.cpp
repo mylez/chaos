@@ -5,6 +5,10 @@
 #include "World.h"
 
 
+/**
+ *
+ * @param renderer
+ */
 void World::render(SDL_Renderer *renderer)
 {
     for (int i = 0; i < 20; i++)
@@ -20,6 +24,10 @@ void World::render(SDL_Renderer *renderer)
 }
 
 
+/**
+ *
+ * @param renderer
+ */
 World::World(SDL_Renderer *renderer)
 {
     this->tileTexture = IMG_LoadTexture(renderer, "media/tile-sheets/Terrain.png");
@@ -27,6 +35,11 @@ World::World(SDL_Renderer *renderer)
 }
 
 
+/**
+ *
+ * @param tile
+ * @return
+ */
 SDL_Rect World::tileRect(int tile)
 {
     int width = TILESET_WIDTH,
@@ -36,6 +49,11 @@ SDL_Rect World::tileRect(int tile)
 }
 
 
+/**
+ *
+ * @param filename
+ * @param vec
+ */
 void World::loadMapData(const char *filename, std::vector< std::vector< int > > &vec)
 {
     std::ifstream mapDataFile;
