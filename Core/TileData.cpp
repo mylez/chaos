@@ -61,10 +61,11 @@ void TileData::setData(Json::Value tileData)
         std::cout << "error: TileData::setData was passed null tileData" << std::endl;
     }
 
-
     tileData_ = tileData;
 
     layers_.clear();
+
+    std::cout << "loaded tileData with " << getNumLayers() << " layers" << std::endl;
 
     for (int l = 0; l < getNumLayers(); l++)
     {
@@ -74,8 +75,6 @@ void TileData::setData(Json::Value tileData)
             layers_.at((unsigned long)(l)).push_back(tileData_["layers"][l]["data"][i].asInt());
         }
     }
-
-    std::cout << " its okay now i loaded " << layers_.size() << " layers\n";
 }
 
 

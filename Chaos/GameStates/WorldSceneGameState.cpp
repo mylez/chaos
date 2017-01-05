@@ -11,12 +11,12 @@ class Vec2D;
  */
 WorldSceneGameState::WorldSceneGameState(AssetLibrary *assetLibrary)
 {
-    loadTileData("media/tile-data/level-plat.json");
-    assetLibrary->loadTexture("WorldSceneGameState::Terrain", "tile-sheets/Platform.png");
+    loadTileData("media/tile-data/level.json");
+    assetLibrary->loadTexture("WorldSceneGameState::Terrain", "tile-sheets/Terrain.png");
     texture_terrainTiles_ = assetLibrary->getTexture("WorldSceneGameState::Terrain");
-    for (int i = 0; i < 10000; i++)
+    for (int i = 0; i < 20000; i++)
     {
-        //addEntity(new PlayerEntity());
+        addEntity(new PlayerEntity());
     }
 }
 
