@@ -9,20 +9,11 @@
  * @param pos
  * @param size
  */
-void Graphics::drawPoint(Vec2I pos)
-{
-    SDL_RenderDrawPoint(renderer_, pos.x, pos.y);
-}
-
-
-
-/**
- *
- * @param pos
- * @param size
- */
 void Graphics::drawRect(Vec2I pos, Vec2I size)
 {
+    pos = transformPosition(pos);
+    size = transformSize(size);
+    
     SDL_Rect rect = {
         pos.x, pos.y,
         size.x, size.y
@@ -39,8 +30,11 @@ void Graphics::drawRect(Vec2I pos, Vec2I size)
  */
 void Graphics::fillRect(Vec2I pos, Vec2I size)
 {
+    pos = transformPosition(pos);
+    size = transformSize(size);
+
     SDL_Rect rect = {
-        offset_.x + (int)(pos.x * scale_.y), offset_.y + (int)(pos.y * scale_.y),
+        pos.x, pos.y,
         size.x, size.y
     };
 
@@ -64,6 +58,20 @@ void Graphics::pushTransform(Vec2I offset, Vec2D scale)
 
 /**
  *
+ * @param offset
+ * @param scale
+ */
+void Graphics::pushOffset(Vec2I offset)
+{
+    Vec2D scale = Vec2D(1, 1);
+    offset_ = offset_.add(offset);
+    offsetStack_.push_back(offset);
+    scaleStack_.push_back(scale);
+}
+
+
+/**
+ *
  */
 void Graphics::popTransform()
 {
@@ -76,8 +84,11 @@ void Graphics::popTransform()
     offset_.x -= _offset.x;
     offset_.y -= _offset.y;
 
-    scale_.x /= _scale.x;
-    scale_.y /= _scale.y;
+    scale_ = Vec2D(1, 1);
+    for (unsigned long int i = 0; i < scaleStack_.size(); i++)
+    {
+        scale_ = scale_.entryMult(scaleStack_.at(i));
+    }
 }
 
 
@@ -92,7 +103,7 @@ void Graphics::popTransform()
 void Graphics::copyTexture(SDL_Texture *texture, Vec2I srcPos, Vec2I srcSize, Vec2I dstPos, Vec2I dstSize)
 {
     dstPos = transformPosition(dstPos);
-
+    dstSize = transformSize(dstSize);
     SDL_Rect
         srcRect = {
             srcPos.x,
@@ -106,9 +117,6 @@ void Graphics::copyTexture(SDL_Texture *texture, Vec2I srcPos, Vec2I srcSize, Ve
             dstSize.x,
             dstSize.y
         };
-
-    //std::cout << srcRect.x << " " << srcRect.y << " " << srcSize.x << " " << srcSize.y << std::endl;
-    //std::cout << dstRect.x << " " << dstRect.y << " " << dstSize.x << " " << dstSize.y << std::endl << std::endl;
 
     SDL_RenderCopy(renderer_, texture, &srcRect, &dstRect);
 }
@@ -160,6 +168,20 @@ Vec2I Graphics::transformPosition(Vec2I pos)
     return Vec2I(
         scale_.x * pos.x + offset_.x,
         scale_.y * pos.y + offset_.y
+    );
+}
+
+
+/**
+ *
+ * @param size
+ * @return
+ */
+Vec2I Graphics::transformSize(Vec2I size)
+{
+    return Vec2I(
+        (int)(size.x * scale_.x),
+        (int)(size.y * scale_.y)
     );
 }
 

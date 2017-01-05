@@ -30,7 +30,9 @@ int TileData::getTileTypeAt(int layer, int i)
 {
     if (i >= 0)
     {
-        return tileData_["layers"][layer]["data"][i].asInt();
+        return layers_
+            .at((unsigned long)layer)
+            .at((unsigned long)i);
     }
     return 207;
 }
@@ -58,7 +60,22 @@ void TileData::setData(Json::Value tileData)
     {
         std::cout << "error: TileData::setData was passed null tileData" << std::endl;
     }
+
+
     tileData_ = tileData;
+
+    layers_.clear();
+
+    for (int l = 0; l < getNumLayers(); l++)
+    {
+        layers_.push_back(std::vector<int>());
+        for (int i = 0; i < getLayerSize(l); i++)
+        {
+            layers_.at((unsigned long)(l)).push_back(tileData_["layers"][l]["data"][i].asInt());
+        }
+    }
+
+    std::cout << " its okay now i loaded " << layers_.size() << " layers\n";
 }
 
 
@@ -117,6 +134,11 @@ Vec2I TileData::tileSetSheetSize(int tileSet)
         tileCount = tileData_["tilesets"][tileSet]["tilecount"].asInt(),
         rows = tileCount / columns;
     return Vec2I(columns, rows);
+}
+
+int TileData::getNumLayers()
+{
+    return tileData_["layers"].size();
 }
 
 

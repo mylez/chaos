@@ -1,11 +1,16 @@
 #include "HasCamera.h"
 
-void HasCamera::setCameraPosition(Vec2D newPos)
+HasCamera::HasCamera()
 {
-    cameraPosition_ = newPos;
+    this->camera_ = &defaultCamera;
 }
 
-Vec2D HasCamera::getCameraPosition()
+HasCamera::HasCamera(Camera *camera)
 {
-    return cameraPosition_;
+    this->camera_ = camera;
+}
+
+Camera *HasCamera::getCamera()
+{
+    return camera_;
 }

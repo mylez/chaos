@@ -87,7 +87,7 @@ Game::Game()
     TTF_Init();
 
     gameState_ = new SceneGameState();
-    window_ = SDL_CreateWindow("", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 700, 500,
+    window_ = SDL_CreateWindow("", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480,
                                SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
     renderer_ = SDL_CreateRenderer(window_, -1,  SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
     graphics_.setWindowAndRenderer(window_, renderer_);

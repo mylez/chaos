@@ -2,14 +2,18 @@
 #define CHAOS_HASCAMERA_H
 
 #include "Vec2D.h"
+#include "Camera.h"
 
 class HasCamera
 {
 private:
-    Vec2D cameraPosition_ = Vec2D(0, 0);
+    Camera
+        defaultCamera,
+        *camera_;
 public:
-    void setCameraPosition(Vec2D newPos);
-    Vec2D getCameraPosition();
+    HasCamera();
+    HasCamera(Camera *camera);
+    Camera *getCamera();
 };
 
 
