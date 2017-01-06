@@ -3,7 +3,6 @@
 
 class Vec2D;
 
-
 /**
  *
  *
@@ -11,10 +10,10 @@ class Vec2D;
  */
 WorldSceneGameState::WorldSceneGameState(AssetLibrary *assetLibrary)
 {
-    loadTileData("media/tile-data/level.json");
+    loadTileSet("media/tile-data/level.json");
     assetLibrary->loadTexture("WorldSceneGameState::Terrain", "tile-sheets/Terrain.png");
     texture_terrainTiles_ = assetLibrary->getTexture("WorldSceneGameState::Terrain");
-    for (int i = 0; i < 20000; i++)
+    for (int i = 0; i < 5000; i++)
     {
         addEntity(new PlayerEntity());
     }
@@ -26,12 +25,21 @@ WorldSceneGameState::WorldSceneGameState(AssetLibrary *assetLibrary)
  */
 void WorldSceneGameState::render(Graphics *g)
 {
+
+    //static double _time = .01;
+
+    //g->pushTransform(Vec2I(0, 0), Vec2D(.25 + pow(sin(_time*.1), 2), .25 + pow(sin(_time*.5), 2)));
+
     drawWorld(g);
 
     for (const auto &entity: getEntities())
     {
         entity->render(g);
     }
+
+    //_time += 0.01;
+
+    //g->popTransform();
 }
 
 
@@ -42,30 +50,32 @@ void WorldSceneGameState::render(Graphics *g)
  */
 void WorldSceneGameState::drawWorld(Graphics *g)
 {
-    TileData *tileData = getTileData();
+    TileSet
+        *tileData = getTileSet();
 
-    int numLayers = tileData->getNumLayers();
+    int
+        numLayers = tileData->getNumLayers(),
+        worldHeight = tileData->getHeight(0);
 
     Vec2D
         cameraPosition = getCamera()->getCameraPosition(),
         cameraSize = Vec2D(g->getWindowSize());
 
-    int worldHeight = tileData->getHeight(0);
 
     Vec2I
         tileSize = tileData->tileSetTileSize(0),
-        topLeft(
-        (int)(cameraPosition.x / tileSize.x),
-        worldHeight - (int)((cameraSize.y + cameraPosition.y) / tileSize.y)
-    ),
-        bottomRight(
-        (int)((cameraPosition.x + cameraSize.x) / tileSize.x),
-        worldHeight - (int)(cameraPosition.y / tileSize.y)
-    ),
-        scrollOffset(
-        -(int)((cameraPosition.x)) % tileSize.x,
-        (int)(cameraSize.y + cameraPosition.y) % tileSize.y
-    );
+        topLeft = Vec2I(
+            (int)(cameraPosition.x / tileSize.x),
+            worldHeight - (int)((cameraSize.y + cameraPosition.y) / tileSize.y)
+        ),
+        bottomRight = Vec2I(
+            (int)((cameraPosition.x + cameraSize.x) / tileSize.x),
+            worldHeight - (int)(cameraPosition.y / tileSize.y)
+        ),
+        scrollOffset = Vec2I(
+            -(int)((cameraPosition.x)) % tileSize.x,
+            (int)(cameraSize.y + cameraPosition.y) % tileSize.y
+        );
 
     for (int layer = 0; layer < numLayers; layer++)
     {

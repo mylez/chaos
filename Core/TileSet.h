@@ -1,16 +1,17 @@
-#ifndef CHAOS_TILEDATA_H
-#define CHAOS_TILEDATA_H
+#ifndef CHAOS_TILESET_H
+#define CHAOS_TILESET_H
 
 #include <vector>
 #include <SDL2/SDL_rect.h>
 #include "json/json.h"
 #include "Core/Vec2I.h"
 
-class TileData
+class TileSet
 {
 private:
     Json::Value tileData_;
     std::vector<std::vector<int>> layers_;
+    int height_, width_;
 
 public:
     int getTileTypeAt(int layer, int x, int y);
@@ -27,4 +28,4 @@ public:
 };
 
 
-#endif //CHAOS_TILEDATA_H
+#endif //CHAOS_TILESET_H

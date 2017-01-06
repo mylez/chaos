@@ -139,6 +139,18 @@ void Graphics::drawDebugText(std::string msg, int fontSize, Vec2I pos)
  * @param r
  * @param g
  * @param b
+ */
+void Graphics::setColor(int r, int g, int b)
+{
+    SDL_SetRenderDrawColor(renderer_, r, g, b, 255);
+}
+
+
+/**
+ *
+ * @param r
+ * @param g
+ * @param b
  * @param a
  */
 void Graphics::setColor(int r, int g, int b, int a)
@@ -180,8 +192,8 @@ Vec2I Graphics::transformPosition(Vec2I pos)
 Vec2I Graphics::transformSize(Vec2I size)
 {
     return Vec2I(
-        (int)(size.x * scale_.x),
-        (int)(size.y * scale_.y)
+        (int)ceil(size.x * scale_.x),
+        (int)ceil(size.y * scale_.y)
     );
 }
 

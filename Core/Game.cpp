@@ -54,6 +54,8 @@ void Game::loop()
         }
 
         SDL_Rect fpsTextRect{10, 10, h, w};
+        SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 170);
+        SDL_RenderFillRect(renderer_, &fpsTextRect);
         SDL_RenderCopy(renderer_, textTexture, NULL, &fpsTextRect);
         SDL_RenderPresent(renderer_);
     }
@@ -108,5 +110,13 @@ Game::~Game()
     TTF_Quit();
     IMG_Quit();
     SDL_Quit();
+}
+
+
+void Game::setGameState(GameState *gameState)
+{
+    gameState_->willExit();
+    gameState->willEnter();
+    gameState_ = gameState;
 }
 

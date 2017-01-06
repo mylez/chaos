@@ -1,4 +1,4 @@
-#include "TileData.h"
+#include "TileSet.h"
 #include <iostream>
 #include <SDL2/SDL.h>
 
@@ -10,7 +10,7 @@
  * @param y
  * @return
  */
-int TileData::getTileTypeAt(int layer, int x, int y)
+int TileSet::getTileTypeAt(int layer, int x, int y)
 {
     int height = getHeight(layer),
         layerSize = getLayerSize(layer),
@@ -26,7 +26,7 @@ int TileData::getTileTypeAt(int layer, int x, int y)
  * @param i
  * @return
  */
-int TileData::getTileTypeAt(int layer, int i)
+int TileSet::getTileTypeAt(int layer, int i)
 {
     if (i >= 0)
     {
@@ -43,7 +43,7 @@ int TileData::getTileTypeAt(int layer, int i)
  * @param layer
  * @return
  */
-int TileData::getLayerSize(int layer)
+int TileSet::getLayerSize(int layer)
 {
     return tileData_["layers"][layer]["data"].size();
 }
@@ -54,18 +54,18 @@ int TileData::getLayerSize(int layer)
  * @param tileData
  * @return
  */
-void TileData::setData(Json::Value tileData)
+void TileSet::setData(Json::Value tileData)
 {
     if (tileData.isNull())
     {
-        std::cout << "error: TileData::setData was passed null tileData" << std::endl;
+        std::cout << "error: TileSet::setData was passed null tileData" << std::endl;
     }
 
     tileData_ = tileData;
 
     layers_.clear();
 
-    std::cout << "loaded tileData with " << getNumLayers() << " layers" << std::endl;
+    std::cout << "loaded tile data with " << getNumLayers() << " layers" << std::endl;
 
     for (int l = 0; l < getNumLayers(); l++)
     {
@@ -82,7 +82,7 @@ void TileData::setData(Json::Value tileData)
  *
  * @return
  */
-int TileData::getHeight(int layer)
+int TileSet::getHeight(int layer)
 {
     return tileData_["layers"][layer]["height"].asInt();
 }
@@ -91,7 +91,7 @@ int TileData::getHeight(int layer)
  *
  * @return
  */
-int TileData::getWidth(int layer)
+int TileSet::getWidth(int layer)
 {
     return tileData_["layers"][layer]["data"].size() / tileData_["layers"][layer]["height"].asInt();
 }
@@ -103,7 +103,7 @@ int TileData::getWidth(int layer)
  * @param tileType
  * @return
  */
-Vec2I TileData::tileSourcePosition(int tileSet, int tileType)
+Vec2I TileSet::tileSourcePosition(int tileSet, int tileType)
 {
     Vec2I sheetSize = tileSetSheetSize(tileSet);
     return Vec2I(
@@ -116,7 +116,7 @@ Vec2I TileData::tileSourcePosition(int tileSet, int tileType)
 
 
 
-Vec2I TileData::tileSetTileSize(int tileSet)
+Vec2I TileSet::tileSetTileSize(int tileSet)
 {
     return Vec2I(
         tileData_["tilesets"][tileSet]["tilewidth"].asInt(),
@@ -127,7 +127,7 @@ Vec2I TileData::tileSetTileSize(int tileSet)
 
 
 
-Vec2I TileData::tileSetSheetSize(int tileSet)
+Vec2I TileSet::tileSetSheetSize(int tileSet)
 {
     int columns = tileData_["tilesets"][tileSet]["columns"].asInt(),
         tileCount = tileData_["tilesets"][tileSet]["tilecount"].asInt(),
@@ -135,7 +135,7 @@ Vec2I TileData::tileSetSheetSize(int tileSet)
     return Vec2I(columns, rows);
 }
 
-int TileData::getNumLayers()
+int TileSet::getNumLayers()
 {
     return tileData_["layers"].size();
 }

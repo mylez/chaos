@@ -13,11 +13,12 @@ link_directories("/usr/local/lib")
 file(GLOB chaos_SRC
         "*.cpp"
         "Core/*.cpp"
+        "UI/*.cpp"
         "Chaos/*.cpp"
         "Chaos/GameStates/*.cpp"
         "Chaos/Entities/*.cpp"
         "Core/include/jsoncpp/dist/jsoncpp.cpp"
-        )
+)
 
 add_executable(chaos ${chaos_SRC})
 

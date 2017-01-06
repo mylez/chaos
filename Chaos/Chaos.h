@@ -4,7 +4,8 @@
 #include "Core/Game.h"
 #include "Core/AssetLibrary.h"
 
-class Chaos: public Game
+class Chaos:
+    public Game
 {
 public:
     Chaos();

@@ -6,7 +6,7 @@
 
 - Game world management
 
-- GUI management
+- UI management
 
 - Game state management
 

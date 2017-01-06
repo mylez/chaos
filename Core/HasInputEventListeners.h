@@ -7,7 +7,8 @@
 #include "InputEventListener.h"
 
 
-class HasInputEventListeners: public InputEventListener
+class HasInputEventListeners:
+    public InputEventListener
 {
 public:
     void addInputEventListener(Uint32 eventType, InputEventListener *listener);

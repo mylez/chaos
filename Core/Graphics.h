@@ -19,6 +19,7 @@ private:
     std::vector<Vec2D> scaleStack_;
 
 public:
+    void setColor(int r, int g, int b);
     void setColor(int r, int g, int b, int a);
     void drawPoint(Vec2I pos);
     void drawRect(Vec2I pos, Vec2I size);

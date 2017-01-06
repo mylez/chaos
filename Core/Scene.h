@@ -5,14 +5,14 @@
 #include <vector>
 #include "AssetLibrary.h"
 #include "HasInputEventListeners.h"
-#include "HasTileData.h"
+#include "HasTileSet.h"
 #include "HasEntities.h"
 #include "HasCamera.h"
 
 
 class Scene:
     public HasInputEventListeners,
-    public HasTileData,
+    public HasTileSet,
     public HasEntities,
     public HasCamera
 {

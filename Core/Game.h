@@ -25,6 +25,8 @@ public:
 
     void pollInputEvents();
 
+    void setGameState(GameState *gameState);
+
 private:
 
     bool isRunning_;

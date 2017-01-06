@@ -1,13 +1,13 @@
 #include <fstream>
 #include <iostream>
-#include "HasTileData.h"
+#include "HasTileSet.h"
 
 
 /**
  *
  * @param filePath
  */
-void HasTileData::loadTileData(std::string filePath)
+void HasTileSet::loadTileSet(std::string filePath)
 {
     Json::Value root;
     Json::Reader reader;
@@ -24,7 +24,7 @@ void HasTileData::loadTileData(std::string filePath)
  *
  * @return
  */
-TileData *HasTileData::getTileData()
+TileSet *HasTileSet::getTileSet()
 {
     return &tileData_;
 }
@@ -34,7 +34,7 @@ TileData *HasTileData::getTileData()
  *
  * @return
  */
-SDL_Texture *HasTileData::getTileTexture()
+SDL_Texture *HasTileSet::getTileTexture()
 {
     return tileTexture_;
 }

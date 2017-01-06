@@ -14,7 +14,7 @@ PlayerEntity::PlayerEntity()
 
     velocity_ = (double)(rand() % 100) / 100 + 0.1;
 
-    setPosition(rand() % 1250, rand() % 1250);
+    setPosition(rand() % 500, rand() % 500);
 }
 
 
@@ -37,8 +37,10 @@ void PlayerEntity::render(Graphics *g)
         (int)(blue_*pow(2*velocity_ + sin(time * .3), 2)),
         80
     );
+    g->setColor(red_, green_, blue_, 255);
+
     g->fillRect(pos, size);
-    g->setColor(0, 0, 0, 180);
+    g->setColor(red_, green_, blue_, 180);
     g->drawRect(pos, size);
     time += 0.00006;
 }
@@ -51,9 +53,16 @@ void PlayerEntity::update(double timeElapsed)
 {
     time_ += timeElapsed;
 
+    //->setColor(
+    //   (int)(red_*pow(sin(3 * velocity_ + time * .1), 2)),
+    //   (int)(green_*pow(sin(velocity_ + time * .2), 2)),
+    //   (int)(blue_*pow(2*velocity_ + sin(time * .3), 2)),
+    //   80
+    //;
+
     double
-        newX = getXPosition() + timeElapsed * velocity_ * pow(sin(time_ / 2000), 2),
-        newY = getYPosition() + timeElapsed * velocity_ * pow(sin(time_ / 1000), 2);
+        newX = getXPosition() + timeElapsed * velocity_ * pow(sin(time_ / 5000), 2),
+        newY = getYPosition() + timeElapsed * velocity_ * pow(sin(time_ / 4000), 2);
 
     int box = 2000;
 

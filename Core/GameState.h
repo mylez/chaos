@@ -17,6 +17,9 @@ private:
     AssetLibrary *assetLibrary_;
     
 public:
+    virtual void willEnter() {};
+    virtual void willExit() {};
+
     void setAssetLibrary(AssetLibrary *assetLibrary);
     AssetLibrary *getAssetLibrary();
 };
