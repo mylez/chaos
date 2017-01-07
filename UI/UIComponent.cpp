@@ -3,7 +3,7 @@
 
 void UIComponent::addComponent(UIComponent *component)
 {
-    this->children_.push_back(component);
+    children_.push_back(component);
 }
 
 

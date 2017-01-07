@@ -3,15 +3,6 @@
 
 UITestGameState::UITestGameState()
 {
-    c1.setPosition(Vec2I(10, 10));
-    c1.setSize(Vec2I(50, 20));
-
-    c2.setPosition(Vec2I(70, 10));
-    c2.setSize(Vec2I(50, 20));
-
-    c3.setPosition(Vec2I(130, 10));
-    c3.setSize(Vec2I(50, 20));
-
     for (int i = 0; i < 100; i++)
     {
         UIComponent *uiComponent = new UIComponent();
@@ -36,6 +27,24 @@ UITestGameState::UITestGameState()
                 rand() % 10 + 20
             ));
             uiComponent->addComponent(uiComponent2);
+
+            for (int i = 0; i < 10; i++)
+            {
+
+                UIComponent *uiComponent3 = new UIComponent();
+
+                uiComponent3->setPosition(Vec2I(
+                    rand() % 10 + 100,
+                    rand() % 10 + 100
+                ));
+
+                uiComponent3->setSize(Vec2I(
+                    rand() % 5 + 5,
+                    rand() % 5 + 5
+                ));
+
+                uiComponent2->addComponent(uiComponent3);
+            }
         }
         ui.getRootComponent()->addComponent(uiComponent);
     }
