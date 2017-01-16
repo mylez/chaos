@@ -1,13 +1,9 @@
 #include "Chaos.h"
-#include "GameStates/WorldSceneGameState.h"
-#include "GameStates/UITestGameState.h"
+#include "GameStates/WorldGameState.h"
 
 Chaos::Chaos()
 {
-    //static WorldSceneGameState worldSceneGameState(&assetLibrary_);
-    //setGameState(&worldSceneGameState);
-
-    static UITestGameState uiTestGameState;
-    setGameState(&uiTestGameState);
+    static WorldGameState worldGameState;
+    setGameState(&worldGameState);
 }
 

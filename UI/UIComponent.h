@@ -11,7 +11,7 @@ class UIComponent:
     public HasUpdate
 {
 private:
-    Vec2I
+    vec2i
         size_,
         position_;
 
@@ -29,13 +29,13 @@ public:
 
     std::vector<UIComponent *> getChildren();
 
-    Vec2I getSize();
+    vec2i getSize();
 
-    Vec2I getPosition();
+    vec2i getPosition();
 
-    void setPosition(Vec2I position);
+    void setPosition(vec2i position);
 
-    void setSize(Vec2I size);
+    void setSize(vec2i size);
 
     void addComponent(UIComponent *component);
 

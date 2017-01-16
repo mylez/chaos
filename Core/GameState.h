@@ -1,6 +1,7 @@
 #ifndef CHAOS_GAMESTATE_H
 #define CHAOS_GAMESTATE_H
 
+
 #include <SDL2/SDL.h>
 #include "InputEventListener.h"
 #include "HasUpdate.h"

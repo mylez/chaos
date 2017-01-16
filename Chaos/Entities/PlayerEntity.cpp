@@ -27,7 +27,7 @@ void PlayerEntity::render(Graphics *g)
     int boxSize = 10;
     static double time = 0;
 
-    Vec2I
+    vec2i
         pos((int)getXPosition() - boxSize, (int)getYPosition() - boxSize),
         size(boxSize, boxSize);
 

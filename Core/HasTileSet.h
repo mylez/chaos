@@ -11,7 +11,7 @@ public:
     TileSet *getTileSet();
     SDL_Texture *getTileTexture();
 private:
-    TileSet tileData_;
+    TileSet tileSet_;
     SDL_Texture *tileTexture_;
 };
 

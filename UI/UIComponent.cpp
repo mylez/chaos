@@ -21,7 +21,7 @@ std::vector<UIComponent *> UIComponent::getChildren()
  *
  * @return
  */
-Vec2I UIComponent::getSize()
+vec2i UIComponent::getSize()
 {
     return size_;
 }
@@ -31,7 +31,7 @@ Vec2I UIComponent::getSize()
  *
  * @return
  */
-Vec2I UIComponent::getPosition()
+vec2i UIComponent::getPosition()
 {
     return position_;
 }
@@ -41,7 +41,7 @@ Vec2I UIComponent::getPosition()
  *
  * @return
  */
-void UIComponent::setPosition(Vec2I position)
+void UIComponent::setPosition(vec2i position)
 {
     position_ = position;
 }
@@ -51,7 +51,7 @@ void UIComponent::setPosition(Vec2I position)
  *
  * @return
  */
-void UIComponent::setSize(Vec2I size)
+void UIComponent::setSize(vec2i size)
 {
     size_ = size;
 }
@@ -64,7 +64,7 @@ void UIComponent::setSize(Vec2I size)
 void UIComponent::render(Graphics *g)
 {
     g->setColor(red_, green_, blue_);
-    g->fillRect(Vec2I(0, 0), getSize());
+    g->fillRect(vec2i(0, 0), getSize());
     g->setColor(255, 255, 255);
-    g->drawRect(Vec2I(0, 0), getSize());
+    g->drawRect(vec2i(0, 0), getSize());
 }

@@ -7,7 +7,8 @@
 class InputEventListener
 {
 public:
-    virtual void handleInputEvent(SDL_Event *event) {};
+    virtual void handleInputEvent(SDL_Event *event)
+    {};
 };
 
 

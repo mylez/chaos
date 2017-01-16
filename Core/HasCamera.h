@@ -1,7 +1,7 @@
 #ifndef CHAOS_HASCAMERA_H
 #define CHAOS_HASCAMERA_H
 
-#include "Vec2D.h"
+#include "vec2d.h"
 #include "Camera.h"
 
 class HasCamera

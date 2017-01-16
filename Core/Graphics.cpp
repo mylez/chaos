@@ -1,7 +1,8 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include "Graphics.h"
-#include "Vec2I.h"
+#include "SDL_FontCache.h"
+#include "Err.h"
 
 
 /**
@@ -9,7 +10,7 @@
  * @param pos
  * @param size
  */
-void Graphics::drawRect(Vec2I pos, Vec2I size)
+void Graphics::drawRect(vec2i pos, vec2i size)
 {
     pos = transformPosition(pos);
     size = transformSize(size);
@@ -28,7 +29,7 @@ void Graphics::drawRect(Vec2I pos, Vec2I size)
  * @param pos
  * @param size
  */
-void Graphics::fillRect(Vec2I pos, Vec2I size)
+void Graphics::fillRect(vec2i pos, vec2i size)
 {
     pos = transformPosition(pos);
     size = transformSize(size);
@@ -47,7 +48,7 @@ void Graphics::fillRect(Vec2I pos, Vec2I size)
  * @param offset
  * @param scale
  */
-void Graphics::pushTransform(Vec2I offset, Vec2D scale)
+void Graphics::pushTransform(vec2i offset, vec2d scale)
 {
     offset_ = offset_.add(offset);
     scale_ = scale_.entryMult(scale);
@@ -61,9 +62,9 @@ void Graphics::pushTransform(Vec2I offset, Vec2D scale)
  * @param offset
  * @param scale
  */
-void Graphics::pushOffset(Vec2I offset)
+void Graphics::pushOffset(vec2i offset)
 {
-    Vec2D scale = Vec2D(1, 1);
+    vec2d scale = vec2d(1, 1);
     offset_ = offset_.add(offset);
     offsetStack_.push_back(offset);
     scaleStack_.push_back(scale);
@@ -75,8 +76,8 @@ void Graphics::pushOffset(Vec2I offset)
  */
 void Graphics::popTransform()
 {
-    Vec2I _offset = offsetStack_.back();
-    Vec2D _scale = scaleStack_.back();
+    vec2i _offset = offsetStack_.back();
+    vec2d _scale = scaleStack_.back();
 
     offsetStack_.pop_back();
     scaleStack_.pop_back();
@@ -84,7 +85,7 @@ void Graphics::popTransform()
     offset_.x -= _offset.x;
     offset_.y -= _offset.y;
 
-    scale_ = Vec2D(1, 1);
+    scale_ = vec2d(1, 1);
     for (unsigned long int i = 0; i < scaleStack_.size(); i++)
     {
         scale_ = scale_.entryMult(scaleStack_.at(i));
@@ -100,7 +101,7 @@ void Graphics::popTransform()
  * @param dstPos
  * @param dstSize
  */
-void Graphics::copyTexture(SDL_Texture *texture, Vec2I srcPos, Vec2I srcSize, Vec2I dstPos, Vec2I dstSize)
+void Graphics::copyTexture(SDL_Texture *texture, vec2i srcPos, vec2i srcSize, vec2i dstPos, vec2i dstSize)
 {
     dstPos = transformPosition(dstPos);
     dstSize = transformSize(dstSize);
@@ -128,7 +129,7 @@ void Graphics::copyTexture(SDL_Texture *texture, Vec2I srcPos, Vec2I srcSize, Ve
  * @param fontSize
  * @param pos
  */
-void Graphics::drawDebugText(std::string msg, int fontSize, Vec2I pos)
+void Graphics::drawDebugText(std::string msg, int fontSize, vec2i pos)
 {
     // todo
 }
@@ -168,6 +169,8 @@ void Graphics::setWindowAndRenderer(SDL_Window *window, SDL_Renderer *renderer)
 {
     renderer_ = renderer;
     window_ = window;
+
+    loadFontCache(); // todo - find better place for this
 }
 
 
@@ -175,11 +178,11 @@ void Graphics::setWindowAndRenderer(SDL_Window *window, SDL_Renderer *renderer)
  *
  * @param pos
  */
-Vec2I Graphics::transformPosition(Vec2I pos)
+vec2i Graphics::transformPosition(vec2i pos)
 {
-    return Vec2I(
-        scale_.x * pos.x + offset_.x,
-        scale_.y * pos.y + offset_.y
+    return vec2i(
+        (int)ceil(scale_.x * pos.x) + offset_.x,
+        (int)ceil(scale_.y * pos.y) + offset_.y
     );
 }
 
@@ -189,9 +192,9 @@ Vec2I Graphics::transformPosition(Vec2I pos)
  * @param size
  * @return
  */
-Vec2I Graphics::transformSize(Vec2I size)
+vec2i Graphics::transformSize(vec2i size)
 {
-    return Vec2I(
+    return vec2i(
         (int)ceil(size.x * scale_.x),
         (int)ceil(size.y * scale_.y)
     );
@@ -202,9 +205,38 @@ Vec2I Graphics::transformSize(Vec2I size)
  *
  * @param pos
  */
-Vec2I Graphics::getWindowSize()
+vec2i Graphics::getWindowSize()
 {
     int w = 0, h = 0;
     SDL_GetWindowSize(window_, &w, &h);
-    return Vec2I(w, h);
+    return vec2i(w, h);
+}
+
+
+void Graphics::drawString(std::string text, vec2i pos, int fontSize)
+{
+    //FC_Draw(font_, renderer_, pos.x, pos.y, "%s", text.c_str());
+    FC_Draw
+    SDL_Rect box = FC_MakeRect(pos.x, pos.y, 0, 0);
+    double scale = (double)fontSize / (double)168;
+
+    FC_DrawBoxScale(font_, renderer_, box, FC_MakeScale(scale, scale), "%s", text.c_str());
+}
+
+
+void Graphics::drawPoint(vec2i pos)
+{
+
+}
+
+Graphics::Graphics()
+{
+
+}
+
+void Graphics::loadFontCache()
+{
+    font_ = FC_CreateFont();
+    FC_LoadFont(font_, renderer_, "media/fonts/vera-sans-mono/VeraMono.ttf", 20, FC_MakeColor(255, 255, 255, 255),
+                TTF_STYLE_NORMAL);
 }

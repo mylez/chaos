@@ -2,7 +2,7 @@
 #define CHAOS_UI_H
 
 #include <vector>
-#include "Core/Vec2I.h"
+#include "Core/vec2i.h"
 #include "Core/HasRender.h"
 #include "Core/HasUpdate.h"
 #include "Core/InputEventListener.h"
@@ -20,7 +20,7 @@ private:
         *focusComponent_;
 
     void renderComponents(Graphics *g, UIComponent *root);
-    void dispatchInputEvent(SDL_Event *e, UIComponent *root, Vec2I prevTopLeft);
+    void dispatchInputEvent(SDL_Event *e, UIComponent *root, vec2i prevTopLeft);
 
 public:
     virtual void render(Graphics *g);

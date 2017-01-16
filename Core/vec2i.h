@@ -2,12 +2,12 @@
 #define CHAOS_VEC2I_H
 
 
-class Vec2I
+class vec2i
 {
 public:
-    Vec2I();
-    Vec2I(int _x, int _y);
-    Vec2I add(Vec2I a);
+    vec2i();
+    vec2i(int _x, int _y);
+    vec2i add(vec2i a);
     int x, y;
 };
 

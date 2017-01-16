@@ -48,7 +48,7 @@ UIComponent *UI::getRootComponent()
  */
 void UI::handleInputEvent(SDL_Event *e)
 {
-    dispatchInputEvent(e, &rootComponent_, Vec2I(0, 0));
+    dispatchInputEvent(e, &rootComponent_, vec2i(0, 0));
 }
 
 
@@ -58,9 +58,9 @@ void UI::handleInputEvent(SDL_Event *e)
  * @param root
  * @param prevTopLeft
  */
-void UI::dispatchInputEvent(SDL_Event *e, UIComponent *root, Vec2I prevTopLeft)
+void UI::dispatchInputEvent(SDL_Event *e, UIComponent *root, vec2i prevTopLeft)
 {
-    Vec2I
+    vec2i
         topLeft = prevTopLeft.add(root->getPosition()),
         bottomRight = topLeft.add(root->getSize());
 

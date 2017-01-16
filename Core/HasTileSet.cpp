@@ -15,7 +15,7 @@ void HasTileSet::loadTileSet(std::string filePath)
 
     reader.parse(tileFile, root);
 
-    tileData_.setData(root);
+    tileSet_.setData(root);
     tileFile.close();
 }
 
@@ -26,7 +26,7 @@ void HasTileSet::loadTileSet(std::string filePath)
  */
 TileSet *HasTileSet::getTileSet()
 {
-    return &tileData_;
+    return &tileSet_;
 }
 
 

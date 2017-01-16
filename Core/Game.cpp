@@ -2,7 +2,6 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include "Game.h"
-#include "SceneGameState.h"
 
 
 /**
@@ -22,11 +21,8 @@ void Game::loop()
     isRunning_ = true;
 
     // todo - get rid of this stupid fps meter and put it somewhere proper
-    TTF_Font *font = TTF_OpenFont("media/fonts/Bitstream-Vera-Sans-Mono/VeraMono.ttf", 12);
-    int h = 0, w = 0, cycles = 0;
-
-    SDL_Surface *textSurface = TTF_RenderText_Solid(font, "Shit...", SDL_Color{255, 255, 255, 255});
-    SDL_Texture *textTexture = SDL_CreateTextureFromSurface(renderer_, textSurface);
+    int cycles = 0;
+    char fpsMsg[128];
 
     while (isRunning_)
     {
@@ -41,22 +37,19 @@ void Game::loop()
         SDL_RenderClear(renderer_);
         gameState_->render(&graphics_);
 
-        if (cycles++ % 45 == 0)
+        if (cycles++ % 25 == 0)
         {
             fpsCheck_curr = SDL_GetTicks();
-            double fps = 45 * (1000 / (double)(fpsCheck_curr - fpsCheck_prev));
-            char thing[128];
-            snprintf(thing, 128, "fps: %d", (int)fps);
-            textSurface = TTF_RenderText_Solid(font, thing, SDL_Color{255, 255, 255, 255});
-            textTexture = SDL_CreateTextureFromSurface(renderer_, textSurface);
-            TTF_SizeText(font, thing, &h, &w);
+            double fps = 25 * (1000 / (double)(fpsCheck_curr - fpsCheck_prev));
+            snprintf(fpsMsg, 128, "fps: %.3f", fps);
             fpsCheck_prev = fpsCheck_curr;
         }
 
-        SDL_Rect fpsTextRect{10, 10, h, w};
-        SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 170);
-        SDL_RenderFillRect(renderer_, &fpsTextRect);
-        SDL_RenderCopy(renderer_, textTexture, NULL, &fpsTextRect);
+        char text[128];
+        sprintf(text, "%d", rand());
+        graphics_.drawString(text, vec2i(100 + rand()%800, 100 + rand()%800), 168);
+
+        graphics_.drawString(fpsMsg, vec2i(10, 10), 0);
         SDL_RenderPresent(renderer_);
     }
 }
@@ -71,7 +64,7 @@ void Game::pollInputEvents()
     while (SDL_PollEvent(&event))
     {
         gameState_->handleInputEvent(&event);
-        if (event.type == SDL_QUIT || event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_q)
+        if (event.type == SDL_QUIT || (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_q))
         {
             isRunning_ = false;
         }
@@ -87,10 +80,15 @@ Game::Game()
     SDL_Init(SDL_INIT_EVERYTHING);
     IMG_Init(IMG_INIT_PNG);
     TTF_Init();
+    gameState_ = new GameState();
 
-    gameState_ = new SceneGameState();
-    window_ = SDL_CreateWindow("", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480,
+    SDL_DisplayMode displayMode;
+    SDL_GetCurrentDisplayMode(0, &displayMode);
+
+    window_ = SDL_CreateWindow("", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                               displayMode.w/2, displayMode.h/2,
                                SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+
     renderer_ = SDL_CreateRenderer(window_, -1,  SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
     graphics_.setWindowAndRenderer(window_, renderer_);
     assetLibrary_.setRenderer(renderer_);

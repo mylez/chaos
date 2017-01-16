@@ -9,12 +9,15 @@
 #include "HasEntities.h"
 #include "HasCamera.h"
 
+/*
+ * 1920 x 1200  pixels
+ *  60  x 37.5  tiles
+ */
 
 class Scene:
     public HasInputEventListeners,
     public HasTileSet,
-    public HasEntities,
-    public HasCamera
+    public HasEntities
 {
 
 };
