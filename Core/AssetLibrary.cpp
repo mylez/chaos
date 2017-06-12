@@ -1,6 +1,7 @@
 #include <boost/algorithm/string.hpp>
 #include <fstream>
 #include "AssetLibrary.h"
+#include "Err.h"
 
 
 /**
@@ -12,10 +13,7 @@ void AssetLibrary::loadTexture(std::string name, std::string filePath)
 {
     SDL_Texture *texture = IMG_LoadTexture(renderer_, (basePath_ + filePath).c_str());
 
-    if (texture == NULL)
-    {
-        std::cout << "error: assetLibrary.loadTexture: " << SDL_GetError() << std::endl;
-    }
+    Err::predicate(texture != NULL, "AssetLibrary: cannot load texture");
 
     textures_[name] = texture;
 }

@@ -9,6 +9,7 @@ class HasTileSet
 public:
     void loadTileSet(std::string filePath);
     TileSet *getTileSet();
+    void setTileTexture(SDL_Texture *texture);
     SDL_Texture *getTileTexture();
 private:
     TileSet tileSet_;

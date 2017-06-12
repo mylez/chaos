@@ -3,11 +3,8 @@
 
 
 #include <vector>
-#include "AssetLibrary.h"
 #include "HasInputEventListeners.h"
 #include "HasTileSet.h"
-#include "HasEntities.h"
-#include "HasCamera.h"
 
 /*
  * 1920 x 1200  pixels
@@ -16,8 +13,7 @@
 
 class Scene:
     public HasInputEventListeners,
-    public HasTileSet,
-    public HasEntities
+    public HasTileSet
 {
 
 };

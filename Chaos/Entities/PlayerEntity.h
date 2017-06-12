@@ -1,21 +1,25 @@
 #ifndef CHAOS_PLAYERGAMEOBJECT_H
 #define CHAOS_PLAYERGAMEOBJECT_H
+#include <iostream>
+#include "WorldEntity.h"
 
-#include "Core/Entity.h"
 
-class PlayerEntity:
-    public Entity
+
+
+class PlayerEntity
 {
+private:
+    vec2d position;
+
 public:
-    double velocity_, time_;
-
-    PlayerEntity();
-
-    int red_, green_, blue_;
-
-    void render(Graphics *g);
-
-    void update(double timeElapsed);
+    void render(Graphics *g)
+    {
+        std::cout<<"shit\n";
+    }
+    void update(double timeElapsed)
+    {
+        std::cout<<"fuck\n";
+    }
 };
 
 

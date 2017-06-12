@@ -1,6 +1,9 @@
 #include <fstream>
 #include <iostream>
 #include "HasTileSet.h"
+#include "Err.h"
+#include "AssetLibrary.h"
+#include "Sprite.h"
 
 
 /**
@@ -14,6 +17,8 @@ void HasTileSet::loadTileSet(std::string filePath)
     std::ifstream tileFile(filePath);
 
     reader.parse(tileFile, root);
+
+    Err::predicate(!root.isNull(), "HasTileSet: cannot parse tile set");
 
     tileSet_.setData(root);
     tileFile.close();
@@ -38,3 +43,15 @@ SDL_Texture *HasTileSet::getTileTexture()
 {
     return tileTexture_;
 }
+
+
+/**
+ *
+ * @param texture
+ */
+void HasTileSet::setTileTexture(SDL_Texture *texture)
+{
+    tileTexture_ = texture;
+}
+
+

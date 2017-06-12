@@ -213,14 +213,14 @@ vec2i Graphics::getWindowSize()
 }
 
 
-void Graphics::drawString(std::string text, vec2i pos, int fontSize)
+void Graphics::drawString(std::string text, vec2i pos)
 {
-    //FC_Draw(font_, renderer_, pos.x, pos.y, "%s", text.c_str());
-    FC_Draw
-    SDL_Rect box = FC_MakeRect(pos.x, pos.y, 0, 0);
-    double scale = (double)fontSize / (double)168;
+    pos = transformPosition(pos);
 
-    FC_DrawBoxScale(font_, renderer_, box, FC_MakeScale(scale, scale), "%s", text.c_str());
+    FC_Draw(font_, renderer_, pos.x, pos.y, "%s", text.c_str());
+    //SDL_Rect box = FC_MakeRect(pos.x, pos.y, 0, 0);
+    //double scale = (double)fontSize / (double)168;
+    //FC_DrawBoxScale(font_, renderer_, box, FC_MakeScale(scale, scale), "%s", text.c_str());
 }
 
 
@@ -237,6 +237,31 @@ Graphics::Graphics()
 void Graphics::loadFontCache()
 {
     font_ = FC_CreateFont();
-    FC_LoadFont(font_, renderer_, "media/fonts/vera-sans-mono/VeraMono.ttf", 20, FC_MakeColor(255, 255, 255, 255),
+    FC_LoadFont(font_, renderer_, "media/fonts/vera-sans-mono/VeraMono.ttf", 14, FC_MakeColor(255, 255, 255, 255),
                 TTF_STYLE_NORMAL);
+}
+
+
+/**
+ *
+ * @param sprite
+ * @param size
+ * @param pos
+ */
+void Graphics::drawSprite(Sprite *sprite, vec2i size, vec2i pos)
+{
+    vec2i
+        dstPos = transformPosition(pos).add(vec2i(0, -size.y)),
+        dstSize = transformSize(size);
+
+    SDL_Rect
+        srcRect = sprite->getSrcRect(),
+        dstRect = {
+            (int)floor(dstPos.x),
+            (int)floor(dstPos.y),
+            (int)floor(abs(dstSize.x)),
+            (int)floor(abs(dstSize.y))
+        };
+
+    SDL_RenderCopy(renderer_, sprite->getTexture(), &srcRect, &dstRect);
 }

@@ -3,27 +3,24 @@
 
 
 #include <SDL2/SDL.h>
+#include "AssetLibrary.h"
 #include "InputEventListener.h"
 #include "HasUpdate.h"
 #include "HasRender.h"
-#include "AssetLibrary.h"
-
+#include "HasAssets.h"
 
 class GameState:
     public InputEventListener,
     public HasUpdate,
-    public HasRender
+    public HasRender,
+    public HasAssets
 {
-private:
-    AssetLibrary *assetLibrary_;
-    
-public:
-    virtual void willEnter() {};
-    virtual void willExit() {};
 
-    void setAssetLibrary(AssetLibrary *assetLibrary);
-    AssetLibrary *getAssetLibrary();
+public:
+    virtual void willEnter(AssetLibrary *assetLibrary) {};
+    virtual void willExit() {};
 };
+
 
 
 #endif //CHAOS_GAMESTATE_H

@@ -6,6 +6,7 @@
 #include <SDL_FontCache.h>
 #include "vec2i.h"
 #include "vec2d.h"
+#include "Sprite.h"
 
 class Graphics
 {
@@ -29,9 +30,10 @@ public:
 
     void setColor(int r, int g, int b);
     void setColor(int r, int g, int b, int a);
+    void drawSprite(Sprite *sprite, vec2i size, vec2i pos);
     void drawPoint(vec2i pos);
     void drawRect(vec2i pos, vec2i size);
-    void drawString(std::string text, vec2i pos, int fontSize);
+    void drawString(std::string text, vec2i pos);
     void fillRect(vec2i pos, vec2i size);
     void copyTexture(SDL_Texture *texture, vec2i srcPos, vec2i srcSize, vec2i dstPos, vec2i dstSize);
 

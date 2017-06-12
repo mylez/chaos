@@ -45,11 +45,7 @@ void Game::loop()
             fpsCheck_prev = fpsCheck_curr;
         }
 
-        char text[128];
-        sprintf(text, "%d", rand());
-        graphics_.drawString(text, vec2i(100 + rand()%800, 100 + rand()%800), 168);
-
-        graphics_.drawString(fpsMsg, vec2i(10, 10), 0);
+        graphics_.drawString(fpsMsg, vec2i(10, 10));
         SDL_RenderPresent(renderer_);
     }
 }
@@ -94,6 +90,7 @@ Game::Game()
     assetLibrary_.setRenderer(renderer_);
 
     SDL_SetRenderDrawBlendMode(renderer_, SDL_BLENDMODE_BLEND);
+
 }
 
 
@@ -114,7 +111,7 @@ Game::~Game()
 void Game::setGameState(GameState *gameState)
 {
     gameState_->willExit();
-    gameState->willEnter();
+    gameState->willEnter(&assetLibrary_);
     gameState_ = gameState;
 }
 
