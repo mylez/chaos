@@ -14,10 +14,8 @@ link_directories("/usr/local/lib")
 file(GLOB chaos_SRC
         "*.cpp"
         "Core/*.cpp"
-        "UI/*.cpp"
+        #"UI/*.cpp"
         "Chaos/*.cpp"
-        "Chaos/GameStates/*.cpp"
-        "Chaos/Entities/*.cpp"
         "Core/include/jsoncpp/dist/jsoncpp.cpp"
         "Core/include/SDL_FontCache/SDL_FontCache.c"
 )
@@ -27,4 +25,3 @@ add_executable(chaos ${chaos_SRC})
 target_link_libraries(chaos SDL2)
 target_link_libraries(chaos SDL2_image)
 target_link_libraries(chaos SDL2_ttf)
-

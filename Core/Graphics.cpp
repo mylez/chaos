@@ -247,7 +247,7 @@ void Graphics::loadFontCache()
  * @param sprite
  * @param size
  * @param pos
- */
+ *
 void Graphics::drawSprite(Sprite *sprite, vec2i size, vec2i pos)
 {
     vec2i
@@ -265,3 +265,4 @@ void Graphics::drawSprite(Sprite *sprite, vec2i size, vec2i pos)
 
     SDL_RenderCopy(renderer_, sprite->getTexture(), &srcRect, &dstRect);
 }
+*/

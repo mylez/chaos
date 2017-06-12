@@ -31,11 +31,11 @@ void Game::loop()
         timePrevious = timeCurrent;
 
         pollInputEvents();
-        gameState_->update(timeElapsed);
+        //gameState_->update(timeElapsed);
 
         SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
         SDL_RenderClear(renderer_);
-        gameState_->render(&graphics_);
+        //gameState_->render(&graphics_);
 
         if (cycles++ % 25 == 0)
         {
@@ -59,7 +59,7 @@ void Game::pollInputEvents()
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
-        gameState_->handleInputEvent(&event);
+        //gameState_->handleInputEvent(&event);
         if (event.type == SDL_QUIT || (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_q))
         {
             isRunning_ = false;
@@ -76,7 +76,7 @@ Game::Game()
     SDL_Init(SDL_INIT_EVERYTHING);
     IMG_Init(IMG_INIT_PNG);
     TTF_Init();
-    gameState_ = new GameState();
+    //gameState_ = new GameState();
 
     SDL_DisplayMode displayMode;
     SDL_GetCurrentDisplayMode(0, &displayMode);
@@ -108,10 +108,10 @@ Game::~Game()
 }
 
 
-void Game::setGameState(GameState *gameState)
+/*void Game::setGameState(GameState *gameState)
 {
     gameState_->willExit();
     gameState->willEnter(&assetLibrary_);
     gameState_ = gameState;
-}
+}*/
 
