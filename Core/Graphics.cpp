@@ -2,7 +2,7 @@
 #include <SDL2/SDL.h>
 #include "Graphics.h"
 #include "SDL_FontCache.h"
-#include "Err.h"
+#include "Error.h"
 
 
 /**

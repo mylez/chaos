@@ -16,6 +16,8 @@ file(GLOB chaos_SRC
         "Core/*.cpp"
         #"UI/*.cpp"
         "Chaos/*.cpp"
+        "Components/*.cpp"
+        "Systems/*.cpp"
         "Core/include/jsoncpp/dist/jsoncpp.cpp"
         "Core/include/SDL_FontCache/SDL_FontCache.c"
 )

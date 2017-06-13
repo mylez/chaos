@@ -14,7 +14,7 @@ using std::cout;
 using std::endl;
 
 // errors
-class Err
+class Error
 {
 public:
     string msg = "";
@@ -24,7 +24,7 @@ public:
      *
      * @param _msg
      */
-    Err(string _msg)
+    Error(string _msg)
     {
         msg = _msg;
     }
@@ -53,7 +53,7 @@ public:
                 cout << "Error: " << msg << endl;
             }
             cout << "SDL_GetError: " << SDL_GetError() << endl;
-            throw Err(msg);
+            throw Error(msg);
         }
     }
 };
