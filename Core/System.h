@@ -8,6 +8,7 @@ class Entity;
 class System {
 public:
     unsigned long signature = 0x00000000;
+    virtual void init() {}
     virtual void update(double timeElapsed, std::vector<Entity *>) = 0;
 };
 

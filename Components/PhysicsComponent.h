@@ -9,7 +9,8 @@ class PhysicsComponent:
 {
 public:
     vec2d velocity;
-    PhysicsComponent(): velocity(vec2d(0, 0))
+    PhysicsComponent():
+        velocity(vec2d(0, 0))
     { label = COMPONENT_PHYSICS; }
 };
 

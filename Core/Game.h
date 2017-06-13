@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 #include "AssetLibrary.h"
 #include "Graphics.h"
+#include "GameState.h"
 
 
 class Game
@@ -14,7 +15,7 @@ public:
 
     ~Game();
 
-    //GameState defaultGameState, *gameState_ = &defaultGameState;
+    GameState defaultGameState, *gameState_ = &defaultGameState;
 
     Graphics graphics_;
 
@@ -24,7 +25,7 @@ public:
 
     void pollInputEvents();
 
-    //void setGameState(GameState *gameState);
+    void setGameState(GameState *gameState);
 
 private:
 

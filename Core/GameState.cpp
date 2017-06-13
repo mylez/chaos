@@ -1,12 +1,24 @@
 #include "GameState.h"
 
+/**
+ *
+ */
+void GameState::init()
+{
+    for (const auto &system: systems_) {
+        system->init();
+    }
+}
+
 
 /**
  *
  * @param timeElapsed
  */
-void GameState::update(double timeElapsed) {
-    for (const auto &system: systems_) {
+void GameState::update(double timeElapsed)
+{
+    for (const auto &system: systems_)
+    {
         system->update(timeElapsed, filterBySignature(system->signature));
     }
 }
@@ -16,7 +28,8 @@ void GameState::update(double timeElapsed) {
  *
  * @param entity
  */
-void GameState::addEntity(Entity *entity) {
+void GameState::addEntity(Entity *entity)
+{
     entities_.push_back(entity);
 }
 
@@ -25,7 +38,8 @@ void GameState::addEntity(Entity *entity) {
  *
  * @param system
  */
-void GameState::addSystem(System *system) {
+void GameState::addSystem(System *system)
+{
     systems_.push_back(system);
 }
 
@@ -35,10 +49,13 @@ void GameState::addSystem(System *system) {
  * @param signature
  * @return
  */
-std::vector<Entity *> GameState::filterBySignature(unsigned long signature) {
+std::vector<Entity *> GameState::filterBySignature(unsigned long signature)
+{
     std::vector<Entity *> entities;
-    for (const auto& entity: entities_) {
-        if ((entity->signature & signature) == signature) {
+    for (const auto &entity: entities_)
+    {
+        if ((entity->signature & signature) == signature)
+        {
             entities.push_back(entity);
         }
     }

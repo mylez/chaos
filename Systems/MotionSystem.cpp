@@ -5,14 +5,18 @@
 #include <iostream>
 
 
+/**
+ *
+ * @param timeElapsed
+ * @param entities
+ */
 void MotionSystem::update(double timeElapsed, std::vector<Entity *> entities)
 {
-    for (auto const &entity: entities) {
-            std::cout << "updating entity " << this << std::endl;
-
-            TransformComponent  *transform  = static_cast<TransformComponent    *> (entity->getComponent(COMPONENT_TRANSFORM));
-            PhysicsComponent    *physics    = static_cast<PhysicsComponent      *> (entity->getComponent(COMPONENT_PHYSICS));
-
-            transform->position = transform->position.add(physics->velocity.scale(timeElapsed));
-        }
+    for (auto const &entity: entities)
+    {
+        auto *transform = entity->getComponent<TransformComponent>();
+        auto *physics = entity->getComponent<PhysicsComponent>();
+       // std::cout << transform->position.x << ", " << transform->position.y << std::endl;
+        transform->position = transform->position.add(physics->velocity.scale(timeElapsed));
+    }
 }

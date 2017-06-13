@@ -16,6 +16,7 @@ class Component
 public:
     Entity *entity;
     unsigned long label;
+    virtual ~Component(){}
 };
 
 

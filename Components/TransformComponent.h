@@ -20,8 +20,8 @@ public:
         position(vec2d(0, 0)),
         scale(vec2d(1, 1))
     { label = COMPONENT_TRANSFORM; }
-
 };
+
 
 
 

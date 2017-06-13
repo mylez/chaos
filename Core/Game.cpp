@@ -30,17 +30,16 @@ void Game::loop()
         timeElapsed = timeCurrent - timePrevious;
         timePrevious = timeCurrent;
 
-        pollInputEvents();
-        //gameState_->update(timeElapsed);
-
         SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
         SDL_RenderClear(renderer_);
-        //gameState_->render(&graphics_);
+        pollInputEvents();
+
+        gameState_->update(((double)timeElapsed) / 1000);
 
         if (cycles++ % 25 == 0)
         {
             fpsCheck_curr = SDL_GetTicks();
-            double fps = 25 * (1000 / (double)(fpsCheck_curr - fpsCheck_prev));
+            double fps = 25 * (1000 / (double) (fpsCheck_curr - fpsCheck_prev));
             snprintf(fpsMsg, 128, "fps: %.3f", fps);
             fpsCheck_prev = fpsCheck_curr;
         }
@@ -82,10 +81,10 @@ Game::Game()
     SDL_GetCurrentDisplayMode(0, &displayMode);
 
     window_ = SDL_CreateWindow("", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                               displayMode.w/2, displayMode.h/2,
-                               SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+                               displayMode.w / 2, displayMode.h / 2,
+                               SDL_WINDOW_MAXIMIZED | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_FULLSCREEN);
 
-    renderer_ = SDL_CreateRenderer(window_, -1,  SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
+    renderer_ = SDL_CreateRenderer(window_, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
     graphics_.setWindowAndRenderer(window_, renderer_);
     assetLibrary_.setRenderer(renderer_);
 
@@ -108,10 +107,9 @@ Game::~Game()
 }
 
 
-/*void Game::setGameState(GameState *gameState)
+void Game::setGameState(GameState *gameState)
 {
-    gameState_->willExit();
-    gameState->willEnter(&assetLibrary_);
+    //gameState_->willExit();
+    //gameState->willEnter(&assetLibrary_);
     gameState_ = gameState;
-}*/
-
+}

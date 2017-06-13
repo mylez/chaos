@@ -8,7 +8,8 @@ class MotionSystem:
     public System
 {
 public:
-    MotionSystem() { signature = COMPONENT_TRANSFORM | COMPONENT_PHYSICS; }
+    MotionSystem()
+    { signature = COMPONENT_TRANSFORM | COMPONENT_PHYSICS; }
 
     void update(double timeElapsed, std::vector<Entity *> entities);
 };

@@ -13,8 +13,12 @@ private:
     std::vector<Entity *> filterBySignature(unsigned long label);
 
 public:
+    void init();
+
     void update(double timeElapsed);
+
     void addSystem(System *system);
+
     void addEntity(Entity *entity);
 };
 

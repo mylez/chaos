@@ -3,17 +3,48 @@
 
 #import <string>
 #import <map>
+#import <iostream>
+#import <typeindex>
+#import <typeinfo>
 
 class Component;
 
 class Entity
 {
 private:
-    std::map<unsigned long, Component*> components_;
+    std::map<std::type_index, Component *> components_;
 public:
+
     unsigned long signature;
-    void addComponent(Component* component);
-    Component *getComponent(unsigned long label);
+
+
+    /**
+     *
+     * @tparam ComponentType
+     * @param component
+     */
+    template<typename ComponentType>
+    void addComponent(ComponentType *component)
+    {
+        component->entity = this;
+        signature = signature | component->label;
+        components_[std::type_index(typeid(ComponentType))] = component;
+    }
+
+
+    /**
+     *
+     * @tparam ComponentType
+     * @return
+     */
+    template<typename ComponentType>
+    ComponentType *getComponent()
+    {
+        Component *component = components_[std::type_index(typeid(ComponentType))];
+        return (component == nullptr)
+               ? nullptr
+               : dynamic_cast<ComponentType *>(component);
+    }
 };
 
 
