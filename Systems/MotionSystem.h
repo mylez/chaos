@@ -11,7 +11,9 @@ public:
     MotionSystem()
     { signature = COMPONENT_TRANSFORM | COMPONENT_PHYSICS; }
 
-    void update(double timeElapsed, Entity *entity, std::vector<Entity *> entities);
+    void update(double timeElapsed, std::vector<Entity *> entities);
+
+    void init (Game *game);
 };
 
 

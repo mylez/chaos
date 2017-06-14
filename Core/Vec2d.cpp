@@ -3,8 +3,8 @@
 
 Vec2d::Vec2d(Vec2i a)
 {
-    x = (double)a.x;
-    y = (double)a.y;
+    x = (double) a.x;
+    y = (double) a.y;
 }
 
 /**

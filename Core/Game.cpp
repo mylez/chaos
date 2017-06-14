@@ -34,7 +34,7 @@ void Game::loop()
         SDL_RenderClear(renderer_);
         pollInputEvents();
 
-        gameState_->update(((double)timeElapsed) / 1000);
+        gameState_->update(((double) timeElapsed) / 1000);
 
         if (cycles++ % 25 == 0)
         {
@@ -75,7 +75,6 @@ Game::Game()
     SDL_Init(SDL_INIT_EVERYTHING);
     IMG_Init(IMG_INIT_PNG);
     TTF_Init();
-    //gameState_ = new GameState();
 
     SDL_DisplayMode displayMode;
     SDL_GetCurrentDisplayMode(0, &displayMode);
@@ -108,7 +107,7 @@ Game::~Game()
 
 void Game::setGameState(GameState *gameState)
 {
-    //gameState_->willExit();
+    gameState->performInit(this);
     //gameState->willEnter(&assetLibrary_);
     gameState_ = gameState;
 }

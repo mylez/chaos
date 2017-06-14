@@ -1,7 +1,7 @@
 
 
 * Game
-    - init/destroy SDL
+    - performInit/destroy SDL
     - dispatch SDL input events to gameState_
     - perform game loop, keep track of elapsed time
     - call gameState_.update() and gameState_.render()

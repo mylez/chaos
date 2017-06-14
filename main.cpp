@@ -1,62 +1,70 @@
 #include "Chaos/Chaos.h"
 #include <Core/Entity.h>
-#include <Core/Component.h>
-#include <Core/System.h>
-#include <Core/GameState.h>
 #include <Components/PhysicsComponent.h>
-#include <Components/TransformComponent.h>
 #include <Components/RenderComponent.h>
+#include <Components/ShapeComponent.h>
 #include <Systems/MotionSystem.h>
 #include <Systems/RenderingSystem.h>
-#include <iostream>
-#include <Components/ShapeComponent.h>
+#include <GameStates/ShooterGameState.h>
 
 using namespace std;
+
+void bench(Chaos *, int);
+
+void shooter(Chaos *);
 
 
 int main()
 {
     Chaos chaos;
-
-    MotionSystem
-        ms;
-
-    RenderingSystem
-        rs(&chaos.graphics_);
-
-    GameState
-        gs;
-
-    gs.addSystem(&ms);
-    gs.addSystem(&rs);
-
-
-    for (int i = 0; i < 5000; i++)
-    {
-        Entity *e = new Entity();
-        ShapeComponent *pc = new ShapeComponent();
-        //PhysicsComponent *ph = new PhysicsComponent();
-        RenderComponent *rc = new RenderComponent();
-
-        //ph->velocity = Vec2d((rand()%2560)/100.0, (rand()%2560)/100.0);
-        pc->color = Color(rand()%128 + 127, rand()%128 + 127, rand()%128 + 127, 255);
-        pc->size = Vec2d(rand()%80, rand()%80);
-        e->getComponent<TransformComponent>()->position = Vec2d(rand()%1000, rand()%1000);
-
-        e->addComponent(pc);
-        //e->addComponent(ph);
-        e->addComponent(rc);
-
-        gs.addEntity(e);
-    }
-
-    gs.init();
-
-    chaos.setGameState(&gs);
-
-    chaos.loop();
-    //
-    //
+    shooter(&chaos);
 }
 
 
+/**
+ *
+ * @param chaos
+ */
+void shooter(Chaos *chaos)
+{
+    ShooterGameState shooterGameState;
+    chaos->setGameState(&shooterGameState);
+    chaos->loop();
+}
+
+
+/**
+ *
+ * @param chaos
+ * @param numEntities
+ */
+void bench(Chaos *chaos, int numEntities)
+{
+    GameState *gameState = new GameState;
+
+    gameState->addSystem(new MotionSystem);
+    gameState->addSystem(new RenderingSystem);
+
+    for (int i = 0; i < numEntities; i++)
+    {
+        Entity *entity = new Entity();
+
+        ShapeComponent *shapeComponent = new ShapeComponent();
+        PhysicsComponent *physicsComponent = new PhysicsComponent();
+        RenderComponent *renderComponent = new RenderComponent();
+
+        physicsComponent->velocity = Vec2d((rand() % 1000) / 50.0, (rand() % 1000) / 50.0);
+        shapeComponent->color = Color(rand() % 128 + 127, rand() % 128 + 127, rand() % 128 + 127, rand() % 256);
+        shapeComponent->size = Vec2d(rand() % 80, rand() % 80);
+        entity->transformComponent.position = Vec2d(rand() % 2000, rand() % 1000);
+
+        if (i % 1 == 0) entity->addComponent(shapeComponent);
+        if (i % 1 == 0) entity->addComponent(physicsComponent);
+        if (i % 1 == 0) entity->addComponent(renderComponent);
+
+        gameState->addEntity(entity);
+        chaos->loop();
+    }
+
+    chaos->setGameState(gameState);
+}

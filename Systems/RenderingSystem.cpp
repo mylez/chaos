@@ -1,9 +1,11 @@
 #include <Components/TransformComponent.h>
 #include <Components/ShapeComponent.h>
+#include <Components/SpriteComponent.h>
 #include <Core/Entity.h>
 #include <Core/Vec2d.h>
 #include <Core/Vec2i.h>
 #include <Systems/RenderingSystem.h>
+#include <Core/Game.h>
 
 
 /**
@@ -12,17 +14,20 @@
  * @param entity
  * @param entities
  */
-void RenderingSystem::update(double timeElapsed, Entity *entity, std::vector<Entity *> entities)
+void RenderingSystem::update(double timeElapsed, std::vector<Entity *> entities)
 {
-
-    if (entity->hasComponent<ShapeComponent>())
+    for (const auto &entity:entities)
     {
-        renderShape(entity);
-    }
+        if (entity->hasComponent<ShapeComponent>())
+        {
+            renderShape(entity);
+        }
 
-    //if (entity->hasComponent<SpriteComponent>()) {
-    //
-    //}
+        if (entity->hasComponent<SpriteComponent>())
+        {
+            renderSprite(entity);
+        }
+    }
 }
 
 
@@ -35,14 +40,9 @@ void RenderingSystem::renderShape(Entity *entity)
     auto transform = entity->getComponent<TransformComponent>();
     auto polygon = entity->getComponent<ShapeComponent>();
 
-    Vec2i
-        window = graphics->getWindowSize(),
-        position = transform->position.asVec2i();
+    Vec2i position = transform->position.asVec2i();
 
     graphics->setColor(polygon->color);
-    graphics->fillRect(position, polygon->size.asVec2i());
-    graphics->fillRect(position, polygon->size.asVec2i());
-    graphics->fillRect(position, polygon->size.asVec2i());
     graphics->fillRect(position, polygon->size.asVec2i());
 }
 
@@ -53,7 +53,9 @@ void RenderingSystem::renderShape(Entity *entity)
  */
 void RenderingSystem::renderSprite(Entity *entity)
 {
-
+    auto transform = entity->getComponent<TransformComponent>();
+    auto sprite = &entity->getComponent<SpriteComponent>()->sprite;
+    graphics->drawSprite(sprite, Vec2i(32, 32), transform->position.asVec2i());
 }
 
 
@@ -62,6 +64,16 @@ void RenderingSystem::renderSprite(Entity *entity)
  * @param entity
  */
 void RenderingSystem::renderAnimatedSprite(Entity *entity)
-{
+{}
 
+
+/**
+ *
+ * @param game
+ */
+void RenderingSystem::init(Game *game)
+{
+    std::cout << "RenderingSystem::init " << this << "\n";
+    assetLibrary = game->getAssetLibrary();
+    graphics = game->getGraphics();
 }

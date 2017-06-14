@@ -9,6 +9,14 @@
 
 class Game
 {
+private:
+
+    bool isRunning_;
+
+    SDL_Window *window_;
+
+    SDL_Renderer *renderer_;
+
 public:
 
     Game();
@@ -27,13 +35,9 @@ public:
 
     void setGameState(GameState *gameState);
 
-private:
+    AssetLibrary *getAssetLibrary() { return &assetLibrary_; }
 
-    bool isRunning_;
-
-    SDL_Window *window_;
-
-    SDL_Renderer *renderer_;
+    Graphics *getGraphics() { return &graphics_; }
 };
 
 

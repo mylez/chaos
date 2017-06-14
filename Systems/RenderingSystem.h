@@ -4,17 +4,22 @@
 #include <Core/Component.h>
 #include <Core/System.h>
 #include <Core/Graphics.h>
+#include <Core/AssetLibrary.h>
 
 class RenderingSystem:
     public System
 {
     Graphics *graphics;
+
+    AssetLibrary *assetLibrary;
+
 public:
-    RenderingSystem(Graphics *g) :
-        graphics(g)
+    RenderingSystem()
     { signature = COMPONENT_TRANSFORM | COMPONENT_RENDER; }
 
-    void update(double timeElapsed, Entity *entity, std::vector<Entity *> entities);
+    void init(Game *game);
+
+    void update(double timeElapsed, std::vector<Entity *> entities);
 
     void renderShape(Entity *entity);
 

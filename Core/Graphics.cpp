@@ -3,6 +3,7 @@
 #include "Graphics.h"
 #include "SDL_FontCache.h"
 #include "Error.h"
+#include "Sprite.h"
 
 
 /**
@@ -13,8 +14,8 @@
 void Graphics::drawRect(Vec2i pos, Vec2i size)
 {
     pos = transformPosition(pos);
-    size = transformSize(size);
-    
+    size = transformScale(size);
+
     SDL_Rect rect = {
         pos.x, pos.y,
         size.x, size.y
@@ -32,7 +33,7 @@ void Graphics::drawRect(Vec2i pos, Vec2i size)
 void Graphics::fillRect(Vec2i pos, Vec2i size)
 {
     pos = transformPosition(pos);
-    size = transformSize(size);
+    size = transformScale(size);
 
     SDL_Rect rect = {
         pos.x, pos.y,
@@ -104,20 +105,20 @@ void Graphics::popTransform()
 void Graphics::copyTexture(SDL_Texture *texture, Vec2i srcPos, Vec2i srcSize, Vec2i dstPos, Vec2i dstSize)
 {
     dstPos = transformPosition(dstPos);
-    dstSize = transformSize(dstSize);
+    dstSize = transformScale(dstSize);
     SDL_Rect
         srcRect = {
-            srcPos.x,
-            srcPos.y,
-            srcSize.x,
-            srcSize.y
-        },
+        srcPos.x,
+        srcPos.y,
+        srcSize.x,
+        srcSize.y
+    },
         dstRect = {
-            dstPos.x,
-            dstPos.y,
-            dstSize.x,
-            dstSize.y
-        };
+        dstPos.x,
+        dstPos.y,
+        dstSize.x,
+        dstSize.y
+    };
 
     SDL_RenderCopy(renderer_, texture, &srcRect, &dstRect);
 }
@@ -181,8 +182,8 @@ void Graphics::setWindowAndRenderer(SDL_Window *window, SDL_Renderer *renderer)
 Vec2i Graphics::transformPosition(Vec2i pos)
 {
     return Vec2i(
-        (int)ceil(scale_.x * pos.x) + offset_.x,
-        (int)ceil(scale_.y * pos.y) + offset_.y
+        (int) ceil(scale_.x * pos.x) + offset_.x,
+        (int) ceil(scale_.y * pos.y) + offset_.y
     );
 }
 
@@ -192,11 +193,11 @@ Vec2i Graphics::transformPosition(Vec2i pos)
  * @param size
  * @return
  */
-Vec2i Graphics::transformSize(Vec2i size)
+Vec2i Graphics::transformScale(Vec2i size)
 {
     return Vec2i(
-        (int)ceil(size.x * scale_.x),
-        (int)ceil(size.y * scale_.y)
+        (int) ceil(size.x * scale_.x),
+        (int) ceil(size.y * scale_.y)
     );
 }
 
@@ -234,6 +235,7 @@ Graphics::Graphics()
 
 }
 
+
 void Graphics::loadFontCache()
 {
     font_ = FC_CreateFont();
@@ -241,6 +243,11 @@ void Graphics::loadFontCache()
                 TTF_STYLE_NORMAL);
 }
 
+
+/**
+ *
+ * @param c
+ */
 void Graphics::setColor(Color c)
 {
     setColor(c.r, c.g, c.b, c.a);
@@ -252,22 +259,19 @@ void Graphics::setColor(Color c)
  * @param sprite
  * @param size
  * @param pos
- *
-void Graphics::drawSprite(Sprite *sprite, vec2i size, vec2i pos)
+ */
+void Graphics::drawSprite(Sprite *sprite, Vec2i size, Vec2i pos)
 {
-    vec2i
-        dstPos = transformPosition(pos).add(vec2i(0, -size.y)),
-        dstSize = transformSize(size);
-
+    //Vec2i dstPos = transformPosition(pos).add(Vec2i(0, size.y));
+    //Vec2i dstSize = transformScale(size);
     SDL_Rect
         srcRect = sprite->getSrcRect(),
         dstRect = {
-            (int)floor(dstPos.x),
-            (int)floor(dstPos.y),
-            (int)floor(abs(dstSize.x)),
-            (int)floor(abs(dstSize.y))
+            pos.x,
+            pos.y,
+            size.x,
+            size.y
         };
 
     SDL_RenderCopy(renderer_, sprite->getTexture(), &srcRect, &dstRect);
 }
-*/

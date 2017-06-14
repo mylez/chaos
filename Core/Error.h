@@ -59,5 +59,4 @@ public:
 };
 
 
-
 #endif //CHAOS_ERR_H

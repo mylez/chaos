@@ -10,18 +10,26 @@
 
 class Component;
 
+unsigned int genEntityId();
+
 class Entity
 {
 private:
-    TransformComponent transformComponent_;
     std::map<std::type_index, Component *> components_;
-public:
 
-    unsigned long signature = 0;
+public:
+    TransformComponent transformComponent;
+
+    unsigned long
+        signature = 0;
+
+    unsigned int
+        id = 0;
 
     Entity()
     {
-        addComponent(&transformComponent_);
+        addComponent(&transformComponent);
+        id = genEntityId();
     }
 
     /**
@@ -68,7 +76,7 @@ public:
                : dynamic_cast<ComponentType *>(component) != nullptr;
     }
 
-
+    virtual void destroy() {};
 };
 
 

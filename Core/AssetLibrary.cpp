@@ -12,8 +12,12 @@
 void AssetLibrary::loadTexture(std::string name, std::string filePath)
 {
     SDL_Texture *texture = IMG_LoadTexture(renderer_, (basePath_ + filePath).c_str());
-
     Error::predicate(texture != NULL, "AssetLibrary: cannot load texture");
+
+    if (textures_[name] != nullptr)
+    {
+        SDL_DestroyTexture(textures_[name]);
+    }
 
     textures_[name] = texture;
 }
@@ -38,5 +42,18 @@ SDL_Texture *AssetLibrary::getTexture(std::string name)
 void AssetLibrary::setRenderer(SDL_Renderer *renderer)
 {
     renderer_ = renderer;
+}
+
+
+/**
+ *
+ * @param name
+ * @return
+ */
+Vec2i AssetLibrary::getTextureSize(std::string name)
+{
+    Vec2i size;
+    SDL_QueryTexture(getTexture(name), nullptr, nullptr, &size.x, &size.y);
+    return size;
 }
 

@@ -31,8 +31,8 @@ int TileSet::getTileTypeAt(int layer, int i)
     if (i >= 0)
     {
         return layers_
-            .at((unsigned long)layer)
-            .at((unsigned long)i);
+            .at((unsigned long) layer)
+            .at((unsigned long) i);
     }
     return 207;
 }
@@ -72,7 +72,7 @@ void TileSet::setData(Json::Value tileData)
         layers_.push_back(std::vector<int>());
         for (int i = 0; i < getLayerSize(l); i++)
         {
-            layers_.at((unsigned long)(l)).push_back(tileData_["layers"][l]["data"][i].asInt());
+            layers_.at((unsigned long) (l)).push_back(tileData_["layers"][l]["data"][i].asInt());
         }
     }
 }
@@ -113,9 +113,6 @@ Vec2i TileSet::tileSourcePosition(int tileSet, int tileType)
 }
 
 
-
-
-
 Vec2i TileSet::tileSetTileSize(int tileSet)
 {
     return Vec2i(
@@ -123,8 +120,6 @@ Vec2i TileSet::tileSetTileSize(int tileSet)
         tileData_["tilesets"][tileSet]["tileheight"].asInt()
     );
 }
-
-
 
 
 Vec2i TileSet::tileSetSheetSize(int tileSet)

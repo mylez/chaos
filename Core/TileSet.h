@@ -15,13 +15,21 @@ private:
 
 public:
     int getTileTypeAt(int layer, int x, int y);
+
     int getTileTypeAt(int layer, int i);
+
     int getHeight(int layer);
+
     int getWidth(int layer);
+
     int getLayerSize(int layer);
+
     int getNumLayers();
+
     Vec2i tileSourcePosition(int tileSet, int tileType);
+
     Vec2i tileSetSheetSize(int tileSet);
+
     Vec2i tileSetTileSize(int tileSet);
 
     void setData(Json::Value value);

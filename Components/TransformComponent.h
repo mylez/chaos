@@ -18,7 +18,8 @@ public:
         rotation;
     TransformComponent():
         position(Vec2d(0, 0)),
-        scale(Vec2d(1, 1))
+        scale(Vec2d(1, 1)),
+        rotation(0)
     { label = COMPONENT_TRANSFORM; }
 };
 

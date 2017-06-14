@@ -10,10 +10,19 @@
  * @param timeElapsed
  * @param entities
  */
-void MotionSystem::update(double timeElapsed, Entity *entity, std::vector<Entity *> entities)
+void MotionSystem::update(double timeElapsed, std::vector<Entity *> entities)
 {
-    auto *transform = entity->getComponent<TransformComponent>();
-    auto *physics = entity->getComponent<PhysicsComponent>();
-    physics->velocity = physics->velocity.scale(1);
-    transform->position = transform->position.add(physics->velocity.scale(timeElapsed));
+    for (const auto &entity: entities)
+    {
+        auto *transform = entity->getComponent<TransformComponent>();
+        auto *physics = entity->getComponent<PhysicsComponent>();
+
+        physics->velocity = physics->velocity.scale(1);
+        transform->position = transform->position.add(physics->velocity.scale(timeElapsed));
+    }
+}
+
+void MotionSystem::init(Game *game)
+{
+    std::cout << "MotionSystem::init " << game << "\n\n";
 }

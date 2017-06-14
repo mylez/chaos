@@ -1,25 +1,34 @@
 #ifndef CHAOS_GAMESTATE_H
 #define CHAOS_GAMESTATE_H
 
-#include <Core/Entity.h>
-#include <Core/System.h>
+#include <map>
+#include <vector>
+
+class Game;
+class System;
+class Entity;
 
 class GameState
 {
 private:
-    std::vector<Entity *> entities_;
-    std::vector<System *> systems_;
+    std::map<unsigned int, Entity*> entities_;
 
-    //std::vector<Entity *> filterBySignature(unsigned long label);
+    //std::vector<Entity *> entities_;
+    std::vector<System *> systems_;
+    std::vector<Entity *> filterBySignature(unsigned long label);
 
 public:
-    void init();
+    void performInit(Game *game);
+
+    virtual void init(Game *game) {}
 
     void update(double timeElapsed);
 
     void addSystem(System *system);
 
     void addEntity(Entity *entity);
+
+    void removeEntity(unsigned int entityId);
 };
 
 
