@@ -1,18 +1,67 @@
 #include <Components/TransformComponent.h>
+#include <Components/ShapeComponent.h>
 #include <Core/Entity.h>
-#include <Core/vec2d.h>
-#include <Core/vec2i.h>
+#include <Core/Vec2d.h>
+#include <Core/Vec2i.h>
 #include <Systems/RenderingSystem.h>
 
-void RenderingSystem::update(double timeElapsed, std::vector<Entity *> entities)
+
+/**
+ *
+ * @param timeElapsed
+ * @param entity
+ * @param entities
+ */
+void RenderingSystem::update(double timeElapsed, Entity *entity, std::vector<Entity *> entities)
 {
-    vec2i window = graphics->getWindowSize();
-    for (const auto &entity: entities) {
-        TransformComponent *transform = entity->getComponent<TransformComponent>();
-        vec2i
-            position = transform->position.entryMult(vec2d(1, -1)).asVec2i().add(vec2i(5, window.y)),
-            size = vec2i(5, 5);
-        graphics->setColor(255, 0, 0);
-        graphics->fillRect(position, size);
+
+    if (entity->hasComponent<ShapeComponent>())
+    {
+        renderShape(entity);
     }
+
+    //if (entity->hasComponent<SpriteComponent>()) {
+    //
+    //}
+}
+
+
+/**
+ *
+ * @param entity
+ */
+void RenderingSystem::renderShape(Entity *entity)
+{
+    auto transform = entity->getComponent<TransformComponent>();
+    auto polygon = entity->getComponent<ShapeComponent>();
+
+    Vec2i
+        window = graphics->getWindowSize(),
+        position = transform->position.asVec2i();
+
+    graphics->setColor(polygon->color);
+    graphics->fillRect(position, polygon->size.asVec2i());
+    graphics->fillRect(position, polygon->size.asVec2i());
+    graphics->fillRect(position, polygon->size.asVec2i());
+    graphics->fillRect(position, polygon->size.asVec2i());
+}
+
+
+/**
+ *
+ * @param entity
+ */
+void RenderingSystem::renderSprite(Entity *entity)
+{
+
+}
+
+
+/**
+ *
+ * @param entity
+ */
+void RenderingSystem::renderAnimatedSprite(Entity *entity)
+{
+
 }

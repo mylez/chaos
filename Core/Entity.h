@@ -1,22 +1,28 @@
 #ifndef CHAOS_ENTITY_H
 #define CHAOS_ENTITY_H
 
-#import <string>
-#import <map>
-#import <iostream>
-#import <typeindex>
-#import <typeinfo>
+#include <string>
+#include <map>
+#include <iostream>
+#include <typeindex>
+#include <typeinfo>
+#include <Components/TransformComponent.h>
 
 class Component;
 
 class Entity
 {
 private:
+    TransformComponent transformComponent_;
     std::map<std::type_index, Component *> components_;
 public:
 
-    unsigned long signature;
+    unsigned long signature = 0;
 
+    Entity()
+    {
+        addComponent(&transformComponent_);
+    }
 
     /**
      *
@@ -45,6 +51,24 @@ public:
                ? nullptr
                : dynamic_cast<ComponentType *>(component);
     }
+
+
+    /**
+     *
+     * @tparam ComponentType
+     * @return
+     */
+    template<typename ComponentType>
+    bool hasComponent()
+    {
+        Component *component = components_[std::type_index(typeid(ComponentType))];
+
+        return (component == nullptr)
+               ? false
+               : dynamic_cast<ComponentType *>(component) != nullptr;
+    }
+
+
 };
 
 

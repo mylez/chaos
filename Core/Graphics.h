@@ -4,8 +4,10 @@
 #include <SDL2/SDL.h>
 #include <vector>
 #include <SDL_FontCache.h>
-#include "vec2i.h"
-#include "vec2d.h"
+#include "Vec2i.h"
+#include "Vec2d.h"
+
+#include <Core/Color.h>
 
 class Graphics
 {
@@ -16,11 +18,11 @@ private:
     SDL_Window *window_ = NULL;
     FC_Font *font_ = NULL;
 
-    vec2i offset_ = vec2i(0, 0);
-    vec2d scale_ = vec2d(1, 1);
+    Vec2i offset_ = Vec2i(0, 0);
+    Vec2d scale_ = Vec2d(1, 1);
 
-    std::vector<vec2i> offsetStack_;
-    std::vector<vec2d> scaleStack_;
+    std::vector<Vec2i> offsetStack_;
+    std::vector<Vec2d> scaleStack_;
 
     void loadFontCache();
 
@@ -29,21 +31,22 @@ public:
 
     void setColor(int r, int g, int b);
     void setColor(int r, int g, int b, int a);
-    // void drawSprite(Sprite *sprite, vec2i size, vec2i pos);
-    void drawPoint(vec2i pos);
-    void drawRect(vec2i pos, vec2i size);
-    void drawString(std::string text, vec2i pos);
-    void fillRect(vec2i pos, vec2i size);
-    void copyTexture(SDL_Texture *texture, vec2i srcPos, vec2i srcSize, vec2i dstPos, vec2i dstSize);
+    void setColor(Color c);
+    // void drawSprite(Sprite *sprite, Vec2i size, Vec2i pos);
+    void drawPoint(Vec2i pos);
+    void drawRect(Vec2i pos, Vec2i size);
+    void drawString(std::string text, Vec2i pos);
+    void fillRect(Vec2i pos, Vec2i size);
+    void copyTexture(SDL_Texture *texture, Vec2i srcPos, Vec2i srcSize, Vec2i dstPos, Vec2i dstSize);
 
-    void pushOffset(vec2i offset);
-    void pushTransform(vec2i offset, vec2d scale);
+    void pushOffset(Vec2i offset);
+    void pushTransform(Vec2i offset, Vec2d scale);
     void popTransform();
-    vec2i transformPosition(vec2i pos);
-    vec2i transformSize(vec2i size);
+    Vec2i transformPosition(Vec2i pos);
+    Vec2i transformSize(Vec2i size);
 
-    void drawDebugText(std::string msg, int fontSize, vec2i pos);
-    vec2i getWindowSize();
+    void drawDebugText(std::string msg, int fontSize, Vec2i pos);
+    Vec2i getWindowSize();
 
     void setWindowAndRenderer(SDL_Window* window, SDL_Renderer *renderer);
 };

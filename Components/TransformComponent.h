@@ -5,20 +5,20 @@
 
 #include <Core/Component.h>
 #include <Core/System.h>
-#include <Core/vec2d.h>
+#include <Core/Vec2d.h>
 
 class TransformComponent:
     public Component
 {
 public:
-    vec2d
+    Vec2d
         position,
         scale;
     double
         rotation;
     TransformComponent():
-        position(vec2d(0, 0)),
-        scale(vec2d(1, 1))
+        position(Vec2d(0, 0)),
+        scale(Vec2d(1, 1))
     { label = COMPONENT_TRANSFORM; }
 };
 

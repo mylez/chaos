@@ -10,11 +10,17 @@ class RenderingSystem:
 {
     Graphics *graphics;
 public:
-    RenderingSystem(Graphics *g):
+    RenderingSystem(Graphics *g) :
         graphics(g)
-    { signature = COMPONENT_TRANSFORM; }
+    { signature = COMPONENT_TRANSFORM | COMPONENT_RENDER; }
 
-    void update(double timeElapsed, std::vector<Entity *> entities);
+    void update(double timeElapsed, Entity *entity, std::vector<Entity *> entities);
+
+    void renderShape(Entity *entity);
+
+    void renderSprite(Entity *entity);
+
+    void renderAnimatedSprite(Entity *entity);
 };
 
 

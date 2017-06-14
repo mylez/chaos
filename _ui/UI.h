@@ -2,7 +2,7 @@
 #define CHAOS_UI_H
 
 #include <vector>
-#include "Core/vec2i.h"
+#include "Core/Vec2i.h"
 #include "Core/HasRender.h"
 #include "Core/HasUpdate.h"
 #include "Core/InputEventListener.h"

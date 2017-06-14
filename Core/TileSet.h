@@ -4,7 +4,7 @@
 #include <vector>
 #include <SDL2/SDL_rect.h>
 #include "json/json.h"
-#include "Core/vec2i.h"
+#include "Core/Vec2i.h"
 
 class TileSet
 {
@@ -20,9 +20,9 @@ public:
     int getWidth(int layer);
     int getLayerSize(int layer);
     int getNumLayers();
-    vec2i tileSourcePosition(int tileSet, int tileType);
-    vec2i tileSetSheetSize(int tileSet);
-    vec2i tileSetTileSize(int tileSet);
+    Vec2i tileSourcePosition(int tileSet, int tileType);
+    Vec2i tileSetSheetSize(int tileSet);
+    Vec2i tileSetTileSize(int tileSet);
 
     void setData(Json::Value value);
 };

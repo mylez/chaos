@@ -103,10 +103,10 @@ int TileSet::getWidth(int layer)
  * @param tileType
  * @return
  */
-vec2i TileSet::tileSourcePosition(int tileSet, int tileType)
+Vec2i TileSet::tileSourcePosition(int tileSet, int tileType)
 {
-    vec2i sheetSize = tileSetSheetSize(tileSet);
-    return vec2i(
+    Vec2i sheetSize = tileSetSheetSize(tileSet);
+    return Vec2i(
         32 * ((tileType - 1) % sheetSize.x),
         32 * ((tileType - 1) / sheetSize.x)
     );
@@ -116,9 +116,9 @@ vec2i TileSet::tileSourcePosition(int tileSet, int tileType)
 
 
 
-vec2i TileSet::tileSetTileSize(int tileSet)
+Vec2i TileSet::tileSetTileSize(int tileSet)
 {
-    return vec2i(
+    return Vec2i(
         tileData_["tilesets"][tileSet]["tilewidth"].asInt(),
         tileData_["tilesets"][tileSet]["tileheight"].asInt()
     );
@@ -127,12 +127,12 @@ vec2i TileSet::tileSetTileSize(int tileSet)
 
 
 
-vec2i TileSet::tileSetSheetSize(int tileSet)
+Vec2i TileSet::tileSetSheetSize(int tileSet)
 {
     int columns = tileData_["tilesets"][tileSet]["columns"].asInt(),
         tileCount = tileData_["tilesets"][tileSet]["tilecount"].asInt(),
         rows = tileCount / columns;
-    return vec2i(columns, rows);
+    return Vec2i(columns, rows);
 }
 
 int TileSet::getNumLayers()

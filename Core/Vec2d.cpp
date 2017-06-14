@@ -1,7 +1,7 @@
-#include "vec2d.h"
-#include "vec2i.h"
+#include "Vec2d.h"
+#include "Vec2i.h"
 
-vec2d::vec2d(vec2i a)
+Vec2d::Vec2d(Vec2i a)
 {
     x = (double)a.x;
     y = (double)a.y;
@@ -12,7 +12,7 @@ vec2d::vec2d(vec2i a)
  * @param _x
  * @param _y
  */
-vec2d::vec2d(double _x, double _y)
+Vec2d::Vec2d(double _x, double _y)
 {
     x = _x;
     y = _y;
@@ -24,9 +24,9 @@ vec2d::vec2d(double _x, double _y)
  * @param a
  * @return
  */
-vec2d vec2d::entryMult(vec2d a)
+Vec2d Vec2d::entryMult(Vec2d a)
 {
-    return vec2d(
+    return Vec2d(
         x * a.x,
         y * a.y
     );
@@ -38,9 +38,9 @@ vec2d vec2d::entryMult(vec2d a)
  * @param a
  * @return
  */
-vec2d vec2d::add(vec2d a)
+Vec2d Vec2d::add(Vec2d a)
 {
-    return vec2d(
+    return Vec2d(
         x + a.x,
         y + a.y
     );

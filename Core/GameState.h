@@ -10,7 +10,7 @@ private:
     std::vector<Entity *> entities_;
     std::vector<System *> systems_;
 
-    std::vector<Entity *> filterBySignature(unsigned long label);
+    //std::vector<Entity *> filterBySignature(unsigned long label);
 
 public:
     void init();

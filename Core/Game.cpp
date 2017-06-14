@@ -44,7 +44,7 @@ void Game::loop()
             fpsCheck_prev = fpsCheck_curr;
         }
 
-        graphics_.drawString(fpsMsg, vec2i(10, 10));
+        graphics_.drawString(fpsMsg, Vec2i(10, 10));
         SDL_RenderPresent(renderer_);
     }
 }
@@ -82,14 +82,13 @@ Game::Game()
 
     window_ = SDL_CreateWindow("", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                                displayMode.w / 2, displayMode.h / 2,
-                               SDL_WINDOW_MAXIMIZED | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_FULLSCREEN);
+                               SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 
     renderer_ = SDL_CreateRenderer(window_, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
     graphics_.setWindowAndRenderer(window_, renderer_);
     assetLibrary_.setRenderer(renderer_);
 
     SDL_SetRenderDrawBlendMode(renderer_, SDL_BLENDMODE_BLEND);
-
 }
 
 

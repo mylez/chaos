@@ -5,7 +5,8 @@
  */
 void GameState::init()
 {
-    for (const auto &system: systems_) {
+    for (const auto &system: systems_)
+    {
         system->init();
     }
 }
@@ -19,7 +20,13 @@ void GameState::update(double timeElapsed)
 {
     for (const auto &system: systems_)
     {
-        system->update(timeElapsed, filterBySignature(system->signature));
+        for (const auto &entity: entities_)
+        {
+            if ((entity->signature & system->signature) == system->signature)
+            {
+                system->update(timeElapsed, entity, entities_);
+            }
+        }
     }
 }
 
@@ -49,6 +56,7 @@ void GameState::addSystem(System *system)
  * @param signature
  * @return
  */
+/*
 std::vector<Entity *> GameState::filterBySignature(unsigned long signature)
 {
     std::vector<Entity *> entities;
@@ -61,3 +69,4 @@ std::vector<Entity *> GameState::filterBySignature(unsigned long signature)
     }
     return entities;
 }
+ */
