@@ -17,12 +17,18 @@ void MotionSystem::update(double timeElapsed, std::vector<Entity *> entities)
         auto *transform = entity->getComponent<TransformComponent>();
         auto *physics = entity->getComponent<PhysicsComponent>();
 
-        physics->velocity = physics->velocity.scale(1);
+        physics->velocity = physics->velocity.add(physics->acceleration);
+        physics->velocity = physics->velocity.scale(physics->friction);
         transform->position = transform->position.add(physics->velocity.scale(timeElapsed));
+
+        if (physics->useGravity)
+        {
+            transform->position = transform->position.add(gravity);
+        }
     }
 }
 
 void MotionSystem::init(Game *game)
 {
-    std::cout << "MotionSystem::init " << game << "\n\n";
+    std::cout << "MotionSystem.init\n";
 }

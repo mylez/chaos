@@ -11,7 +11,7 @@ class System
 public:
     unsigned long signature = 0;
     virtual void init(Game *game) {}
-    virtual void update(double timeElapsed, std::vector<Entity *> entity) = 0;
+    virtual void update(double timeElapsed, std::vector<Entity *> entities) = 0;
 };
 
 

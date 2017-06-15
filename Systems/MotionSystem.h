@@ -1,14 +1,16 @@
 #ifndef CHAOS_MOTIONSYSTEM_H
 #define CHAOS_MOTIONSYSTEM_H
 
-#include <Core/Component.h>
 #include <Core/System.h>
+#include <Core/Component.h>
 
 class MotionSystem:
     public System
 {
 public:
-    MotionSystem()
+    Vec2d gravity;
+    MotionSystem():
+        gravity(Vec2d(0, 3))
     { signature = COMPONENT_TRANSFORM | COMPONENT_PHYSICS; }
 
     void update(double timeElapsed, std::vector<Entity *> entities);

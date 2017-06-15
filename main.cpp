@@ -4,7 +4,6 @@
 #include <Components/RenderComponent.h>
 #include <Components/ShapeComponent.h>
 #include <Systems/MotionSystem.h>
-#include <Systems/RenderingSystem.h>
 #include <GameStates/ShooterGameState.h>
 
 using namespace std;
@@ -18,6 +17,7 @@ int main()
 {
     Chaos chaos;
     shooter(&chaos);
+    //bench(&chaos, 25000);
 }
 
 
@@ -56,15 +56,15 @@ void bench(Chaos *chaos, int numEntities)
         physicsComponent->velocity = Vec2d((rand() % 1000) / 50.0, (rand() % 1000) / 50.0);
         shapeComponent->color = Color(rand() % 128 + 127, rand() % 128 + 127, rand() % 128 + 127, rand() % 256);
         shapeComponent->size = Vec2d(rand() % 80, rand() % 80);
-        entity->transformComponent.position = Vec2d(rand() % 2000, rand() % 1000);
+        entity->transform.position = Vec2d(rand() % 2000, rand() % 1000);
 
         if (i % 1 == 0) entity->addComponent(shapeComponent);
         if (i % 1 == 0) entity->addComponent(physicsComponent);
         if (i % 1 == 0) entity->addComponent(renderComponent);
 
         gameState->addEntity(entity);
-        chaos->loop();
     }
 
     chaos->setGameState(gameState);
+    chaos->loop();
 }

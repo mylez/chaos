@@ -8,9 +8,20 @@ class PhysicsComponent:
     public Component
 {
 public:
-    Vec2d velocity;
+    Vec2d
+        velocity = Vec2d(0, 0),
+        acceleration;
+    double
+        friction,
+        mass;
+    bool
+        useGravity;
     PhysicsComponent():
-        velocity(Vec2d(0, 0))
+        velocity(Vec2d(0, 0)),
+        acceleration(Vec2d(0, 0)),
+        friction(1),
+        mass(1),
+        useGravity(false)
     { label = COMPONENT_PHYSICS; }
 };
 

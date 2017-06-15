@@ -3,6 +3,8 @@
 
 #include <map>
 #include <vector>
+#include <Systems/RenderingSystem.h>
+#include <Systems/UpdateSystem.h>
 
 class Game;
 class System;
@@ -18,6 +20,10 @@ private:
     std::vector<Entity *> filterBySignature(unsigned long label);
 
 public:
+
+    RenderingSystem renderingSystem;
+    UpdateSystem    updateSystem;
+
     void performInit(Game *game);
 
     virtual void init(Game *game) {}

@@ -1,6 +1,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#include <deque>
 #include "Game.h"
 
 
@@ -21,8 +22,17 @@ void Game::loop()
     isRunning_ = true;
 
     // todo - get rid of this stupid fps meter and put it somewhere proper
-    int cycles = 0;
+    int cycles = 0,
+        fpsBarWidth = 0,
+        timeSleeping = 0,
+        timePlaceholder = 0,
+        avgBarWidth = 0;
     char fpsMsg[128];
+
+
+    std::deque<int> barWidths;
+    int numCycles = 10;
+    for (int i = 0; i < numCycles; i++) barWidths.push_back(0);
 
     while (isRunning_)
     {
@@ -36,16 +46,32 @@ void Game::loop()
 
         gameState_->update(((double) timeElapsed) / 1000);
 
-        if (cycles++ % 25 == 0)
+        if (cycles++ % numCycles == 0)
         {
             fpsCheck_curr = SDL_GetTicks();
-            double fps = 25 * (1000 / (double) (fpsCheck_curr - fpsCheck_prev));
+            double fps = numCycles * (1000 / (double) (fpsCheck_curr - fpsCheck_prev));
             snprintf(fpsMsg, 128, "fps: %.3f", fps);
             fpsCheck_prev = fpsCheck_curr;
+            fpsBarWidth = (int)(200 * timeSleeping / 16.0);
+            if (fpsBarWidth>200) fpsBarWidth -= fpsBarWidth%200;
+
+            barWidths.push_back(fpsBarWidth);
+            barWidths.pop_front();
+
+            avgBarWidth = 0;
+            for (int i = 0; i < numCycles; i++) avgBarWidth += barWidths[i];
+            avgBarWidth = (int)(avgBarWidth/numCycles);
         }
 
+
+        graphics_.setColor(50, 200, 10);
+        graphics_.drawRect(Vec2i(7, 7), Vec2i(200, 22));
+        graphics_.fillRect(Vec2i(7, 7), Vec2i(avgBarWidth, 22));
         graphics_.drawString(fpsMsg, Vec2i(10, 10));
+
+        timePlaceholder = SDL_GetTicks();
         SDL_RenderPresent(renderer_);
+        timeSleeping = SDL_GetTicks() - timePlaceholder;
     }
 }
 

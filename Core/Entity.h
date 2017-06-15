@@ -10,15 +10,18 @@
 
 class Component;
 
+class GameState;
+
 unsigned int genEntityId();
 
 class Entity
 {
 private:
-    std::map<std::type_index, Component *> components_;
 
 public:
-    TransformComponent transformComponent;
+    std::map<std::type_index, Component *> components_;
+
+    TransformComponent transform;
 
     unsigned long
         signature = 0;
@@ -26,9 +29,14 @@ public:
     unsigned int
         id = 0;
 
+    std::string
+        name;
+
+    GameState *gameState;
+
     Entity()
     {
-        addComponent(&transformComponent);
+        addComponent(&transform);
         id = genEntityId();
     }
 
@@ -40,9 +48,26 @@ public:
     template<typename ComponentType>
     void addComponent(ComponentType *component)
     {
+        std::cout << "the thing! " << component << "\n";
+
         component->entity = this;
         signature = signature | component->label;
         components_[std::type_index(typeid(ComponentType))] = component;
+    }
+
+
+    /**
+     *
+     * @tparam ComponentType
+     * @return
+     */
+    template<typename ComponentType>
+    ComponentType *addComponent()
+    {
+        ComponentType *component = new ComponentType;
+        component->managed_ = true;
+        addComponent(component);
+        return component;
     }
 
 
@@ -76,7 +101,7 @@ public:
                : dynamic_cast<ComponentType *>(component) != nullptr;
     }
 
-    virtual void destroy() {};
+    virtual void destroy();
 };
 
 

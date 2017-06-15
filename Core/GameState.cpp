@@ -1,5 +1,4 @@
 #include <Core/GameState.h>
-#include <Core/System.h>
 #include <Core/Entity.h>
 
 /**
@@ -8,10 +7,6 @@
  */
 void GameState::update(double timeElapsed)
 {
-    static int i;
-    if (i++ % 20 == 0) {
-
-    }
     for (const auto &system: systems_)
     {
         system->update(timeElapsed, filterBySignature(system->signature));
@@ -25,7 +20,9 @@ void GameState::update(double timeElapsed)
  */
 void GameState::addEntity(Entity *entity)
 {
+    entity->gameState = this;
     entities_[entity->id] = entity;
+    std::cout << "adding entity " << typeid(entity).name() << "\n";
     //entities_.push_back(entity);
 }
 
