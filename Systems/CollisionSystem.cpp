@@ -1,7 +1,6 @@
 #include "CollisionSystem.h"
 #include <Core/Entity.h>
 #include <Components/BoxCollisionComponent.h>
-#include <Components/PhysicsComponent.h>
 #include <cmath>
 #include <Core/Game.h>
 
@@ -27,6 +26,7 @@ void CollisionSystem::update(double timeElapsed, std::vector<Entity *> entities)
             {
                 continue;
             }
+
             auto *transform_b = entity_b->getComponent<TransformComponent>();
             auto *boxCollision_b = entity_b->getComponent<BoxCollisionComponent>();
 
@@ -36,10 +36,10 @@ void CollisionSystem::update(double timeElapsed, std::vector<Entity *> entities)
 
             if (isIntersecting(pos_a, size_a, pos_b, size_b))
             {
-                trackCollisionThisCycle(entity_a, entity_b);
+                trackCollisionThisCycle(entity_a, boxCollision_a, entity_b, boxCollision_b);
             }
 
-            trackCollisionInProgress(entity_a, entity_b);
+            trackCollisionInProgress(entity_a, boxCollision_a, entity_b, boxCollision_b);
         }
 
         if (boxCollision_a->debugDraw)
@@ -84,7 +84,7 @@ void CollisionSystem::init(Game *game)
  * @param idA
  * @param idB
  */
-void CollisionSystem::trackCollisionThisCycle(Entity *entityA, Entity *entityB)
+void CollisionSystem::trackCollisionThisCycle(Entity *entityA, BoxCollisionComponent *cmpA, Entity *entityB, BoxCollisionComponent *cmpB)
 {
     std::pair<unsigned int, unsigned int>
         orderedPair = makeOrderedPair(entityA->id, entityB->id);
@@ -92,10 +92,17 @@ void CollisionSystem::trackCollisionThisCycle(Entity *entityA, Entity *entityB)
     if (!collisionsInProgress[orderedPair])
     {
         std::cout << "collision enter: " << entityA->id << " and " << entityB->id << "\n";
-        //if (boxCollision_a->collisionEnterProcedure)
-        //{
-        //    boxCollision_a->collisionEnterProcedure->onCollisionEnter(Collision(entity_a, entity_b));
-        //}
+
+        if (cmpA->collisionEnterProcedure)
+        {
+            cmpA->collisionEnterProcedure->onCollisionEnter(Collision(entityA, entityB));
+        }
+
+        if (cmpB->collisionEnterProcedure)
+        {
+            cmpB->collisionEnterProcedure->onCollisionEnter(Collision(entityB, entityA));
+        }
+
     }
 
     collisionsThisCycle[orderedPair] = true;
@@ -108,7 +115,7 @@ void CollisionSystem::trackCollisionThisCycle(Entity *entityA, Entity *entityB)
  * @param entityA
  * @param entityB
  */
-void CollisionSystem::trackCollisionInProgress(Entity *entityA, Entity *entityB)
+void CollisionSystem::trackCollisionInProgress(Entity *entityA, BoxCollisionComponent *cmpA, Entity *entityB, BoxCollisionComponent *cmpB)
 {
 
 

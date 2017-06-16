@@ -9,6 +9,7 @@
 
 
 class Entity;
+class BoxCollisionComponent;
 
 class CollisionSystem:
     public System
@@ -21,9 +22,9 @@ private:
 
     bool isIntersecting(Vec2d, Vec2d, Vec2d, Vec2d);
 
-    void trackCollisionThisCycle(Entity *entityA, Entity *entityB);
+    void trackCollisionThisCycle(Entity *entityA, BoxCollisionComponent *cmpA, Entity *entityB, BoxCollisionComponent *cmpB);
 
-    void trackCollisionInProgress(Entity *entityA, Entity *entityB);
+    void trackCollisionInProgress(Entity *entityA, BoxCollisionComponent *cmpA, Entity *entityB, BoxCollisionComponent *cmpB);
 
     std::pair<unsigned int, unsigned int> makeOrderedPair(unsigned int idA, unsigned int idB);
 
