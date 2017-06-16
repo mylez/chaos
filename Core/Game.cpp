@@ -59,14 +59,20 @@ void Game::loop()
 
             avgBarWidth = 0;
             for (int i = 0; i < numCycles; i++) avgBarWidth += barWidths[i];
-            avgBarWidth = (int)(avgBarWidth/numCycles);
+            avgBarWidth = avgBarWidth/numCycles;
         }
 
 
         graphics_.setColor(50, 200, 10);
         graphics_.drawRect(Vec2i(7, 7), Vec2i(200, 22));
-        graphics_.fillRect(Vec2i(7, 7), Vec2i(avgBarWidth, 22));
+        if (avgBarWidth <= 200) graphics_.fillRect(Vec2i(7, 7), Vec2i(200 - avgBarWidth, 22));
+        graphics_.setColor(0, 0, 0);
+        for (int i = 200/17; i < 200 - 200/17; i += 200/17)
+        {
+            graphics_.drawRect(Vec2i(7, 9).add(Vec2i(i, 0)), Vec2i(1, 18));
+        }
         graphics_.drawString(fpsMsg, Vec2i(10, 10));
+
 
         timePlaceholder = SDL_GetTicks();
         SDL_RenderPresent(renderer_);

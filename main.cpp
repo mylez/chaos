@@ -3,7 +3,10 @@
 #include <Components/PhysicsComponent.h>
 #include <Components/RenderComponent.h>
 #include <Components/ShapeComponent.h>
+#include <Components/BoxCollisionComponent.h>
 #include <Systems/MotionSystem.h>
+#include <Systems/CollisionSystem.h>
+#include <Systems/RenderingSystem.h>
 #include <GameStates/ShooterGameState.h>
 
 using namespace std;
@@ -12,12 +15,11 @@ void bench(Chaos *, int);
 
 void shooter(Chaos *);
 
-
 int main()
 {
     Chaos chaos;
     shooter(&chaos);
-    //bench(&chaos, 25000);
+    bench(&chaos, 150);
 }
 
 
@@ -44,6 +46,7 @@ void bench(Chaos *chaos, int numEntities)
 
     gameState->addSystem(new MotionSystem);
     gameState->addSystem(new RenderingSystem);
+    gameState->addSystem(new CollisionSystem);
 
     for (int i = 0; i < numEntities; i++)
     {
@@ -52,15 +55,18 @@ void bench(Chaos *chaos, int numEntities)
         ShapeComponent *shapeComponent = new ShapeComponent();
         PhysicsComponent *physicsComponent = new PhysicsComponent();
         RenderComponent *renderComponent = new RenderComponent();
+        BoxCollisionComponent *boxCollisionComponent = new BoxCollisionComponent();
 
         physicsComponent->velocity = Vec2d((rand() % 1000) / 50.0, (rand() % 1000) / 50.0);
         shapeComponent->color = Color(rand() % 128 + 127, rand() % 128 + 127, rand() % 128 + 127, rand() % 256);
         shapeComponent->size = Vec2d(rand() % 80, rand() % 80);
+        boxCollisionComponent->size = shapeComponent->size;
         entity->transform.position = Vec2d(rand() % 2000, rand() % 1000);
 
-        if (i % 1 == 0) entity->addComponent(shapeComponent);
-        if (i % 1 == 0) entity->addComponent(physicsComponent);
-        if (i % 1 == 0) entity->addComponent(renderComponent);
+        entity->addComponent(shapeComponent);
+        entity->addComponent(physicsComponent);
+        entity->addComponent(boxCollisionComponent);
+        entity->addComponent(renderComponent);
 
         gameState->addEntity(entity);
     }

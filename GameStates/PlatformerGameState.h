@@ -10,6 +10,8 @@ class PlatformerGameState:
 public:
 
     void init(Game *game)
+    {
 
+    }
 };
 #endif //CHAOS_PLATFORMERGAMESTATE_H

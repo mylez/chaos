@@ -6,25 +6,43 @@
 #include <Core/Vec2d.h>
 #include <Core/Graphics.h>
 #include <map>
+#include <unordered_map>
 
+
+/**
+ * using std::unordered_map is slightly faster than std::map
+ */
+namespace std
+{
+    template<>
+    struct hash<std::pair<unsigned int, unsigned int>>
+    {
+        size_t operator()(const std::pair<unsigned int, unsigned int> &pt) const
+        {
+            return std::hash<unsigned int>()(pt.first + 0x10000 * pt.second);
+        }
+    };
+}
 
 class Entity;
+
 class BoxCollisionComponent;
 
 class CollisionSystem:
     public System
 {
 private:
-
-    std::map<std::pair<unsigned int, unsigned int>, bool>
+    std::unordered_map<std::pair<unsigned int, unsigned int>, bool>
         collisionsThisCycle,
         collisionsInProgress;
 
-    bool isIntersecting(Vec2d, Vec2d, Vec2d, Vec2d);
+    bool isIntersecting(Vec2d posA, Vec2d sizeA, Vec2d posB, Vec2d sizeB);
 
-    void trackCollisionThisCycle(Entity *entityA, BoxCollisionComponent *cmpA, Entity *entityB, BoxCollisionComponent *cmpB);
+    void trackCollisionThisCycle(Entity *entityA, BoxCollisionComponent *cmpA, Entity *entityB,
+                                 BoxCollisionComponent *cmpB);
 
-    void trackCollisionInProgress(Entity *entityA, BoxCollisionComponent *cmpA, Entity *entityB, BoxCollisionComponent *cmpB);
+    void trackCollisionInProgress(Entity *entityA, BoxCollisionComponent *cmpA, Entity *entityB,
+                                  BoxCollisionComponent *cmpB);
 
     std::pair<unsigned int, unsigned int> makeOrderedPair(unsigned int idA, unsigned int idB);
 

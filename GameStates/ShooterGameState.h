@@ -5,10 +5,12 @@
 #include <Core/AssetLibrary.h>
 #include <Core/Script.h>
 #include <Core/Collision.h>
+
 #include <Systems/MotionSystem.h>
 #include <Systems/CollisionSystem.h>
 #include <Systems/RenderingSystem.h>
 #include <Systems/ScriptingSystem.h>
+
 #include <Components/ShapeComponent.h>
 #include <Components/PhysicsComponent.h>
 #include <Components/BoxCollisionComponent.h>
@@ -53,7 +55,7 @@ public:
         boxCollisionComponent2.debugDraw = true;
 
         entity1.transform.position = Vec2d(0, 400);
-        physicsComponent1.velocity = Vec2d(100, 0);
+        physicsComponent1.velocity = Vec2d(40, 0);
         entity1.addComponent(&physicsComponent1);
 
         entity2.transform.position = Vec2d(300, 400);

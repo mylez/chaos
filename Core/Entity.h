@@ -3,13 +3,14 @@
 
 #include <string>
 #include <map>
+#include <unordered_map>
 #include <iostream>
 #include <typeindex>
 #include <typeinfo>
 #include <Components/TransformComponent.h>
 
 class Component;
-
+class Script;
 class GameState;
 
 
@@ -62,21 +63,6 @@ public:
      * @return
      */
     template<typename ComponentType>
-    ComponentType *addComponent()
-    {
-        ComponentType *component = new ComponentType;
-        component->managed_ = true;
-        addComponent(component);
-        return component;
-    }
-
-
-    /**
-     *
-     * @tparam ComponentType
-     * @return
-     */
-    template<typename ComponentType>
     ComponentType *getComponent()
     {
         Component *component = components_[std::type_index(typeid(ComponentType))];
@@ -100,6 +86,8 @@ public:
                ? false
                : dynamic_cast<ComponentType *>(component) != nullptr;
     }
+
+    std::vector<Script *> getScripts();
 
     virtual void destroy();
 };

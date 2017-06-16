@@ -1,6 +1,8 @@
 #ifndef CHAOS_SCRIPT_H
 #define CHAOS_SCRIPT_H
 
+#include <Core/Collision.h>
+
 class Game;
 class Entity;
 
@@ -17,7 +19,14 @@ public:
 
     unsigned int id;
 
-    virtual void update(Game *game, Entity *entity, double timeElapsed) = 0;
+    virtual void update(Game *game, Entity *entity, double timeElapsed)
+    {}
+
+    virtual void onCollisionEnter(Collision collision)
+    {}
+
+    virtual void onCollisionExit(Collision collision)
+    {}
 };
 
 

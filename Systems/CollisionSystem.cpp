@@ -3,9 +3,15 @@
 #include <Components/BoxCollisionComponent.h>
 #include <cmath>
 #include <Core/Game.h>
+#include <Core/Script.h>
 
 
 /**
+ * very dumb and slow collision system
+ *
+ * O(n^2) + map operations and clearing at every frame
+ *
+ * todo - replace with spatial partitioning
  *
  * @param timeElapsed
  * @param entities
@@ -20,6 +26,7 @@ void CollisionSystem::update(double timeElapsed, std::vector<Entity *> entities)
         Vec2d
             pos_a = transform_a->position.add(boxCollision_a->center),
             size_a = boxCollision_a->size;
+
         for (const auto entity_b: entities)
         {
             if (entity_a->id == entity_b->id)
@@ -55,16 +62,16 @@ void CollisionSystem::update(double timeElapsed, std::vector<Entity *> entities)
 
 /**
  *
- * @param pos_a
- * @param size_a
- * @param pos_b
- * @param size_b
+ * @param posA
+ * @param sizeA
+ * @param posB
+ * @param sizeB
  * @return
  */
-bool CollisionSystem::isIntersecting(Vec2d pos_a, Vec2d size_a, Vec2d pos_b, Vec2d size_b)
+bool CollisionSystem::isIntersecting(Vec2d posA, Vec2d sizeA, Vec2d posB, Vec2d sizeB)
 {
-    return (fabs(pos_a.x - pos_b.x) * 2. < (size_a.x + size_b.x)) &&
-           (fabs(pos_a.y - pos_b.y) * 2. < (size_a.y + size_b.y));
+    return (fabs(posA.x - posB.x) * 2. < (sizeA.x + sizeB.x)) &&
+           (fabs(posA.y - posB.y) * 2. < (sizeA.y + sizeB.y));
 }
 
 
@@ -84,25 +91,23 @@ void CollisionSystem::init(Game *game)
  * @param idA
  * @param idB
  */
-void CollisionSystem::trackCollisionThisCycle(Entity *entityA, BoxCollisionComponent *cmpA, Entity *entityB, BoxCollisionComponent *cmpB)
+void CollisionSystem::trackCollisionThisCycle(Entity *entityA, BoxCollisionComponent *cmpA, Entity *entityB,
+                                              BoxCollisionComponent *cmpB)
 {
     std::pair<unsigned int, unsigned int>
         orderedPair = makeOrderedPair(entityA->id, entityB->id);
 
     if (!collisionsInProgress[orderedPair])
     {
-        std::cout << "collision enter: " << entityA->id << " and " << entityB->id << "\n";
-
-        if (cmpA->collisionEnterProcedure)
+        for (const auto &script: entityA->getScripts())
         {
-            cmpA->collisionEnterProcedure->onCollisionEnter(Collision(entityA, entityB));
+            script->onCollisionEnter(Collision(entityA, entityB));
         }
 
-        if (cmpB->collisionEnterProcedure)
+        for (const auto &script: entityB->getScripts())
         {
-            cmpB->collisionEnterProcedure->onCollisionEnter(Collision(entityB, entityA));
+            script->onCollisionEnter(Collision(entityB, entityA));
         }
-
     }
 
     collisionsThisCycle[orderedPair] = true;
@@ -115,10 +120,9 @@ void CollisionSystem::trackCollisionThisCycle(Entity *entityA, BoxCollisionCompo
  * @param entityA
  * @param entityB
  */
-void CollisionSystem::trackCollisionInProgress(Entity *entityA, BoxCollisionComponent *cmpA, Entity *entityB, BoxCollisionComponent *cmpB)
+void CollisionSystem::trackCollisionInProgress(Entity *entityA, BoxCollisionComponent *cmpA, Entity *entityB,
+                                               BoxCollisionComponent *cmpB)
 {
-
-
     std::pair<unsigned int, unsigned int>
         orderedPair = makeOrderedPair(entityA->id, entityB->id);
 
@@ -128,7 +132,16 @@ void CollisionSystem::trackCollisionInProgress(Entity *entityA, BoxCollisionComp
 
     if (inProgress && !thisCycle)
     {
-        std::cout << "collision exit:  " << entityA->id << " and " << entityB->id << "\n";
+        for (const auto &script: entityA->getScripts())
+        {
+            script->onCollisionExit(Collision(entityA, entityB));
+        }
+
+        for (const auto &script: entityB->getScripts())
+        {
+            script->onCollisionExit(Collision(entityB, entityA));
+        }
+
         collisionsInProgress.erase(orderedPair);
     }
 }
