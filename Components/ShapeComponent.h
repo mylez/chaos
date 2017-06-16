@@ -13,7 +13,7 @@ public:
     Color color;
     ShapeComponent():
         size(Vec2d(20, 20)),
-        color(Color())
+        color(Color(100, 100, 100))
 
     { label = COMPONENT_SHAPE; }
 };

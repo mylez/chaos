@@ -22,7 +22,7 @@ void GameState::addEntity(Entity *entity)
 {
     entity->gameState = this;
     entities_[entity->id] = entity;
-    std::cout << "adding entity " << typeid(entity).name() << "\n";
+    std::cout << "adding entity " << entity->id <<":\t" << entity << " to ShooterGameState\n";
     //entities_.push_back(entity);
 }
 
@@ -62,6 +62,7 @@ std::vector<Entity *> GameState::filterBySignature(unsigned long signature)
  */
 void GameState::removeEntity(unsigned int entityId)
 {
+    std::cout << "removing entity " << entityId << "\n";
     entities_.erase(entityId);
 }
 

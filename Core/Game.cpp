@@ -29,7 +29,6 @@ void Game::loop()
         avgBarWidth = 0;
     char fpsMsg[128];
 
-
     std::deque<int> barWidths;
     int numCycles = 10;
     for (int i = 0; i < numCycles; i++) barWidths.push_back(0);

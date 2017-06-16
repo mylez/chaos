@@ -17,7 +17,6 @@ void CollisionSystem::update(double timeElapsed, std::vector<Entity *> entities)
     {
         auto *transform_a = entity_a->getComponent<TransformComponent>();
         auto *boxCollision_a = entity_a->getComponent<BoxCollisionComponent>();
-        auto *physics_a = entity_a->getComponent<PhysicsComponent>();
 
         Vec2d
             pos_a = transform_a->position.add(boxCollision_a->center),
@@ -30,7 +29,6 @@ void CollisionSystem::update(double timeElapsed, std::vector<Entity *> entities)
             }
             auto *transform_b = entity_b->getComponent<TransformComponent>();
             auto *boxCollision_b = entity_b->getComponent<BoxCollisionComponent>();
-            auto *physics_b = entity_b->getComponent<PhysicsComponent>();
 
             Vec2d
                 pos_b = transform_b->position.add(boxCollision_b->center),
@@ -38,11 +36,10 @@ void CollisionSystem::update(double timeElapsed, std::vector<Entity *> entities)
 
             if (isIntersecting(pos_a, size_a, pos_b, size_b))
             {
-                if (boxCollision_a->collisionEnterProcedure)
-                {
-                    boxCollision_a->collisionEnterProcedure->onCollisionEnter(Collision(entity_a, entity_b));
-                }
+                trackCollisionThisCycle(entity_a, entity_b);
             }
+
+            trackCollisionInProgress(entity_a, entity_b);
         }
 
         if (boxCollision_a->debugDraw)
@@ -52,6 +49,8 @@ void CollisionSystem::update(double timeElapsed, std::vector<Entity *> entities)
             graphics->fillRect(pos_a.add(Vec2d(-1, -1)).asVec2i(), Vec2i(2, 2));
         }
     }
+
+    collisionsThisCycle.clear();
 }
 
 /**
@@ -61,11 +60,6 @@ void CollisionSystem::update(double timeElapsed, std::vector<Entity *> entities)
  * @param pos_b
  * @param size_b
  * @return
- *
- * bool DoBoxesIntersect(Box a, Box b) {
-  return (abs(a.x - b.x) * 2 < (a.width + b.width)) &&
-         (abs(a.y - b.y) * 2 < (a.height + b.height));
-}
  */
 bool CollisionSystem::isIntersecting(Vec2d pos_a, Vec2d size_a, Vec2d pos_b, Vec2d size_b)
 {
@@ -82,4 +76,67 @@ void CollisionSystem::init(Game *game)
 {
     std::cout << "CollisionSystem.init\n";
     graphics = game->getGraphics();
+}
+
+
+/**
+ *
+ * @param idA
+ * @param idB
+ */
+void CollisionSystem::trackCollisionThisCycle(Entity *entityA, Entity *entityB)
+{
+    std::pair<unsigned int, unsigned int>
+        orderedPair = makeOrderedPair(entityA->id, entityB->id);
+
+    if (!collisionsInProgress[orderedPair])
+    {
+        std::cout << "collision enter: " << entityA->id << " and " << entityB->id << "\n";
+        //if (boxCollision_a->collisionEnterProcedure)
+        //{
+        //    boxCollision_a->collisionEnterProcedure->onCollisionEnter(Collision(entity_a, entity_b));
+        //}
+    }
+
+    collisionsThisCycle[orderedPair] = true;
+    collisionsInProgress[orderedPair] = true;
+}
+
+
+/**
+ *
+ * @param entityA
+ * @param entityB
+ */
+void CollisionSystem::trackCollisionInProgress(Entity *entityA, Entity *entityB)
+{
+
+
+    std::pair<unsigned int, unsigned int>
+        orderedPair = makeOrderedPair(entityA->id, entityB->id);
+
+    bool
+        inProgress = collisionsInProgress[orderedPair],
+        thisCycle = collisionsThisCycle[orderedPair];
+
+    if (inProgress && !thisCycle)
+    {
+        std::cout << "collision exit:  " << entityA->id << " and " << entityB->id << "\n";
+        collisionsInProgress.erase(orderedPair);
+    }
+}
+
+
+/**
+ *
+ * @param idA
+ * @param idB
+ * @return
+ */
+std::pair<unsigned int, unsigned int> CollisionSystem::makeOrderedPair(unsigned int idA, unsigned int idB)
+{
+    unsigned int
+        a = idA > idB ? idA : idB,
+        b = idA < idB ? idA : idB;
+    return std::make_pair(a, b);
 }

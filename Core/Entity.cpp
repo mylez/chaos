@@ -1,11 +1,7 @@
 #include "Entity.h"
 #include <Core/GameState.h>
 
-unsigned int genEntityId()
-{
-    static unsigned int id_;
-    return ++id_;
-}
+unsigned int Entity::nextId_ = 0;
 
 void Entity::destroy()
 {

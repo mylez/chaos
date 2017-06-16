@@ -12,11 +12,11 @@ class Component;
 
 class GameState;
 
-unsigned int genEntityId();
 
 class Entity
 {
 private:
+    static unsigned int nextId_;
 
 public:
     std::map<std::type_index, Component *> components_;
@@ -36,8 +36,8 @@ public:
 
     Entity()
     {
+        id = ++nextId_;
         addComponent(&transform);
-        id = genEntityId();
     }
 
     /**
@@ -48,7 +48,7 @@ public:
     template<typename ComponentType>
     void addComponent(ComponentType *component)
     {
-        std::cout << "the thing! " << component << "\n";
+        std::cout << typeid(ComponentType).name() << "\t" << component << "\t to entity " << id <<"\n";
 
         component->entity = this;
         signature = signature | component->label;

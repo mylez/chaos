@@ -4,7 +4,7 @@
 #include <map>
 #include <vector>
 #include <Systems/RenderingSystem.h>
-#include <Systems/UpdateSystem.h>
+#include <Systems/ScriptingSystem.h>
 
 class Game;
 class System;
@@ -22,7 +22,7 @@ private:
 public:
 
     RenderingSystem renderingSystem;
-    UpdateSystem    updateSystem;
+    ScriptingSystem    updateSystem;
 
     void performInit(Game *game);
 

@@ -5,20 +5,20 @@
 #include <Core/Component.h>
 #include <iostream>
 
-class UpdateSystem:
+class ScriptingSystem:
     public System
 {
 public:
     Game *game;
 
-    UpdateSystem()
+    ScriptingSystem()
     { signature = COMPONENT_UPDATE; }
 
     void update(double timeElapsed, std::vector<Entity *> entities);
 
     void init(Game *game)
     {
-        std::cout << "UpdateSystem.init\n";
+        std::cout << "ScriptingSystem.init\n";
         this->game = game;
     }
 };
