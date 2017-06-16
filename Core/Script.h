@@ -2,8 +2,10 @@
 #define CHAOS_SCRIPT_H
 
 #include <Core/Collision.h>
+#include <iostream>
 
 class Game;
+
 class Entity;
 
 class Script
@@ -12,12 +14,23 @@ private:
     static unsigned int nextId_;
 
 public:
-    Script()
+    unsigned int id;
+
+    bool hasInit_;
+
+    Script():
+        id(++nextId_),
+        hasInit_(false)
+    {}
+
+    inline void doInit(Game *game, Entity *entity)
     {
-        id = ++nextId_;
+        init(game, entity);
+        hasInit_ = true;
     }
 
-    unsigned int id;
+    virtual void init(Game *game, Entity *entity)
+    {}
 
     virtual void update(Game *game, Entity *entity, double timeElapsed)
     {}

@@ -51,15 +51,15 @@ void Game::loop()
             double fps = numCycles * (1000 / (double) (fpsCheck_curr - fpsCheck_prev));
             snprintf(fpsMsg, 128, "fps: %.3f", fps);
             fpsCheck_prev = fpsCheck_curr;
-            fpsBarWidth = (int)(200 * timeSleeping / 16.0);
-            if (fpsBarWidth>200) fpsBarWidth -= fpsBarWidth%200;
+            fpsBarWidth = (int) (200 * timeSleeping / 16.0);
+            if (fpsBarWidth > 200) fpsBarWidth -= fpsBarWidth % 200;
 
             barWidths.push_back(fpsBarWidth);
             barWidths.pop_front();
 
             avgBarWidth = 0;
             for (int i = 0; i < numCycles; i++) avgBarWidth += barWidths[i];
-            avgBarWidth = avgBarWidth/numCycles;
+            avgBarWidth = avgBarWidth / numCycles;
         }
 
 
@@ -67,7 +67,7 @@ void Game::loop()
         graphics_.drawRect(Vec2i(7, 7), Vec2i(200, 22));
         if (avgBarWidth <= 200) graphics_.fillRect(Vec2i(7, 7), Vec2i(200 - avgBarWidth, 22));
         graphics_.setColor(0, 0, 0);
-        for (int i = 200/17; i < 200 - 200/17; i += 200/17)
+        for (int i = 200 / 17; i < 200 - 200 / 17; i += 200 / 17)
         {
             graphics_.drawRect(Vec2i(7, 9).add(Vec2i(i, 0)), Vec2i(1, 18));
         }

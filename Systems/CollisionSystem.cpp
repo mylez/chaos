@@ -11,7 +11,7 @@
  *
  * O(n^2) + map operations and clearing at every frame
  *
- * todo - replace with spatial partitioning
+ * todo - use spatial partitioning
  *
  * @param timeElapsed
  * @param entities

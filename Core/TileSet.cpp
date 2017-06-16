@@ -1,6 +1,5 @@
 #include "TileSet.h"
 #include <iostream>
-#include <SDL2/SDL.h>
 
 
 /**

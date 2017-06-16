@@ -35,11 +35,14 @@ public:
 
     void setGameState(GameState *gameState);
 
-    GameState *getGameState() { return gameState_; }
+    GameState *getGameState()
+    { return gameState_; }
 
-    AssetLibrary *getAssetLibrary() { return &assetLibrary_; }
+    AssetLibrary *getAssetLibrary()
+    { return &assetLibrary_; }
 
-    Graphics *getGraphics() { return &graphics_; }
+    Graphics *getGraphics()
+    { return &graphics_; }
 };
 
 

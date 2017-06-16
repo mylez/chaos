@@ -10,7 +10,9 @@
 #include <Components/TransformComponent.h>
 
 class Component;
+
 class Script;
+
 class GameState;
 
 
@@ -49,7 +51,7 @@ public:
     template<typename ComponentType>
     void addComponent(ComponentType *component)
     {
-        std::cout << typeid(ComponentType).name() << "\t" << component << "\t to entity " << id <<"\n";
+        std::cout << typeid(ComponentType).name() << "\t" << component << "\t to entity " << id << "\n";
 
         component->entity = this;
         signature = signature | component->label;

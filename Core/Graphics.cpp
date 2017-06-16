@@ -1,7 +1,6 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include "Graphics.h"
-#include "SDL_FontCache.h"
 #include "Error.h"
 #include "Sprite.h"
 
@@ -119,6 +118,7 @@ void Graphics::copyTexture(SDL_Texture *texture, Vec2i srcPos, Vec2i srcSize, Ve
         dstSize.x,
         dstSize.y
     };
+
 
     SDL_RenderCopy(renderer_, texture, &srcRect, &dstRect);
 }
@@ -267,11 +267,11 @@ void Graphics::drawSprite(Sprite *sprite, Vec2i size, Vec2i pos)
     SDL_Rect
         srcRect = sprite->getSrcRect(),
         dstRect = {
-            pos.x,
-            pos.y,
-            size.x,
-            size.y
-        };
+        pos.x,
+        pos.y,
+        size.x,
+        size.y
+    };
 
     SDL_RenderCopy(renderer_, sprite->getTexture(), &srcRect, &dstRect);
 }

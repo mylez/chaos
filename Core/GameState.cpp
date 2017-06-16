@@ -22,7 +22,7 @@ void GameState::addEntity(Entity *entity)
 {
     entity->gameState = this;
     entities_[entity->id] = entity;
-    std::cout << "adding entity " << entity->id <<":\t" << entity << " to ShooterGameState\n";
+    std::cout << "adding entity " << entity->id << ":\t" << entity << " to GameState\n";
     //entities_.push_back(entity);
 }
 

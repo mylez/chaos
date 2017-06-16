@@ -17,7 +17,7 @@ void MotionSystem::update(double timeElapsed, std::vector<Entity *> entities)
         auto *transform = entity->getComponent<TransformComponent>();
         auto *physics = entity->getComponent<PhysicsComponent>();
 
-        physics->velocity = physics->velocity.add(physics->acceleration);
+        physics->velocity = physics->velocity.add(physics->acceleration.scale(timeElapsed));
         physics->velocity = physics->velocity.scale(physics->friction);
         transform->position = transform->position.add(physics->velocity.scale(timeElapsed));
 

@@ -6,8 +6,8 @@
 #include <Components/BoxCollisionComponent.h>
 #include <Systems/MotionSystem.h>
 #include <Systems/CollisionSystem.h>
-#include <Systems/RenderingSystem.h>
 #include <GameStates/ShooterGameState.h>
+#include <GameStates/PlatformerGameState.h>
 
 using namespace std;
 
@@ -15,11 +15,27 @@ void bench(Chaos *, int);
 
 void shooter(Chaos *);
 
+void platformer(Chaos *);
+
+
 int main()
 {
     Chaos chaos;
+    platformer(&chaos);
     shooter(&chaos);
     bench(&chaos, 150);
+}
+
+
+/**
+ *
+ * @param chaos
+ */
+void platformer(Chaos *chaos)
+{
+    PlatformerGameState platformerGameState;
+    chaos->setGameState(&platformerGameState);
+    chaos->loop();
 }
 
 

@@ -7,26 +7,30 @@
 #include <Systems/ScriptingSystem.h>
 
 class Game;
+
 class System;
+
 class Entity;
 
 class GameState
 {
 private:
-    std::map<unsigned int, Entity*> entities_;
+    std::map<unsigned int, Entity *> entities_;
 
     //std::vector<Entity *> entities_;
     std::vector<System *> systems_;
+
     std::vector<Entity *> filterBySignature(unsigned long label);
 
 public:
 
     RenderingSystem renderingSystem;
-    ScriptingSystem    updateSystem;
+    ScriptingSystem updateSystem;
 
     void performInit(Game *game);
 
-    virtual void init(Game *game) {}
+    virtual void init(Game *game)
+    {}
 
     void update(double timeElapsed);
 

@@ -1,7 +1,7 @@
 #ifndef CHAOS_COLLISION_H
 #define CHAOS_COLLISION_H
 
-#include <Core/Entity.h>
+class Entity;
 
 class Collision
 {

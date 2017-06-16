@@ -4,13 +4,17 @@
 #include <vector>
 
 class Entity;
+
 class Game;
 
 class System
 {
 public:
     unsigned long signature = 0;
-    virtual void init(Game *game) {}
+
+    virtual void init(Game *game)
+    {}
+
     virtual void update(double timeElapsed, std::vector<Entity *> entities) = 0;
 };
 

@@ -1,5 +1,4 @@
 #include "Vec2d.h"
-#include "Vec2i.h"
 
 Vec2d::Vec2d(Vec2i a)
 {
