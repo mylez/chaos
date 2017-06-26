@@ -5,25 +5,29 @@
 #include <Core/Collision.h>
 #include <Core/Vec2d.h>
 
-class BoxCollisionComponent:
+class CollisionComponent:
     public Component
 {
 public:
     bool
         debugDraw = false;
 
+    std::vector<unsigned short>
+        collisionLayers,
+        targetLayers;
+
+    CollisionComponent()
+    { label = COMPONENT_COLLISION; }
+
+};
+
+class BoxCollisionComponent:
+    public CollisionComponent
+{
+public:
     Vec2d
         size = Vec2d(1, 1),
         center = Vec2d(0, 0);
-
-    CollisionEnterProcedure
-        *collisionEnterProcedure = nullptr;
-
-    CollisionExitProcedure
-        *collisionExitProcedure = nullptr;
-
-    BoxCollisionComponent()
-    { label = COMPONENT_COLLISION; }
 };
 
 

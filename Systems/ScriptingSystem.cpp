@@ -11,6 +11,7 @@ void ScriptingSystem::update(double timeElapsed, std::vector<Entity *> entities)
         for (const auto &script: update->scripts)
         {
             script->update(game, entity, timeElapsed);
+            script->update(entity);
         }
     }
 }

@@ -9,7 +9,7 @@
  * @param name
  * @param filePath
  */
-void AssetLibrary::loadTexture(std::string name, std::string filePath)
+SDL_Texture *AssetLibrary::loadTexture(std::string name, std::string filePath)
 {
     SDL_Texture *texture = IMG_LoadTexture(renderer_, (basePath_ + filePath).c_str());
     Error::predicate(texture != NULL, "AssetLibrary: cannot load texture");
@@ -20,6 +20,8 @@ void AssetLibrary::loadTexture(std::string name, std::string filePath)
     }
 
     textures_[name] = texture;
+
+    return texture;
 }
 
 

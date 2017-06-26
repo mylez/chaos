@@ -14,71 +14,21 @@
 #include <Components/ScriptComponent.h>
 #include <Components/BoxCollisionComponent.h>
 #include <Components/PhysicsComponent.h>
-
-struct MyScript:
-    public Script
-{
-public:
-    void update(Game *game, Entity *entity)
-    {
-        static int t;
-        t ++;
-
-        std::cout << "whatever...\n";
-
-        if (t % 180)
-        {
-            entity->getComponent<PhysicsComponent>()->velocity.x *= -1;
-        }
-    }
-
-    void onCollisionEnter(Collision c)
-    {
-        //std::cout << "collision enter, entity id: " << c.entityA->id << "\n";
-        Vec2d x = c.entityA->getComponent<PhysicsComponent>()->velocity;
-        c.entityA->getComponent<PhysicsComponent>()->velocity = c.entityB->getComponent<PhysicsComponent>()->velocity;
-        c.entityB->getComponent<PhysicsComponent>()->velocity = x;
-    }
-
-    void onCollisionExit(Collision c)
-    {
-        //std::cout << "collision exit, entity id:  " << c.entityA->id << "\n";
-    }
-};
-
+#include <Components/SpriteComponent.h>
+#include <Components/RenderComponent.h>
 
 
 class PlatformerGameState:
     public GameState
 {
 public:
+    ScriptComponent scriptComponent;
+    BoxCollisionComponent collisionComponent;
+    PhysicsComponent physicsComponent1, physicsComponent2;
 
-    ScriptingSystem
-        scriptingSystem;
+    Entity entity1, entity2, entity3;
 
-    CollisionSystem
-        collisionSystem;
-
-    MotionSystem
-        motionSystem;
-
-    ScriptComponent
-        scriptComponent;
-
-    BoxCollisionComponent
-        collisionComponent;
-
-    PhysicsComponent
-        physicsComponent1,
-        physicsComponent2;
-
-    MyScript
-        myScript;
-
-    Entity
-        entity1,
-        entity2,
-        entity3;
+    Sprite dirtSprite;
 
     /**
      *
@@ -86,37 +36,41 @@ public:
      */
     void init(Game *game)
     {
-
-        scriptComponent.addScript(&myScript);
-
-        collisionComponent.size = Vec2d(30, 30);
-        collisionComponent.debugDraw = true;
-
-        entity1.addComponent(&collisionComponent);
-        entity1.addComponent(&physicsComponent1);
-        entity1.addComponent(&scriptComponent);
+        loadAssets(game);
 
         entity1.transform.position = Vec2d(10, 200);
-        physicsComponent1.velocity = Vec2d(300, 0);
-        physicsComponent1.friction = 0.999;
 
-        entity2.addComponent(&collisionComponent);
-        entity2.addComponent(&physicsComponent2);
-        entity2.transform.position = Vec2d(200, 200);
-        physicsComponent2.velocity = Vec2d(-100, 0);
+        addSystem<ScriptingSystem>();
+        addSystem<CollisionSystem>();
+        addSystem<MotionSystem>();
+        addSystem<RenderingSystem>();
 
-        entity3.addComponent(&collisionComponent);
-        entity3.addComponent(&scriptComponent);
-        entity3.addComponent(&physicsComponent1);
-        entity3.transform.position = Vec2d(300, 200);
-
-        addSystem(&scriptingSystem);
-        addSystem(&collisionSystem);
-        addSystem(&motionSystem);
+        entity1.transform.position = Vec2d(100, 100);
+        entity2.transform.position = Vec2d(132, 116);
 
         addEntity(&entity1);
         addEntity(&entity2);
-        addEntity(&entity3);
+    }
+
+
+    /**
+     *
+     * @param game
+     */
+    void loadAssets(Game *game)
+    {
+        entity1.addComponent<RenderComponent>();
+        entity2.addComponent<RenderComponent>();
+        auto
+            dirtSpriteComponent1 = entity1.addComponent<SpriteComponent>(),
+            dirtSpriteComponent2 = entity2.addComponent<SpriteComponent>();
+        SDL_Texture *t = game->getAssetLibrary()->loadTexture("dirtTile", "media/image/dirt-tile.png");
+        dirtSprite.setTexture(t);
+        dirtSprite.setSourceSize(Vec2i(64, 32));
+        dirtSprite.setSourcePosition(Vec2i(0, 0));
+        dirtSprite.setTargetSize(Vec2d(64, 32));
+        dirtSpriteComponent1->sprite = dirtSprite;
+        dirtSpriteComponent2->sprite = dirtSprite;
     }
 };
 

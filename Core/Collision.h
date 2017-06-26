@@ -16,18 +16,5 @@ public:
     {}
 };
 
-class CollisionEnterProcedure
-{
-public:
-    virtual void onCollisionEnter(Collision collision) = 0;
-};
-
-
-class CollisionExitProcedure
-{
-public:
-    virtual void onCollisionExit(Collision collision) = 0;
-};
-
 
 #endif //CHAOS_COLLISION_H

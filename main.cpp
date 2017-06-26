@@ -23,7 +23,7 @@ int main()
     Chaos chaos;
     platformer(&chaos);
     shooter(&chaos);
-    bench(&chaos, 150);
+    //bench(&chaos, 150);
 }
 
 

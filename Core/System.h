@@ -12,6 +12,8 @@ class System
 public:
     unsigned long signature = 0;
 
+    bool managed_;
+
     virtual void init(Game *game)
     {}
 

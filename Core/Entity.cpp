@@ -12,6 +12,8 @@ const std::vector<Script *> emptyScriptVector;
  */
 void Entity::destroy()
 {
+    return;
+
     gameState->removeEntity(id);
 
     for (const auto &element: components_)

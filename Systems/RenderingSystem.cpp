@@ -18,11 +18,10 @@ void RenderingSystem::update(double timeElapsed, std::vector<Entity *> entities)
 {
     for (const auto &entity:entities)
     {
-
-        //if (entity->hasComponent<SpriteComponent>())
-        //{
-        //    renderSprite(entity);
-        //}
+        if (entity->hasComponent<SpriteComponent>())
+        {
+            renderSprite(entity);
+        }
 
         if (entity->hasComponent<ShapeComponent>())
         {
@@ -42,10 +41,8 @@ void RenderingSystem::renderShape(Entity *entity)
     ShapeComponent *polygon = entity->getComponent<ShapeComponent>();
     Vec2i position = transform->position.add(polygon->size.scale(-0.5)).asVec2i();
 
-    //std::cout << " drawing something at " << position.x << "\n";
-
-    graphics->setColor(polygon->color);
-    graphics->fillRect(position, polygon->size.asVec2i());
+    graphics_->setColor(polygon->color);
+    graphics_->fillRect(position, polygon->size.asVec2i());
 }
 
 
@@ -55,10 +52,9 @@ void RenderingSystem::renderShape(Entity *entity)
  */
 void RenderingSystem::renderSprite(Entity *entity)
 {
-    std::cout << " render sprite? \n";
     auto transform = entity->getComponent<TransformComponent>();
     auto sprite = &entity->getComponent<SpriteComponent>()->sprite;
-    graphics->drawSprite(sprite, Vec2i(32, 32), transform->position.asVec2i());
+    graphics_->drawSprite(sprite, sprite->getTargetSize().asVec2i(), transform->position.asVec2i());
 }
 
 
@@ -77,6 +73,6 @@ void RenderingSystem::renderAnimatedSprite(Entity *entity)
 void RenderingSystem::init(Game *game)
 {
     std::cout << "RenderingSystem.init\n";
-    assetLibrary = game->getAssetLibrary();
-    graphics = game->getGraphics();
+    assetLibrary_ = game->getAssetLibrary();
+    graphics_ = game->getGraphics();
 }

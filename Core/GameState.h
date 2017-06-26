@@ -36,9 +36,21 @@ public:
 
     void addSystem(System *system);
 
+    template<typename SystemType>
+    SystemType *addSystem()
+    {
+        SystemType *system = new SystemType;
+        system->managed_ = true;
+        addSystem(system);
+        return system;
+    }
+
+
     void addEntity(Entity *entity);
 
     void removeEntity(unsigned int entityId);
+
+    ~GameState();
 };
 
 

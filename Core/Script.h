@@ -18,6 +18,10 @@ public:
 
     bool hasInit_;
 
+    Entity *entity;
+
+    Game *game;
+
     Script():
         id(++nextId_),
         hasInit_(false)
@@ -33,6 +37,9 @@ public:
     {}
 
     virtual void update(Game *game, Entity *entity, double timeElapsed)
+    {}
+
+    virtual void update(Entity *entity)
     {}
 
     virtual void onCollisionEnter(Collision collision)

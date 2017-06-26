@@ -17,7 +17,7 @@ private:
     const std::string basePath_ = "";
 
 public:
-    void loadTexture(std::string name, std::string filePath);
+    SDL_Texture *loadTexture(std::string name, std::string filePath);
 
     SDL_Texture *getTexture(std::string name);
 

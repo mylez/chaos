@@ -52,12 +52,20 @@ public:
     void addComponent(ComponentType *component)
     {
         std::cout << typeid(ComponentType).name() << "\t" << component << "\t to entity " << id << "\n";
-
         component->entity = this;
         signature = signature | component->label;
         components_[std::type_index(typeid(ComponentType))] = component;
     }
 
+
+    template<typename ComponentType>
+    ComponentType *addComponent()
+    {
+        ComponentType *c = new ComponentType;
+        c->managed_ = true;
+        addComponent(c);
+        return c;
+    }
 
     /**
      *

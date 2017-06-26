@@ -82,8 +82,23 @@ void GameState::performInit(Game *game)
 }
 
 
-
-
+/**
+ *
+ */
+GameState::~GameState()
+{
+    for (const auto &entity: entities_)
+    {
+        entity.second->destroy();
+    }
+    for (const auto &system: systems_)
+    {
+        if (system->managed_)
+        {
+            delete system;
+        }
+    }
+}
 
 
 

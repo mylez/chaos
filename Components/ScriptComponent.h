@@ -13,7 +13,7 @@ public:
     std::vector<Script *> scripts;
 
     ScriptComponent()
-    { label = COMPONENT_UPDATE; }
+    { label = COMPONENT_SCRIPT; }
 
     void addScript(Script *script)
     {

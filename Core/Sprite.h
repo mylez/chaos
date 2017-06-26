@@ -8,7 +8,11 @@ class Sprite
 {
     SDL_Texture *texture_;
     SDL_Rect srcRect_;
-    Vec2i pos_, size_;
+    Vec2i
+        sourcePos_,
+        sourceSize_;
+
+    Vec2d targetSize_;
 public:
     Sprite()
     {};
@@ -19,11 +23,12 @@ public:
      * @param pos
      * @param size
      */
-    Sprite(SDL_Texture *texture, Vec2i pos, Vec2i size)
+    Sprite(SDL_Texture *texture, Vec2i pos, Vec2i size, Vec2d targetSize)
     {
         texture_ = texture;
-        pos_ = pos;
-        size_ = size;
+        sourcePos_ = pos;
+        sourceSize_ = size;
+        targetSize_ = targetSize;
     }
 
     /**
@@ -50,7 +55,7 @@ public:
      */
     SDL_Rect getSrcRect()
     {
-        return SDL_Rect{pos_.x, pos_.y, size_.x, size_.y};
+        return SDL_Rect{sourcePos_.x, sourcePos_.y, sourceSize_.x, sourceSize_.y};
     }
 
     /**
@@ -59,7 +64,7 @@ public:
      */
     void setSourcePosition(Vec2i pos)
     {
-        pos_ = pos;
+        sourcePos_ = pos;
     }
 
     /**
@@ -68,7 +73,18 @@ public:
      */
     void setSourceSize(Vec2i size)
     {
-        size_ = size;
+        sourceSize_ = size;
+    }
+
+
+    void setTargetSize(Vec2d size)
+    {
+        targetSize_ = size;
+    }
+
+    Vec2d getTargetSize()
+    {
+        return targetSize_;
     }
 };
 

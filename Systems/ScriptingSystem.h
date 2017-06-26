@@ -12,7 +12,7 @@ public:
     Game *game;
 
     ScriptingSystem()
-    { signature = COMPONENT_UPDATE; }
+    { signature = COMPONENT_SCRIPT; }
 
     void update(double timeElapsed, std::vector<Entity *> entities);
 

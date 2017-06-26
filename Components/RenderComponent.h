@@ -3,12 +3,22 @@
 
 #include <Core/Component.h>
 
+typedef enum COORD
+{
+    ISOMETRIC
+} RenderCoordSystem;
+
 class RenderComponent:
     public Component
 {
 public:
+    RenderCoordSystem renderCoordSystem;
+
     RenderComponent()
-    { label = COMPONENT_RENDER; }
+    {
+        label = COMPONENT_RENDER;
+        renderCoordSystem = COORD::ISOMETRIC;
+    }
 };
 
 

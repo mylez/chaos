@@ -1,7 +1,6 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include "Graphics.h"
-#include "Error.h"
 #include "Sprite.h"
 
 
@@ -268,7 +267,7 @@ void Graphics::drawSprite(Sprite *sprite, Vec2i size, Vec2i pos)
         srcRect = sprite->getSrcRect(),
         dstRect = {
         pos.x,
-        pos.y,
+        pos.y - size.y / 2,
         size.x,
         size.y
     };

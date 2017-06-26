@@ -9,9 +9,13 @@
 class RenderingSystem:
     public System
 {
-    Graphics *graphics;
+private:
+    Graphics *graphics_;
 
-    AssetLibrary *assetLibrary;
+    AssetLibrary *assetLibrary_;
+
+    Vec2i windowSize_;
+
 
 public:
     RenderingSystem()

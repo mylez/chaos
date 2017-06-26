@@ -7,6 +7,8 @@
 class Vec2d
 {
 public:
+    Vec2d(): x(0), y(0) {}
+
     Vec2d(Vec2i a);
 
     Vec2d(double _x, double _y);

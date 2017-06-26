@@ -16,23 +16,14 @@
 #include <Components/BoxCollisionComponent.h>
 #include <Components/ScriptComponent.h>
 #include <Components/BoxCollisionComponent.h>
+#include <Components/TerrainLayerComponent.h>
 
 
 class ShooterGameState:
     public GameState
 {
 public:
-    CollisionSystem         collisionSystem;
-    RenderingSystem         renderingSystem;
-    MotionSystem            motionSystem;
-    ScriptingSystem         scriptingSystem;
 
-    Entity                  entity1, entity2, entity3;
-
-    PhysicsComponent        physicsComponent1, physicsComponent2;
-    ShapeComponent          shapeComponent1, shapeComponent2;
-    BoxCollisionComponent   boxCollisionComponent1, boxCollisionComponent2;
-    RenderComponent         renderComponent;
 
     /**
      *
@@ -40,34 +31,11 @@ public:
      */
     void init(Game *game)
     {
-        addSystem(&collisionSystem);
-        addSystem(&motionSystem);
-        addSystem(&renderingSystem);
+        TerrainLayerComponent terrain;
 
-        entity1.addComponent(&boxCollisionComponent1);
+        terrain.loadTerrainData("media/tile-data/level.json");
 
-        entity2.addComponent(&boxCollisionComponent2);
-
-        boxCollisionComponent1.size = Vec2d(70, 20);
-        boxCollisionComponent1.debugDraw = true;
-
-        boxCollisionComponent2.size = Vec2d(10, 100);
-        boxCollisionComponent2.debugDraw = true;
-
-        entity1.transform.position = Vec2d(0, 400);
-        physicsComponent1.velocity = Vec2d(40, 0);
-        entity1.addComponent(&physicsComponent1);
-
-        entity2.transform.position = Vec2d(300, 400);
-        physicsComponent2.velocity = Vec2d(15, 0);
-        entity2.addComponent(&physicsComponent2);
-
-        entity3.transform.position = Vec2d(400, 400);
-        entity3.addComponent(&boxCollisionComponent1);
-
-        addEntity(&entity1);
-        addEntity(&entity2);
-        addEntity(&entity3);
+        std::cout << "loaded terrain: " << terrain.height << "x" <<terrain.width << "\n";
     }
 };
 
