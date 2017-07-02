@@ -1,6 +1,6 @@
 #ifndef CHAOS_COLOR_H
 #define CHAOS_COLOR_H
-
+#include <random>
 
 struct Color
 {
@@ -17,6 +17,16 @@ struct Color
     Color(int r_, int g_, int b_):
         r(r_), g(g_), b(b_), a(255)
     {}
+
+    static Color random()
+    {
+        return random(0);
+    }
+
+    static Color random(int min)
+    {
+        return Color(min + rand()%(256 - min), min + rand()%(256 - min), min + rand()%(256 - min));
+    }
 };
 
 

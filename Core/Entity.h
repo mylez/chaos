@@ -15,7 +15,6 @@ class Script;
 
 class GameState;
 
-
 class Entity
 {
 private:

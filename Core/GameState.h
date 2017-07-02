@@ -3,6 +3,7 @@
 
 #include <map>
 #include <vector>
+#include <Core/Entity.h>
 #include <Systems/RenderingSystem.h>
 #include <Systems/ScriptingSystem.h>
 
@@ -15,14 +16,13 @@ class Entity;
 class GameState
 {
 private:
-    std::map<unsigned int, Entity *> entities_;
-
     //std::vector<Entity *> entities_;
     std::vector<System *> systems_;
 
-    std::vector<Entity *> filterBySignature(unsigned long label);
 
 public:
+
+    std::map<unsigned int, Entity *> entities_;
 
     RenderingSystem renderingSystem;
     ScriptingSystem updateSystem;
@@ -45,10 +45,27 @@ public:
         return system;
     }
 
+    Entity *findEntity(std::string name);
 
     void addEntity(Entity *entity);
 
     void removeEntity(unsigned int entityId);
+
+    std::vector<Entity *> filterEntitiesBySignature(unsigned long label);
+
+
+    template<typename ComponentType>
+    Entity *findEntityWithComponent()
+    {
+        for (const auto &e: entities_)
+        {
+            if (e.second->hasComponent<ComponentType>())
+            {
+                return e.second;
+            }
+        }
+        return nullptr;
+    }
 
     ~GameState();
 };

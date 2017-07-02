@@ -12,6 +12,19 @@ public:
     Vec2i add(Vec2i a);
 
     int x, y;
+
+    /**
+     *
+     * @param a
+     * @return
+     */
+    Vec2i entryMult(Vec2i a)
+    {
+        return Vec2i(
+            x * a.x,
+            y * a.y
+        );
+    }
 };
 
 

@@ -6,15 +6,31 @@
 #include <Core/Graphics.h>
 #include <Core/AssetLibrary.h>
 
+#include <Components/CameraComponent.h>
+
 class RenderingSystem:
     public System
 {
 private:
-    Graphics *graphics_;
 
-    AssetLibrary *assetLibrary_;
+    Vec2i
+        windowSize_;
 
-    Vec2i windowSize_;
+    Graphics
+        *graphics_
+        = nullptr;
+
+    AssetLibrary
+        *assetLibrary_
+        = nullptr;
+
+    Entity
+        *cameraEntity
+        = nullptr;
+
+    CameraComponent
+        *cameraComponent
+        = nullptr;
 
 
 public:
@@ -29,7 +45,11 @@ public:
 
     void renderSprite(Entity *entity);
 
-    void renderAnimatedSprite(Entity *entity);
+    void renderAnimation(Entity *entity);
+
+    void renderTerrain(Entity *entity);
+
+    Vec2d positionInCamera(Vec2d position);
 };
 
 

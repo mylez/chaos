@@ -3,6 +3,7 @@
 
 #include <Core/Component.h>
 #include <vector>
+#include <Core/Script.h>
 
 class Script;
 
@@ -17,6 +18,7 @@ public:
 
     void addScript(Script *script)
     {
+        script->entity = this->entity;
         scripts.push_back(script);
     }
 

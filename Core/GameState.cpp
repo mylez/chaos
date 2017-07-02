@@ -9,7 +9,8 @@ void GameState::update(double timeElapsed)
 {
     for (const auto &system: systems_)
     {
-        system->update(timeElapsed, filterBySignature(system->signature));
+        std::vector<Entity *> entities = filterEntitiesBySignature(system->signature);
+        system->update(timeElapsed, entities);
     }
 }
 
@@ -22,7 +23,7 @@ void GameState::addEntity(Entity *entity)
 {
     entity->gameState = this;
     entities_[entity->id] = entity;
-    std::cout << "adding entity " << entity->id << ":\t" << entity << " to GameState\n";
+    std::cout << "adding entity " << entity->id << ":\t" << entity << "\t to GameState\n";
     //entities_.push_back(entity);
 }
 
@@ -42,7 +43,7 @@ void GameState::addSystem(System *system)
  * @param signature
  * @return
  */
-std::vector<Entity *> GameState::filterBySignature(unsigned long signature)
+std::vector<Entity *> GameState::filterEntitiesBySignature(unsigned long signature)
 {
     std::vector<Entity *> entities;
     for (const auto &entity: entities_)
@@ -54,7 +55,6 @@ std::vector<Entity *> GameState::filterBySignature(unsigned long signature)
     }
     return entities;
 }
-
 
 /**
  *
@@ -73,6 +73,7 @@ void GameState::removeEntity(unsigned int entityId)
  */
 void GameState::performInit(Game *game)
 {
+    std::cout << "performInit " << entities_.size() << "\n";
     init(game);
 
     for (const auto &system: systems_)
@@ -101,6 +102,23 @@ GameState::~GameState()
 }
 
 
+/**
+ *
+ * @param name
+ * @return
+ */
+Entity *GameState::findEntity(std::string name)
+{
+    for (const auto &e: entities_)
+    {
+        if (e.second->name == name)
+        {
+            return e.second;
+        }
+    }
+
+    return nullptr;
+}
 
 
 /**
@@ -122,3 +140,4 @@ void GameState::update(double timeElapsed)
     }
 }
 */
+

@@ -225,14 +225,10 @@ void Graphics::drawString(std::string text, Vec2i pos)
 
 
 void Graphics::drawPoint(Vec2i pos)
-{
-
-}
+{}
 
 Graphics::Graphics()
-{
-
-}
+{}
 
 
 void Graphics::loadFontCache()
@@ -267,7 +263,7 @@ void Graphics::drawSprite(Sprite *sprite, Vec2i size, Vec2i pos)
         srcRect = sprite->getSrcRect(),
         dstRect = {
         pos.x,
-        pos.y - size.y / 2,
+        pos.y,// - size.y / 2,
         size.x,
         size.y
     };

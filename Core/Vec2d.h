@@ -15,6 +15,12 @@ public:
 
     Vec2d entryMult(Vec2d a);
 
+    Vec2d entryMult(double x, double y);
+
+    Vec2d entryDiv(Vec2d a);
+
+    Vec2d entryDiv(double a, double b);
+
     Vec2d add(Vec2d a);
 
     Vec2d scale(double a)

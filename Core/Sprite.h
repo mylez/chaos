@@ -2,6 +2,7 @@
 #define CHAOS_SPRITE_H
 
 #include <Core/Vec2i.h>
+#include <Core/Vec2d.h>
 #include <SDL2/SDL.h>
 
 class Sprite
@@ -42,6 +43,7 @@ public:
 
     /**
      *
+     *
      * @param texture
      */
     void setTexture(SDL_Texture *texture)
@@ -77,11 +79,19 @@ public:
     }
 
 
+    /**
+     *
+     * @param size
+     */
     void setTargetSize(Vec2d size)
     {
         targetSize_ = size;
     }
 
+    /**
+     *
+     * @return
+     */
     Vec2d getTargetSize()
     {
         return targetSize_;

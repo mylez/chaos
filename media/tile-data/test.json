@@ -3,21 +3,10 @@
         {
          "data":[161, 162, 162, 162, 163, 177, 178, 178, 178, 179, 177, 178, 178, 178, 179, 177, 178, 178, 178, 179, 193, 194, 194, 194, 195],
          "height":5,
-         "name":"Background",
+         "name":"Terrain",
          "opacity":1,
          "type":"tilelayer",
          "visible": true,
-         "width":5,
-         "x":0,
-         "y":0
-        }, 
-        {
-         "data":[1, 0, 0, 0, 0, 0, 0, 0, 140, 0, 0, 166, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-         "height":5,
-         "name":"Items",
-         "opacity":1,
-         "type":"tilelayer",
-         "visible":true,
          "width":5,
          "x":0,
          "y":0

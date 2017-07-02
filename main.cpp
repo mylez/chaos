@@ -8,6 +8,8 @@
 #include <Systems/CollisionSystem.h>
 #include <GameStates/ShooterGameState.h>
 #include <GameStates/PlatformerGameState.h>
+#include <stdlib.h>
+#include <time.h>
 
 using namespace std;
 
@@ -21,7 +23,7 @@ void platformer(Chaos *);
 int main()
 {
     Chaos chaos;
-    platformer(&chaos);
+    //platformer(&chaos);
     shooter(&chaos);
     //bench(&chaos, 150);
 }

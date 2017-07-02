@@ -12,7 +12,7 @@ class System
 public:
     unsigned long signature = 0;
 
-    bool managed_;
+    bool managed_ = false;
 
     virtual void init(Game *game)
     {}

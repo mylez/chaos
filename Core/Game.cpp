@@ -111,7 +111,8 @@ Game::Game()
     SDL_GetCurrentDisplayMode(0, &displayMode);
 
     window_ = SDL_CreateWindow("", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                               displayMode.w / 2, displayMode.h / 2,
+                               640, 320,
+                               //displayMode.w / 2, displayMode.h / 2,
                                SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 
     renderer_ = SDL_CreateRenderer(window_, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
@@ -138,7 +139,7 @@ Game::~Game()
 
 void Game::setGameState(GameState *gameState)
 {
-    gameState->performInit(this);
-    //gameState->willEnter(&assetLibrary_);
     gameState_ = gameState;
+    gameState_->performInit(this);
+    //gameState->willEnter(&assetLibrary_);
 }

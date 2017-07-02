@@ -37,10 +37,48 @@ Vec2d Vec2d::entryMult(Vec2d a)
  * @param a
  * @return
  */
+Vec2d Vec2d::entryDiv(Vec2d a)
+{
+    return Vec2d(
+        x / a.x,
+        y / a.y
+    );
+}
+
+
+/**
+ *
+ * @param a
+ * @return
+ */
 Vec2d Vec2d::add(Vec2d a)
 {
     return Vec2d(
         x + a.x,
         y + a.y
     );
+}
+
+
+/**
+ *
+ * @param a
+ * @param b
+ * @return
+ */
+Vec2d Vec2d::entryMult(double a, double b)
+{
+    return entryMult(Vec2d(a, b));
+}
+
+
+/**
+ *
+ * @param a
+ * @param b
+ * @return
+ */
+Vec2d Vec2d::entryDiv(double a, double b)
+{
+    return entryDiv(Vec2d(a, b));
 }

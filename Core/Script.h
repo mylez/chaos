@@ -8,6 +8,8 @@ class Game;
 
 class Entity;
 
+class GameState;
+
 class Script
 {
 private:
@@ -29,11 +31,11 @@ public:
 
     inline void doInit(Game *game, Entity *entity)
     {
-        init(game, entity);
+        init(entity);
         hasInit_ = true;
     }
 
-    virtual void init(Game *game, Entity *entity)
+    virtual void init(Entity *entity)
     {}
 
     virtual void update(Game *game, Entity *entity, double timeElapsed)
@@ -47,6 +49,8 @@ public:
 
     virtual void onCollisionExit(Collision collision)
     {}
+
+    GameState *gameState();
 };
 
 

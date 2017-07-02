@@ -3,7 +3,7 @@
         {
          "data":[1, 2, 3, 4],
          "height":2,
-         "name":"Tile Layer 1",
+         "name":"Terrain",
          "opacity":1,
          "type":"tilelayer",
          "visible":true,

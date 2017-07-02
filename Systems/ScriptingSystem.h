@@ -5,6 +5,8 @@
 #include <Core/Component.h>
 #include <iostream>
 
+class Game;
+
 class ScriptingSystem:
     public System
 {
@@ -16,11 +18,7 @@ public:
 
     void update(double timeElapsed, std::vector<Entity *> entities);
 
-    void init(Game *game)
-    {
-        std::cout << "ScriptingSystem.init\n";
-        this->game = game;
-    }
+    void init(Game *game);
 };
 
 
