@@ -14,7 +14,6 @@
 #include <Components/ShapeComponent.h>
 #include <Components/SpriteComponent.h>
 #include <Components/PhysicsComponent.h>
-#include <Components/BoxCollisionComponent.h>
 #include <Components/ScriptComponent.h>
 #include <Components/BoxCollisionComponent.h>
 #include <Components/TerrainLayerComponent.h>
@@ -43,7 +42,7 @@ struct PlayerScript: public Script
     void update(Entity *playerEntity)
     {
         const Uint8 *keyStates = SDL_GetKeyboardState(NULL);
-        double a = 100;
+        double a = 200;
         Vec2d acceleration;
 
         if (keyStates[SDL_SCANCODE_RIGHT]) { acceleration.x +=  a; }
@@ -61,7 +60,7 @@ struct PlayerScript: public Script
             printf("tile type: %d\n", terrain->getTileInfoAtPosition(0, gameState()->findEntity("player")->transform.position));
         }
 
-        //gameState()->findEntityWithComponent<CameraComponent>()->transform.position = Vec2d(100 * deltaT, 100 * deltaT);
+        gameState()->findEntityWithComponent<CameraComponent>()->transform.position = playerEntity->transform.position.scale(-1);
     }
 };
 
@@ -87,7 +86,8 @@ public:
     Entity
         cameraEntity,
         terrainEntity,
-        playerEntity;
+        playerEntity,
+        centerEntity;
 
     /**
      *
@@ -103,28 +103,32 @@ public:
 
         game->getAssetLibrary()->loadTexture("Terrain", "media/tile-sheets/Terrain.png");
 
-        terrain.loadTerrainData("media/tile-data/level.json");
+        terrain.loadTerrainData("media/tile-data/test.json");
 
         terrainEntity.addComponent(&terrain);
         terrainEntity.addComponent(&render);
 
         script.addScript(&playerScript);
-        shape.color = Color::random(100);
+        shape.color = Color(255, 0, 0);
+        shape.size = Vec2d(3,3);
+
+        centerEntity.addComponent(&shape);
+        centerEntity.addComponent(&render);
 
         physics.friction = 0.97;
 
         terrainEntity.name = "terrain";
         playerEntity.name = "player";
 
-        printf("p: %p\n", &playerEntity);
         playerEntity.addComponent(&shape);
         playerEntity.addComponent(&physics);
         playerEntity.addComponent(&script);
         playerEntity.addComponent(&render);
 
-        //addEntity(&cameraEntity);
+        addEntity(&cameraEntity);
         addEntity(&terrainEntity);
         addEntity(&playerEntity);
+        addEntity(&centerEntity);
     }
 };
 

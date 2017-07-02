@@ -73,7 +73,6 @@ void GameState::removeEntity(unsigned int entityId)
  */
 void GameState::performInit(Game *game)
 {
-    std::cout << "performInit " << entities_.size() << "\n";
     init(game);
 
     for (const auto &system: systems_)

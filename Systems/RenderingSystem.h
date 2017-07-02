@@ -14,7 +14,10 @@ class RenderingSystem:
 private:
 
     Vec2i
-        windowSize_;
+        windowSize_i_;
+
+    Vec2d
+        windowSize_d_;
 
     Graphics
         *graphics_
@@ -50,6 +53,8 @@ public:
     void renderTerrain(Entity *entity);
 
     Vec2d positionInCamera(Vec2d position);
+
+    Vec2d positionOriginRelative(Vec2d position);
 };
 
 

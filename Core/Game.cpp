@@ -111,7 +111,7 @@ Game::Game()
     SDL_GetCurrentDisplayMode(0, &displayMode);
 
     window_ = SDL_CreateWindow("", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                               640, 320,
+                               960, 640,
                                //displayMode.w / 2, displayMode.h / 2,
                                SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 

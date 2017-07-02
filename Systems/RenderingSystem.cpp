@@ -1,12 +1,9 @@
 #include <Core/Entity.h>
 #include <Core/Game.h>
 #include <Core/SpriteSheet.h>
-#include <Core/Sprite.h>
-#include <Components/TransformComponent.h>
 #include <Components/ShapeComponent.h>
 #include <Components/SpriteComponent.h>
 #include <Components/TerrainLayerComponent.h>
-#include <Systems/RenderingSystem.h>
 
 
 /**
@@ -27,25 +24,27 @@ void RenderingSystem::update(double timeElapsed, std::vector<Entity *> entities)
                 .add(Vec2d(-85, -20))
                 .asVec2i()
         );
+        return;
     }
-    else
+
+    windowSize_i_ = graphics_->getWindowSize();
+    windowSize_d_ = Vec2d(windowSize_i_.x, windowSize_i_.y);
+
+    for (const auto &entity:entities)
     {
-        for (const auto &entity:entities)
+        if (entity->hasComponent<SpriteComponent>())
         {
-            if (entity->hasComponent<SpriteComponent>())
-            {
-                renderSprite(entity);
-            }
+            renderSprite(entity);
+        }
 
-            if (entity->hasComponent<ShapeComponent>())
-            {
-                renderShape(entity);
-            }
+        if (entity->hasComponent<ShapeComponent>())
+        {
+            renderShape(entity);
+        }
 
-            if (entity->hasComponent<TerrainLayerComponent>())
-            {
-                renderTerrain(entity);
-            }
+        if (entity->hasComponent<TerrainLayerComponent>())
+        {
+            renderTerrain(entity);
         }
     }
 }
@@ -121,6 +120,7 @@ void RenderingSystem::renderTerrain(Entity *entity)
     TransformComponent *transform = entity->getComponent<TransformComponent>();
     TerrainLayerComponent *terrain = entity->getComponent<TerrainLayerComponent>();
     Vec2i windowSize = graphics_->getWindowSize();
+    Vec2i tileSize(terrain->tileSets[0].tileWidth, terrain->tileSets[0].tileHeight);
 
     for (int l = 0; l < terrain->numLayers; l++)
     {
@@ -131,29 +131,53 @@ void RenderingSystem::renderTerrain(Entity *entity)
             Vec2i(32, 32)
         );
 
-        for (int x = 0; x < terrain->width && x*32 < windowSize.x; x++)
+        for (int x = 0; x < terrain->width /*&& x * 32 < windowSize.x*/; x++)
         {
-            for (int y = 0; y < terrain->height && y*32 < windowSize.y; y++)
+            for (int y = 0; y < terrain->height /*&& y * 32 < windowSize.y*/; y++)
             {
                 TileInfo tileInfo = terrain->getTileInfoAtIndex(l, x, y);
                 if (tileInfo.type >= 0)
                 {
                     Sprite sprite = spriteSheet.getSprite(tileInfo.type);
+                    Vec2i pos = tileSize
+                        .entryMult(Vec2i(x, y))
+                        .add(positionInCamera(transform->position).asVec2i())
+                        .add(Vec2i(-terrainLayer.height*tileSize.x / 2, -terrainLayer.height * tileSize.y / 2));
 
                     graphics_->drawSprite(
                         &sprite,
-                        Vec2i(32, 32),
-                        Vec2i(32, 32)
-                            .entryMult(Vec2i(x, y))
-                            .add(positionInCamera(transform->position).asVec2i())
+                        tileSize,
+                        pos
                     );
+                    graphics_->setColor(80, 80, 255);
+                    graphics_->drawRect(pos, Vec2i(32, 32));
                 }
             }
         }
     }
 }
 
+
+/**
+ *
+ * @param position
+ * @return
+ */
 Vec2d RenderingSystem::positionInCamera(Vec2d position)
 {
-    return position.add(cameraEntity->transform.position);
+    return position.add(
+        cameraEntity->transform.position
+            .add(windowSize_d_.scale(0.5))
+    );
+}
+
+
+/**
+ *
+ * @param position
+ * @return
+ */
+Vec2d RenderingSystem::positionOriginRelative(Vec2d position)
+{
+    return position.entryMult(1, -1).add(Vec2d(0, windowSize_d_.y));
 }

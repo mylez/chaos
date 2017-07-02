@@ -27,6 +27,7 @@ struct Color
     {
         return Color(min + rand()%(256 - min), min + rand()%(256 - min), min + rand()%(256 - min));
     }
+
 };
 
 

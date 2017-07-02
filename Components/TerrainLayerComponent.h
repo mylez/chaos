@@ -110,7 +110,13 @@ public:
     TileInfo getTileInfoAtIndex(int l, int x, int y)
     {
         int i = width * y + x,
-            type = layers[l].data[i] - 1;
+            type = layers[l].data[i] - 1,
+            s = layers[l].data.size();
+
+        if (x < 0 || y < 0 || x >= layers[l].width || y >= layers[l].height)
+        {
+            type = -10;
+        }
 
         return TileInfo{type, x, y, l};
     }
@@ -128,10 +134,13 @@ public:
         double  th = tileSets[0].tileHeight,
                 tw = tileSets[0].tileWidth;
 
-        Vec2i p = position
-            .add(entity->transform.position)
-            .entryDiv(tw, th)
-            .asVec2i();
+        Vec2i
+            tileSize(tileSets[0].tileWidth, tileSets[0].tileHeight),
+            p = position
+                .add(entity->transform.position)
+                .add(Vec2i((width)*tileSize.x/2, (height)*tileSize.y/2))
+                .entryDiv(tw, th)
+                .asVec2i();
 
         return getTileInfoAtIndex(l, p.x, p.y);
     }
