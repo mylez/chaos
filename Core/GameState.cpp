@@ -95,7 +95,7 @@ GameState::~GameState()
     {
         if (system->managed_)
         {
-            delete system;
+            //delete system;
         }
     }
 }

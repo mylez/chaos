@@ -21,24 +21,30 @@ private:
     static unsigned int nextId_;
 
 public:
-    std::map<std::type_index, Component *> components_;
+    Entity *parent;
+
+    std::vector<Entity *> children;
 
     TransformComponent transform;
 
+    std::map<std::type_index, Component *> components_;
+
     unsigned long
-        signature = 0;
+        signature;
 
     unsigned int
-        id = 0;
+        id;
 
     std::string
         name;
 
     GameState *gameState;
 
-    Entity()
+    Entity():
+        signature(0),
+        parent(nullptr),
+        id(++nextId_)
     {
-        id = ++nextId_;
         addComponent(&transform);
     }
 

@@ -23,7 +23,7 @@ Vec2d::Vec2d(double _x, double _y)
  * @param a
  * @return
  */
-Vec2d Vec2d::entryMult(Vec2d a)
+Vec2d Vec2d::hadamard(Vec2d a)
 {
     return Vec2d(
         x * a.x,
@@ -37,7 +37,7 @@ Vec2d Vec2d::entryMult(Vec2d a)
  * @param a
  * @return
  */
-Vec2d Vec2d::entryDiv(Vec2d a)
+Vec2d Vec2d::divide(Vec2d a)
 {
     return Vec2d(
         x / a.x,
@@ -66,9 +66,9 @@ Vec2d Vec2d::add(Vec2d a)
  * @param b
  * @return
  */
-Vec2d Vec2d::entryMult(double a, double b)
+Vec2d Vec2d::hadamard(double a, double b)
 {
-    return entryMult(Vec2d(a, b));
+    return hadamard(Vec2d(a, b));
 }
 
 
@@ -78,7 +78,7 @@ Vec2d Vec2d::entryMult(double a, double b)
  * @param b
  * @return
  */
-Vec2d Vec2d::entryDiv(double a, double b)
+Vec2d Vec2d::divide(double a, double b)
 {
-    return entryDiv(Vec2d(a, b));
+    return divide(Vec2d(a, b));
 }

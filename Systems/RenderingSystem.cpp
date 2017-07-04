@@ -20,7 +20,7 @@ void RenderingSystem::update(double timeElapsed, std::vector<Entity *> entities)
         graphics_->drawString(
             "No camera attached",
             Vec2d(w.x, w.y)
-                .entryMult(.5, .5)
+                .hadamard(.5, .5)
                 .add(Vec2d(-85, -20))
                 .asVec2i()
         );
@@ -52,18 +52,49 @@ void RenderingSystem::update(double timeElapsed, std::vector<Entity *> entities)
 
 /**
  *
+ * @param game
+ */
+void RenderingSystem::init(Game *game)
+{
+    std::cout << "RenderingSystem.init\n";
+    assetLibrary_ = game->getAssetLibrary();
+    graphics_ = game->getGraphics();
+    cameraEntity = game->getGameState()->findEntityWithComponent<CameraComponent>();
+    if (cameraEntity != nullptr)
+    {
+        cameraComponent = cameraEntity->getComponent<CameraComponent>();
+        cameraComponent->renderingSystem = this;
+    }
+}
+
+
+/**
+ *
  * @param entity
  */
 void RenderingSystem::renderShape(Entity *entity)
 {
     TransformComponent *transform = entity->getComponent<TransformComponent>();
     ShapeComponent *polygon = entity->getComponent<ShapeComponent>();
-    Vec2i position = positionInCamera(transform->position)
-        .add(polygon->size.scale(-0.5))
+
+    Vec2i screenPosition = transform->position
+        // invert y axis
+        .hadamard(1, -1)
+        // position in camera
+        .add(cameraEntity->transform.position.hadamard(-1, 1))
+        // move origin to the center of screen
+        .add(windowSize_d_.scale(.5))
+        // treat entity position as its center
+        .add(polygon->size.scale(-.5))
+        //
         .asVec2i();
 
     graphics_->setColor(polygon->color);
-    graphics_->fillRect(position, polygon->size.asVec2i());
+    graphics_->fillRect(screenPosition, polygon->size.asVec2i());
+    //
+    std::stringstream message;
+    message << entity->transform.position.x << " " << entity->transform.position.y;
+    graphics_->drawString(message.str(), screenPosition.add(Vec2i(10, -3)));
 }
 
 
@@ -95,31 +126,12 @@ void RenderingSystem::renderAnimation(Entity *entity)
 
 /**
  *
- * @param game
- */
-void RenderingSystem::init(Game *game)
-{
-    std::cout << "RenderingSystem.init\n";
-    assetLibrary_ = game->getAssetLibrary();
-    graphics_ = game->getGraphics();
-    cameraEntity = game->getGameState()->findEntityWithComponent<CameraComponent>();
-    if (cameraEntity != nullptr)
-    {
-        cameraComponent = cameraEntity->getComponent<CameraComponent>();
-        cameraComponent->renderingSystem = this;
-    }
-}
-
-
-/**
- *
  * @param entity
  */
 void RenderingSystem::renderTerrain(Entity *entity)
 {
     TransformComponent *transform = entity->getComponent<TransformComponent>();
     TerrainLayerComponent *terrain = entity->getComponent<TerrainLayerComponent>();
-    Vec2i windowSize = graphics_->getWindowSize();
     Vec2i tileSize(terrain->tileSets[0].tileWidth, terrain->tileSets[0].tileHeight);
 
     for (int l = 0; l < terrain->numLayers; l++)
@@ -131,26 +143,46 @@ void RenderingSystem::renderTerrain(Entity *entity)
             Vec2i(32, 32)
         );
 
-        for (int x = 0; x < terrain->width /*&& x * 32 < windowSize.x*/; x++)
+        TileInfo
+            topLeftTile = terrain->getTileInfoAtPosition(l, transform->position.add(windowSize_d_.scale(-.5))
+                .add(cameraEntity->transform.position.hadamard(1, -1)).hadamard(1, -1)),
+            bottomRightTile = terrain->getTileInfoAtPosition(l, transform->position.add(windowSize_d_.scale(.5))
+                .add(cameraEntity->transform.position.hadamard(1, -1)).hadamard(1, -1));
+
+        for (int x = topLeftTile.x; x < bottomRightTile.x; x++)
+        //for (int x = 0; x < terrain->width; x++)
         {
-            for (int y = 0; y < terrain->height /*&& y * 32 < windowSize.y*/; y++)
+            for (int y = topLeftTile.y; y < bottomRightTile.y; y++)
+            //for (int y = 0; y < terrain->height; y++)
             {
                 TileInfo tileInfo = terrain->getTileInfoAtIndex(l, x, y);
                 if (tileInfo.type >= 0)
                 {
                     Sprite sprite = spriteSheet.getSprite(tileInfo.type);
-                    Vec2i pos = tileSize
-                        .entryMult(Vec2i(x, y))
-                        .add(positionInCamera(transform->position).asVec2i())
-                        .add(Vec2i(-terrainLayer.height*tileSize.x / 2, -terrainLayer.height * tileSize.y / 2));
+
+                    Vec2i screenPosition = transform->position
+                        // invert y axis
+                        .hadamard(1, -1)
+                        //
+                        .add(Vec2d(x*tileSize.x, y*tileSize.y))
+                        //
+                        .add(Vec2d(-terrain->width*tileSize.x/2, -terrain->height*tileSize.y/2))
+                        // move origin to the center of screen
+                        .add(windowSize_d_.hadamard(.5, .5))
+                        // treat entity position as its center
+                        //.add(terrain->size.scale(-.5))
+                        // position in camera
+                        .add(cameraEntity->transform.position.hadamard(-1, 1))
+                        //
+                        .asVec2i();
 
                     graphics_->drawSprite(
                         &sprite,
                         tileSize,
-                        pos
+                        screenPosition
                     );
-                    graphics_->setColor(80, 80, 255);
-                    graphics_->drawRect(pos, Vec2i(32, 32));
+                    graphics_->setColor(80, 80, 200);
+                    graphics_->drawRect(screenPosition, Vec2i(32, 32));
                 }
             }
         }
@@ -179,5 +211,5 @@ Vec2d RenderingSystem::positionInCamera(Vec2d position)
  */
 Vec2d RenderingSystem::positionOriginRelative(Vec2d position)
 {
-    return position.entryMult(1, -1).add(Vec2d(0, windowSize_d_.y));
+    return position.hadamard(1, -1).add(Vec2d(0, windowSize_d_.y));
 }

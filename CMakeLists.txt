@@ -21,6 +21,7 @@ file(GLOB chaos_SRC
         "GameStates/*.cpp"
         "Core/include/jsoncpp/dist/jsoncpp.cpp"
         "Core/include/SDL_FontCache/SDL_FontCache.c"
+        "Core/include/base64/base64.cpp"
 )
 
 add_executable(chaos ${chaos_SRC})

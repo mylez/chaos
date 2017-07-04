@@ -18,11 +18,37 @@ public:
      * @param a
      * @return
      */
-    Vec2i entryMult(Vec2i a)
+    Vec2i hadamard(Vec2i a)
     {
         return Vec2i(
             x * a.x,
             y * a.y
+        );
+    }
+
+    /**
+     *
+     * @param a
+     * @return
+     */
+    Vec2i divide(Vec2i a)
+    {
+        return Vec2i(
+            x / a.x,
+            y / a.y
+        );
+    }
+
+    /**
+     *
+     * @param a
+     * @return
+     */
+    Vec2i scale(int a)
+    {
+        return Vec2i(
+            x * a,
+            y * a
         );
     }
 };

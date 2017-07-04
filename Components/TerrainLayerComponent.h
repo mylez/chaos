@@ -6,6 +6,9 @@
 #include <Core/include/jsoncpp/dist/json/json.h>
 #include <Core/Error.h>
 #include <fstream>
+#include <Core/include/base64/base64.h>
+#include <Core/include/base64/base64.h>
+
 
 struct TerrainLayer
 {
@@ -109,16 +112,24 @@ public:
      */
     TileInfo getTileInfoAtIndex(int l, int x, int y)
     {
-        int i = width * y + x,
-            type = layers[l].data[i] - 1,
-            s = layers[l].data.size();
+        int i, s, type, w = layers[l].width, h = layers[l].height;
 
-        if (x < 0 || y < 0 || x >= layers[l].width || y >= layers[l].height)
+        if (x < 0 || y < 0 || x > w || y > h)
         {
-            type = -10;
+            return TileInfo{
+                -1,
+                x < 0 ? 0 : (x > w ? w : x),
+                y < 0 ? 0 : (x > w ? w : y),
+                l
+            };
         }
-
-        return TileInfo{type, x, y, l};
+        else
+        {
+            i = width * y + x;
+            s = layers[l].data.size();
+            type = layers[l].data[i] - 1;
+            return TileInfo{type, x, y, l};
+        }
     }
 
 
@@ -134,16 +145,23 @@ public:
         double  th = tileSets[0].tileHeight,
                 tw = tileSets[0].tileWidth;
 
+        position.y *= -1;
+
         Vec2i
             tileSize(tileSets[0].tileWidth, tileSets[0].tileHeight),
             p = position
                 .add(entity->transform.position)
                 .add(Vec2i((width)*tileSize.x/2, (height)*tileSize.y/2))
-                .entryDiv(tw, th)
-                .asVec2i();
+                .divide(tw, th)
+                .add(Vec2d(1, 1))
+                .asVec2i()
+                .add(Vec2i(-1, -1));
 
+        //printf("%d %d\n", p.x, p.y);
         return getTileInfoAtIndex(l, p.x, p.y);
     }
+
+
 
 
     /**

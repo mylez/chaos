@@ -1,9 +1,9 @@
 { "height":2,
  "layers":[
         {
-         "data":[1, 2, 3, 4],
+         "data":[58, 59, 74, 75],
          "height":2,
-         "name":"Terrain",
+         "name":"Tile Layer 1",
          "opacity":1,
          "type":"tilelayer",
          "visible":true,
@@ -14,22 +14,15 @@
  "nextobjectid":1,
  "orientation":"orthogonal",
  "renderorder":"right-down",
+ "tiledversion":"1.0.1",
  "tileheight":32,
  "tilesets":[
         {
-         "columns":16,
          "firstgid":1,
-         "image":"..\/ClionProjects\/chaos\/media\/tile-sheets\/Terrain.png",
-         "imageheight":512,
-         "imagewidth":512,
-         "margin":0,
-         "name":"Terrain",
-         "spacing":0,
-         "tilecount":256,
-         "tileheight":32,
-         "tilewidth":32
+         "source":"..\/..\/..\/..\/Desktop\/terrain.tsx"
         }],
  "tilewidth":32,
+ "type":"map",
  "version":1,
  "width":2
 }

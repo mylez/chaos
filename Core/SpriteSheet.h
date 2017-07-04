@@ -51,7 +51,7 @@ public:
     {
         Sprite sprite;
         sprite.setTexture(texture_);
-        sprite.setSourcePosition(spriteSize.entryMult(Vec2i(x, y)));
+        sprite.setSourcePosition(spriteSize.hadamard(Vec2i(x, y)));
         sprite.setSourceSize(spriteSize);
         //sprite.setTargetSize(spriteSize);
         //...

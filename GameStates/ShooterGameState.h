@@ -26,6 +26,8 @@ struct PlayerScript: public Script
 
     /**
      *
+     * todo - get this function to run?
+     *
      * @param entity
      */
     void init(Entity *entity)
@@ -42,25 +44,39 @@ struct PlayerScript: public Script
     void update(Entity *playerEntity)
     {
         const Uint8 *keyStates = SDL_GetKeyboardState(NULL);
-        double a = 200;
-        Vec2d acceleration;
+        double a = 800;
+        double cv = 1000;
+        Vec2d acceleration, camVelocity = Vec2d(0, 0);
 
-        if (keyStates[SDL_SCANCODE_RIGHT]) { acceleration.x +=  a; }
-        if (keyStates[SDL_SCANCODE_LEFT])  { acceleration.x += -a; }
-        if (keyStates[SDL_SCANCODE_UP])    { acceleration.y += -a; }
-        if (keyStates[SDL_SCANCODE_DOWN])  { acceleration.y +=  a; }
+        if (keyStates[SDL_SCANCODE_RIGHT])  { acceleration.x +=  a; }
+        if (keyStates[SDL_SCANCODE_LEFT])   { acceleration.x += -a; }
+        if (keyStates[SDL_SCANCODE_UP])     { acceleration.y +=  a; }
+        if (keyStates[SDL_SCANCODE_DOWN])   { acceleration.y += -a; }
 
-        playerEntity->getComponent<PhysicsComponent>()->velocity = acceleration;
+        if (keyStates[SDL_SCANCODE_D])      { camVelocity.x =  cv; }
+        if (keyStates[SDL_SCANCODE_A])      { camVelocity.x = -cv; }
+        if (keyStates[SDL_SCANCODE_W])      { camVelocity.y =  cv; }
+        if (keyStates[SDL_SCANCODE_S])      { camVelocity.y = -cv; }
+
+        playerEntity->getComponent<PhysicsComponent>()->acceleration = acceleration;
+        gameState()->findEntityWithComponent<CameraComponent>()->transform.position = playerEntity->transform.position;
+        //gameState()->findEntityWithComponent<CameraComponent>()->getComponent<PhysicsComponent>()->acceleration = camVelocity;
+
+        Vec2d p = gameState()->findEntityWithComponent<CameraComponent>()->transform.position;
+
 
         deltaT += 1.0 / 60.0;
 
         if (deltaT > 1)
         {
+            Vec2d c = gameState()->findEntityWithComponent<CameraComponent>()->transform.position;
+            Vec2d p = playerEntity->transform.position;
             deltaT = 0;
-            printf("tile type: %d\n", terrain->getTileInfoAtPosition(0, gameState()->findEntity("player")->transform.position));
+            std::cout << "camera: " << c.x << " " << c.y << "\n";
+            std::cout << "player: " << p.x << " " << p.y << "\n";
+            std::cout << terrain->getTileInfoAtPosition(0, playerEntity->transform.position).type << "\n\n";
         }
 
-        gameState()->findEntityWithComponent<CameraComponent>()->transform.position = playerEntity->transform.position.scale(-1);
     }
 };
 
@@ -75,7 +91,7 @@ public:
 
     TerrainLayerComponent terrain;
     ShapeComponent shape;
-    PhysicsComponent physics;
+    PhysicsComponent physics, camPhysics;
     ScriptComponent script;
     RenderComponent render;
     SpriteComponent sprite;
@@ -95,22 +111,28 @@ public:
      */
     void init(Game *game)
     {
-        addSystem(&scriptingSystem);
         addSystem(&motionSystem);
+        addSystem(&scriptingSystem);
         addSystem(&renderingSystem);
 
+
+        playerEntity.transform.position = Vec2d(50, 50);
+
+        camPhysics.friction = 0.95;
+
         cameraEntity.addComponent(&camera);
+        cameraEntity.addComponent(&camPhysics);
 
         game->getAssetLibrary()->loadTexture("Terrain", "media/tile-sheets/Terrain.png");
 
-        terrain.loadTerrainData("media/tile-data/test.json");
+        terrain.loadTerrainData("media/tile-data/test-5x5.json");
 
         terrainEntity.addComponent(&terrain);
         terrainEntity.addComponent(&render);
 
         script.addScript(&playerScript);
         shape.color = Color(255, 0, 0);
-        shape.size = Vec2d(3,3);
+        shape.size = Vec2d(10, 10);
 
         centerEntity.addComponent(&shape);
         centerEntity.addComponent(&render);

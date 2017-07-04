@@ -50,7 +50,7 @@ void Graphics::fillRect(Vec2i pos, Vec2i size)
 void Graphics::pushTransform(Vec2i offset, Vec2d scale)
 {
     offset_ = offset_.add(offset);
-    scale_ = scale_.entryMult(scale);
+    scale_ = scale_.hadamard(scale);
     offsetStack_.push_back(offset);
     scaleStack_.push_back(scale);
 }
@@ -87,7 +87,7 @@ void Graphics::popTransform()
     scale_ = Vec2d(1, 1);
     for (unsigned long int i = 0; i < scaleStack_.size(); i++)
     {
-        scale_ = scale_.entryMult(scaleStack_.at(i));
+        scale_ = scale_.hadamard(scaleStack_.at(i));
     }
 }
 

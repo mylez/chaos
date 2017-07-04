@@ -13,22 +13,25 @@ public:
 
     Vec2d(double _x, double _y);
 
-    Vec2d entryMult(Vec2d a);
+    Vec2d hadamard(Vec2d a);
 
-    Vec2d entryMult(double x, double y);
+    Vec2d hadamard(double x, double y);
 
-    Vec2d entryDiv(Vec2d a);
+    Vec2d divide(Vec2d a);
 
-    Vec2d entryDiv(double a, double b);
+    Vec2d divide(double a, double b);
 
     Vec2d add(Vec2d a);
 
     Vec2d scale(double a)
-    { return Vec2d(a * x, a * y); }
+    {
+        return Vec2d(a * x, a * y);
+    }
 
     Vec2i asVec2i()
     {
-        return Vec2i(x, y);
+        return Vec2i(static_cast<int>(x), static_cast<int>(y));
+
     }
 
     double x, y;
