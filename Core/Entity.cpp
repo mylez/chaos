@@ -16,7 +16,7 @@ void Entity::destroy()
 
     gameState->removeEntity(id);
 
-    for (const auto &element: components_)
+    for (const auto &element: components)
     {
         if (element.second->managed_)
         {

@@ -8,6 +8,10 @@
 #include <map>
 #include <unordered_map>
 
+class Entity;
+
+class BoxCollisionComponent;
+
 
 /**
  * using std::unordered_map is slightly faster than std::map
@@ -23,10 +27,6 @@ namespace std
         }
     };
 }
-
-class Entity;
-
-class BoxCollisionComponent;
 
 class CollisionSystem:
     public System
@@ -54,7 +54,7 @@ public:
 
     void update(double timeElapsed, std::vector<Entity *> entities);
 
-    void init(Game *game);
+    void init();
 };
 
 

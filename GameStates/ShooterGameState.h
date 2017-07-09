@@ -18,67 +18,8 @@
 #include <Components/BoxCollisionComponent.h>
 #include <Components/TerrainLayerComponent.h>
 
-struct PlayerScript: public Script
-{
-    TerrainLayerComponent *terrain = nullptr;
+#include "PlayerScript.h"
 
-    double deltaT = 0;
-
-    /**
-     *
-     * todo - get this function to run?
-     *
-     * @param entity
-     */
-    void init(Entity *entity)
-    {
-        printf("PlayerScrpit.init!\n");
-        terrain = gameState()->findEntity("terrain")->getComponent<TerrainLayerComponent>();
-    }
-
-
-    /**
-     *
-     * @param playerEntity
-     */
-    void update(Entity *playerEntity)
-    {
-        const Uint8 *keyStates = SDL_GetKeyboardState(NULL);
-        double a = 800;
-        double cv = 1000;
-        Vec2d acceleration, camVelocity = Vec2d(0, 0);
-
-        if (keyStates[SDL_SCANCODE_RIGHT])  { acceleration.x +=  a; }
-        if (keyStates[SDL_SCANCODE_LEFT])   { acceleration.x += -a; }
-        if (keyStates[SDL_SCANCODE_UP])     { acceleration.y +=  a; }
-        if (keyStates[SDL_SCANCODE_DOWN])   { acceleration.y += -a; }
-
-        if (keyStates[SDL_SCANCODE_D])      { camVelocity.x =  cv; }
-        if (keyStates[SDL_SCANCODE_A])      { camVelocity.x = -cv; }
-        if (keyStates[SDL_SCANCODE_W])      { camVelocity.y =  cv; }
-        if (keyStates[SDL_SCANCODE_S])      { camVelocity.y = -cv; }
-
-        playerEntity->getComponent<PhysicsComponent>()->acceleration = acceleration;
-        gameState()->findEntityWithComponent<CameraComponent>()->transform.position = playerEntity->transform.position;
-        //gameState()->findEntityWithComponent<CameraComponent>()->getComponent<PhysicsComponent>()->acceleration = camVelocity;
-
-        Vec2d p = gameState()->findEntityWithComponent<CameraComponent>()->transform.position;
-
-
-        deltaT += 1.0 / 60.0;
-
-        if (deltaT > 1)
-        {
-            Vec2d c = gameState()->findEntityWithComponent<CameraComponent>()->transform.position;
-            Vec2d p = playerEntity->transform.position;
-            deltaT = 0;
-            std::cout << "camera: " << c.x << " " << c.y << "\n";
-            std::cout << "player: " << p.x << " " << p.y << "\n";
-            std::cout << terrain->getTileInfoAtPosition(0, playerEntity->transform.position).type << "\n\n";
-        }
-
-    }
-};
 
 class ShooterGameState:
     public GameState
@@ -90,67 +31,89 @@ public:
     ScriptingSystem scriptingSystem;
 
     TerrainLayerComponent terrain;
-    ShapeComponent shape;
-    PhysicsComponent physics, camPhysics;
-    ScriptComponent script;
+    ShapeComponent shape1, shape2;
+    PhysicsComponent physics1, physics2, camPhysics;
+    ScriptComponent script1, script2;
     RenderComponent render;
     SpriteComponent sprite;
     CameraComponent camera;
 
-    PlayerScript playerScript;
+    PlayerScript<SDL_SCANCODE_UP, SDL_SCANCODE_DOWN, SDL_SCANCODE_RIGHT, SDL_SCANCODE_LEFT> player1Script;
+    PlayerScript<SDL_SCANCODE_W,  SDL_SCANCODE_S,    SDL_SCANCODE_D,     SDL_SCANCODE_A> player2Script;
 
     Entity
         cameraEntity,
         terrainEntity,
-        playerEntity,
-        centerEntity;
+        player1Entity,
+        player2Entity;
 
     /**
      *
      * @param game
      */
-    void init(Game *game)
+    void init()
     {
         addSystem(&motionSystem);
         addSystem(&scriptingSystem);
         addSystem(&renderingSystem);
+        setupCamera();
+        setupPlayers();
+        setupTerrain();
+    }
 
-
-        playerEntity.transform.position = Vec2d(50, 50);
-
-        camPhysics.friction = 0.95;
-
+    /**
+     *
+     */
+    void setupCamera()
+    {
         cameraEntity.addComponent(&camera);
-        cameraEntity.addComponent(&camPhysics);
+        addEntity(&cameraEntity);
+    }
 
+    /**
+     *
+     * @param game
+     */
+    void setupTerrain()
+    {
         game->getAssetLibrary()->loadTexture("Terrain", "media/tile-sheets/Terrain.png");
 
-        terrain.loadTerrainData("media/tile-data/test-5x5.json");
-
-        terrainEntity.addComponent(&terrain);
         terrainEntity.addComponent(&render);
+        terrainEntity.addComponent(&terrain);
 
-        script.addScript(&playerScript);
-        shape.color = Color(255, 0, 0);
-        shape.size = Vec2d(10, 10);
-
-        centerEntity.addComponent(&shape);
-        centerEntity.addComponent(&render);
-
-        physics.friction = 0.97;
-
-        terrainEntity.name = "terrain";
-        playerEntity.name = "player";
-
-        playerEntity.addComponent(&shape);
-        playerEntity.addComponent(&physics);
-        playerEntity.addComponent(&script);
-        playerEntity.addComponent(&render);
-
-        addEntity(&cameraEntity);
+        terrain.loadTerrainData("media/tile-data/level.json");
+        terrain.drawDebugGrid = false;
         addEntity(&terrainEntity);
-        addEntity(&playerEntity);
-        addEntity(&centerEntity);
+    }
+
+    /**
+     *
+     */
+    void setupPlayers()
+    {
+        player1Entity.addComponent(&script1);
+        player1Entity.addComponent(&shape1);
+        player1Entity.addComponent(&physics1);
+        player1Entity.addComponent(&render);
+        script1.addScript(&player1Script);
+        shape1.setSize(Vec2d(500, 20));
+        shape1.setColor(Color(255, 0, 0));
+        physics1.friction = 0.99;
+        player1Entity.name = "player 1";
+        addEntity(&player1Entity);
+
+        //
+
+        //player2Entity.addComponent(&script2);
+        //player2Entity.addComponent(&shape2);
+        //player2Entity.addComponent(&physics2);
+        //player2Entity.addComponent(&render);
+        //script2.addScript(&player2Script);
+        //shape2.setSize(Vec2d(5, 5));
+        //shape2.setColor(Color(0, 0, 255));
+        //physics2.friction = 0.99;
+        //player2Entity.name = "player 2";
+        //addEntity(&player2Entity);
     }
 };
 

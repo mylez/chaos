@@ -6,6 +6,7 @@
 #include <Core/Entity.h>
 #include <Systems/RenderingSystem.h>
 #include <Systems/ScriptingSystem.h>
+#include <vector>
 
 class Game;
 
@@ -13,29 +14,82 @@ class System;
 
 class Entity;
 
+namespace std
+{
+    template<>
+    struct hash<std::pair<int, int>>
+    {
+        size_t operator()(const std::pair<int, int> &pt) const
+        {
+            return std::hash<int>()((pt.first & 0xFFFF) | (0x10000 * pt.second));
+        }
+    };
+}
+
+
+
 class GameState
 {
 private:
-    //std::vector<Entity *> entities_;
     std::vector<System *> systems_;
 
-
 public:
+    Vec2d
+        spatialCacheGridSize;
 
-    std::map<unsigned int, Entity *> entities_;
+    std::unordered_map<std::pair<int, int>, std::vector<Entity *> >
+        spatialCache;
 
-    RenderingSystem renderingSystem;
-    ScriptingSystem updateSystem;
+    std::unordered_map<unsigned int, Entity *>
+        entities;
 
-    void performInit(Game *game);
+    Game *game;
 
-    virtual void init(Game *game)
+    double timeElapsed;
+
+    /**
+     *
+     */
+    GameState():
+        spatialCacheGridSize(Vec2d(320, 320))
     {}
 
-    void update(double timeElapsed);
+    /**
+     *
+     * @param game
+     */
+    void performInit(Game *game);
 
+    /**
+     *
+     * @param game
+     */
+    virtual void init()
+    {}
+
+    /**
+     *
+     * @param timeElapsed
+     */
+    void performUpdate(double timeElapsed);
+
+    /**
+     *
+     */
+    virtual void update()
+    {}
+
+    /**
+     *
+     * @param system
+     */
     void addSystem(System *system);
 
+    /**
+     *
+     * @tparam SystemType
+     * @return
+     */
     template<typename SystemType>
     SystemType *addSystem()
     {
@@ -45,19 +99,53 @@ public:
         return system;
     }
 
-    Entity *findEntity(std::string name);
-
+    /**
+     *
+     * @param entity
+     */
     void addEntity(Entity *entity);
 
+    /**
+     *
+     * @param entityId
+     */
     void removeEntity(unsigned int entityId);
 
+    /**
+     *
+     * @param label
+     * @return
+     */
     std::vector<Entity *> filterEntitiesBySignature(unsigned long label);
 
+    /**
+     *
+     * @param position
+     * @return
+     */
+    std::vector<Entity *> filterEntitiesByPosition(Vec2d position);
 
+    /**
+     *
+     * @param name
+     * @return
+     */
+    Entity *findEntityByName(std::string name);
+
+    /**
+     *
+     */
+    void updateSpatialCache();
+
+    /**
+     *
+     * @tparam ComponentType
+     * @return
+     */
     template<typename ComponentType>
-    Entity *findEntityWithComponent()
+    Entity *findEntityByComponent()
     {
-        for (const auto &e: entities_)
+        for (const auto &e: entities)
         {
             if (e.second->hasComponent<ComponentType>())
             {
@@ -67,6 +155,9 @@ public:
         return nullptr;
     }
 
+    /**
+     *
+     */
     ~GameState();
 };
 

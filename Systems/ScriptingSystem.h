@@ -11,14 +11,13 @@ class ScriptingSystem:
     public System
 {
 public:
-    Game *game;
 
     ScriptingSystem()
     { signature = COMPONENT_SCRIPT; }
 
     void update(double timeElapsed, std::vector<Entity *> entities);
 
-    void init(Game *game);
+    void init();
 };
 
 

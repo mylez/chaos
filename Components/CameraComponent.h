@@ -2,6 +2,7 @@
 #define CHAOS_CAMERACOMPONENT_H
 
 #include <Core/Component.h>
+#include <Core/Color.h>
 
 class RenderingSystem;
 

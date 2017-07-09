@@ -10,11 +10,19 @@ class Game;
 class System
 {
 public:
-    unsigned long signature = 0;
+    unsigned long signature;
 
-    bool managed_ = false;
+    Game *game;
 
-    virtual void init(Game *game)
+    bool managed_;
+
+    System():
+        game(nullptr),
+        managed_(false),
+        signature(0)
+    {}
+
+    virtual void init()
     {}
 
     virtual void update(double timeElapsed, std::vector<Entity *> entities) = 0;

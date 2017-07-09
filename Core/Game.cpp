@@ -43,7 +43,7 @@ void Game::loop()
         SDL_RenderClear(renderer_);
         pollInputEvents();
 
-        gameState_->update(((double) timeElapsed) / 1000);
+        gameState_->performUpdate(((double) timeElapsed) / 1000);
 
         if (cycles++ % numCycles == 0)
         {
@@ -140,6 +140,7 @@ Game::~Game()
 void Game::setGameState(GameState *gameState)
 {
     gameState_ = gameState;
+    gameState_->game = this;
     gameState_->performInit(this);
     //gameState->willEnter(&assetLibrary_);
 }

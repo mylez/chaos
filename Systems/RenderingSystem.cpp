@@ -4,6 +4,7 @@
 #include <Components/ShapeComponent.h>
 #include <Components/SpriteComponent.h>
 #include <Components/TerrainLayerComponent.h>
+#include <tmxlite/Map.hpp>
 
 
 /**
@@ -54,12 +55,12 @@ void RenderingSystem::update(double timeElapsed, std::vector<Entity *> entities)
  *
  * @param game
  */
-void RenderingSystem::init(Game *game)
+void RenderingSystem::init()
 {
     std::cout << "RenderingSystem.init\n";
     assetLibrary_ = game->getAssetLibrary();
     graphics_ = game->getGraphics();
-    cameraEntity = game->getGameState()->findEntityWithComponent<CameraComponent>();
+    cameraEntity = game->getGameState()->findEntityByComponent<CameraComponent>();
     if (cameraEntity != nullptr)
     {
         cameraComponent = cameraEntity->getComponent<CameraComponent>();
@@ -85,16 +86,16 @@ void RenderingSystem::renderShape(Entity *entity)
         // move origin to the center of screen
         .add(windowSize_d_.scale(.5))
         // treat entity position as its center
-        .add(polygon->size.scale(-.5))
+        .add(polygon->getSize().scale(-.5))
         //
         .asVec2i();
 
-    graphics_->setColor(polygon->color);
-    graphics_->fillRect(screenPosition, polygon->size.asVec2i());
+    graphics_->setColor(polygon->getColor());
+    graphics_->fillRect(screenPosition, polygon->getSize().asVec2i());
     //
-    std::stringstream message;
-    message << entity->transform.position.x << " " << entity->transform.position.y;
-    graphics_->drawString(message.str(), screenPosition.add(Vec2i(10, -3)));
+    //std::stringstream message;
+    //message << entity->transform.position.x << " " << entity->transform.position.y;
+    //graphics_->drawString(message.str(), screenPosition.add(Vec2i(10, -3)));
 }
 
 
@@ -149,40 +150,42 @@ void RenderingSystem::renderTerrain(Entity *entity)
             bottomRightTile = terrain->getTileInfoAtPosition(l, transform->position.add(windowSize_d_.scale(.5))
                 .add(cameraEntity->transform.position.hadamard(1, -1)).hadamard(1, -1));
 
-        for (int x = topLeftTile.x; x < bottomRightTile.x; x++)
-        //for (int x = 0; x < terrain->width; x++)
+        for (int x = topLeftTile.x; x <= bottomRightTile.x; x++)
         {
-            for (int y = topLeftTile.y; y < bottomRightTile.y; y++)
-            //for (int y = 0; y < terrain->height; y++)
+            for (int y = topLeftTile.y; y <= bottomRightTile.y; y++)
             {
                 TileInfo tileInfo = terrain->getTileInfoAtIndex(l, x, y);
-                if (tileInfo.type >= 0)
-                {
-                    Sprite sprite = spriteSheet.getSprite(tileInfo.type);
 
-                    Vec2i screenPosition = transform->position
+                Sprite sprite = spriteSheet.getSprite(tileInfo.type);
+
+                Vec2i screenPosition = transform->position
                         // invert y axis
-                        .hadamard(1, -1)
+                    .hadamard(1, -1)
                         //
-                        .add(Vec2d(x*tileSize.x, y*tileSize.y))
+                    .add(Vec2d(x*tileSize.x, y*tileSize.y))
                         //
-                        .add(Vec2d(-terrain->width*tileSize.x/2, -terrain->height*tileSize.y/2))
+                    .add(Vec2d(-terrain->width*tileSize.x/2, -terrain->height*tileSize.y/2))
                         // move origin to the center of screen
-                        .add(windowSize_d_.hadamard(.5, .5))
+                    .add(windowSize_d_.hadamard(.5, .5))
                         // treat entity position as its center
                         //.add(terrain->size.scale(-.5))
                         // position in camera
-                        .add(cameraEntity->transform.position.hadamard(-1, 1))
-                        //
-                        .asVec2i();
+                    .add(cameraEntity->transform.position.hadamard(-1, 1))
+                    .asVec2i();
 
+                if (tileInfo.type >= 0)
+                {
                     graphics_->drawSprite(
                         &sprite,
                         tileSize,
                         screenPosition
                     );
-                    graphics_->setColor(80, 80, 200);
-                    graphics_->drawRect(screenPosition, Vec2i(32, 32));
+                }
+
+                if (terrain->drawDebugGrid)
+                {
+                    graphics_->setColor(0, 255, 0);
+                    graphics_->drawRect(screenPosition.add(Vec2i(-1, -1)), Vec2i(33, 33));
                 }
             }
         }

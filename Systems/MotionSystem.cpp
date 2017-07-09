@@ -28,7 +28,7 @@ void MotionSystem::update(double timeElapsed, std::vector<Entity *> entities)
     }
 }
 
-void MotionSystem::init(Game *game)
+void MotionSystem::init()
 {
     std::cout << "MotionSystem.init\n";
 }

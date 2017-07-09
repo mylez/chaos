@@ -24,8 +24,8 @@ void CollisionSystem::update(double timeElapsed, std::vector<Entity *> entities)
         auto *boxCollision_a = entity_a->getComponent<BoxCollisionComponent>();
 
         Vec2d
-            pos_a = transform_a->position.add(boxCollision_a->center),
-            size_a = boxCollision_a->size;
+            pos_a = transform_a->position.add(boxCollision_a->getCenter()),
+            size_a = boxCollision_a->getSize();
 
         for (const auto entity_b: entities)
         {
@@ -38,8 +38,8 @@ void CollisionSystem::update(double timeElapsed, std::vector<Entity *> entities)
             auto *boxCollision_b = entity_b->getComponent<BoxCollisionComponent>();
 
             Vec2d
-                pos_b = transform_b->position.add(boxCollision_b->center),
-                size_b = boxCollision_b->size;
+                pos_b = transform_b->position.add(boxCollision_b->getCenter()),
+                size_b = boxCollision_b->getSize();
 
             if (isIntersecting(pos_a, size_a, pos_b, size_b))
             {
@@ -79,7 +79,7 @@ bool CollisionSystem::isIntersecting(Vec2d posA, Vec2d sizeA, Vec2d posB, Vec2d 
  *
  * @param game
  */
-void CollisionSystem::init(Game *game)
+void CollisionSystem::init()
 {
     std::cout << "CollisionSystem.init\n";
     graphics = game->getGraphics();

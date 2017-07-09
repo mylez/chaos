@@ -24,29 +24,51 @@ public:
 
     Game *game;
 
+    double timeElapsed;
+
     Script():
         id(++nextId_),
-        hasInit_(false)
+        hasInit_(false),
+        game(nullptr),
+        entity(nullptr),
+        timeElapsed(0)
     {}
 
+    /**
+     *
+     * @param game
+     * @param entity
+     */
     inline void doInit(Game *game, Entity *entity)
     {
         init(entity);
         hasInit_ = true;
     }
 
+    /**
+     *
+     * @param entity
+     */
     virtual void init(Entity *entity)
     {}
 
-    virtual void update(Game *game, Entity *entity, double timeElapsed)
+    /**
+     *
+     */
+    virtual void update()
     {}
 
-    virtual void update(Entity *entity)
-    {}
-
+    /**
+     *
+     * @param collision
+     */
     virtual void onCollisionEnter(Collision collision)
     {}
 
+    /**
+     *
+     * @param collision
+     */
     virtual void onCollisionExit(Collision collision)
     {}
 

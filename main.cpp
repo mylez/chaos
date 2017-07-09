@@ -1,5 +1,4 @@
 #include "Chaos/Chaos.h"
-#include <Core/Entity.h>
 #include <Components/PhysicsComponent.h>
 #include <Components/RenderComponent.h>
 #include <Components/ShapeComponent.h>
@@ -7,9 +6,6 @@
 #include <Systems/MotionSystem.h>
 #include <Systems/CollisionSystem.h>
 #include <GameStates/ShooterGameState.h>
-#include <GameStates/PlatformerGameState.h>
-#include <stdlib.h>
-#include <time.h>
 
 using namespace std;
 
@@ -17,27 +13,11 @@ void bench(Chaos *, int);
 
 void shooter(Chaos *);
 
-void platformer(Chaos *);
-
-
 int main()
 {
     Chaos chaos;
-    //platformer(&chaos);
     shooter(&chaos);
     //bench(&chaos, 150);
-}
-
-
-/**
- *
- * @param chaos
- */
-void platformer(Chaos *chaos)
-{
-    PlatformerGameState platformerGameState;
-    chaos->setGameState(&platformerGameState);
-    chaos->loop();
 }
 
 
@@ -76,9 +56,9 @@ void bench(Chaos *chaos, int numEntities)
         BoxCollisionComponent *boxCollisionComponent = new BoxCollisionComponent();
 
         physicsComponent->velocity = Vec2d((rand() % 1000) / 50.0, (rand() % 1000) / 50.0);
-        shapeComponent->color = Color(rand() % 128 + 127, rand() % 128 + 127, rand() % 128 + 127, rand() % 256);
-        shapeComponent->size = Vec2d(rand() % 80, rand() % 80);
-        boxCollisionComponent->size = shapeComponent->size;
+        shapeComponent->setColor(Color(rand() % 128 + 127, rand() % 128 + 127, rand() % 128 + 127, rand() % 256));
+        shapeComponent->setSize(Vec2d(rand() % 80, rand() % 80));
+        boxCollisionComponent->setSize(shapeComponent->getSize());
         entity->transform.position = Vec2d(rand() % 2000, rand() % 1000);
 
         entity->addComponent(shapeComponent);

@@ -5,10 +5,11 @@
 #include <Core/Sprite.h>
 #include <Core/include/jsoncpp/dist/json/json.h>
 #include <Core/Error.h>
+#include <Core/include/base64/base64.h>
 #include <fstream>
-#include <Core/include/base64/base64.h>
-#include <Core/include/base64/base64.h>
-
+#include <boost/iostreams/filtering_stream.hpp>
+#include <boost/iostreams/filter/gzip.hpp>
+#include <tmxlite/Map.hpp>
 
 struct TerrainLayer
 {
@@ -69,6 +70,11 @@ public:
         tileHeight,
         tileWidth,
         version;
+
+    bool drawDebugGrid = false;
+
+    tmx::Map
+        tmxMap;
 
     std::string
         orientation,

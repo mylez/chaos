@@ -8,14 +8,52 @@
 class ShapeComponent:
     public Component
 {
-public:
+private:
     Vec2d size;
     Color color;
+public:
     ShapeComponent():
         size(Vec2d(20, 20)),
-        color(Color(100, 100, 100))
-
+        color(Color(180, 180, 185))
     { label = COMPONENT_SHAPE; }
+
+    /**
+     *
+     * @param size
+     */
+    void setSize(Vec2d size)
+    {
+        this->entity->boundingBox.size = size;
+        this->size = size;
+    }
+
+    /**
+     *
+     * @return
+     */
+    Vec2d getSize()
+    {
+        return size;
+    }
+
+    /**
+     *
+     * @param color
+     */
+    void setColor(Color color)
+    {
+        this->color = color;
+    }
+
+    /**
+     *
+     * @return
+     */
+    Color getColor()
+    {
+        return color;
+    }
+
 };
 
 

@@ -1,6 +1,7 @@
 #ifndef CHAOS_VEC2D_H
 #define CHAOS_VEC2D_H
 
+#include <cmath>
 #include "Vec2d.h"
 #include "Vec2i.h"
 
@@ -26,6 +27,11 @@ public:
     Vec2d scale(double a)
     {
         return Vec2d(a * x, a * y);
+    }
+
+    Vec2d floor(double d)
+    {
+        return Vec2d(std::floor(x), std::floor(y));
     }
 
     Vec2i asVec2i()

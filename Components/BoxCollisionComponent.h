@@ -24,10 +24,30 @@ public:
 class BoxCollisionComponent:
     public CollisionComponent
 {
-public:
     Vec2d
         size = Vec2d(1, 1),
         center = Vec2d(0, 0);
+
+public:
+    Vec2d getSize()
+    {
+        return size;
+    }
+
+    void setSize(Vec2d size)
+    {
+        this->size = size;
+    }
+
+    Vec2d getCenter()
+    {
+        return center;
+    }
+
+    void setCenter(Vec2d center)
+    {
+        this->center = center;
+    }
 };
 
 

@@ -40,7 +40,7 @@ public:
     RenderingSystem()
     { signature = COMPONENT_TRANSFORM | COMPONENT_RENDER; }
 
-    void init(Game *game);
+    void init();
 
     void update(double timeElapsed, std::vector<Entity *> entities);
 

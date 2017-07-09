@@ -1,6 +1,5 @@
 #include "ScriptingSystem.h"
 #include <Core/Game.h>
-#include <Core/Entity.h>
 #include <Core/Script.h>
 #include <Components/ScriptComponent.h>
 
@@ -17,8 +16,10 @@ void ScriptingSystem::update(double timeElapsed, std::vector<Entity *> entities)
         ScriptComponent *update = entity->getComponent<ScriptComponent>();
         for (const auto &script: update->scripts)
         {
-            script->update(game, entity, timeElapsed);
-            script->update(entity);
+            script->timeElapsed = timeElapsed;
+            script->entity = entity;
+            script->game = game;
+            script->update();
         }
     }
 }
@@ -28,15 +29,18 @@ void ScriptingSystem::update(double timeElapsed, std::vector<Entity *> entities)
  *
  * @param game
  */
-void ScriptingSystem::init(Game *game)
+void ScriptingSystem::init()
 {
-    std::cout << "ScriptingSystem.init";
+    std::cout << "ScriptingSystem.init\n";
 
     for (const auto &entity: game->gameState_->filterEntitiesBySignature(signature))
     {
         for (const auto &script: entity->getScripts())
         {
+            script->timeElapsed = 0;
+            script->entity = entity;
             script->game = game;
+            script->update();
             script->init(entity);
         }
     }
