@@ -31,7 +31,7 @@ namespace std
 class GameState
 {
 private:
-    std::vector<System *> systems_;
+    std::vector<System *> systems;
 
 public:
     Vec2d
@@ -69,6 +69,17 @@ public:
 
     /**
      *
+     */
+    void performDeinit();
+
+    /**
+     *
+     */
+    virtual void deinit()
+    {}
+
+    /**
+     *
      * @param timeElapsed
      */
     void performUpdate(double timeElapsed);
@@ -98,6 +109,13 @@ public:
         addSystem(system);
         return system;
     }
+
+    /**
+     * create a managed entity on heap
+     *
+     * @return
+     */
+    Entity *addEntity();
 
     /**
      *

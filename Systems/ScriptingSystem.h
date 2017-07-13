@@ -18,6 +18,8 @@ public:
     void update(double timeElapsed, std::vector<Entity *> entities);
 
     void init();
+
+    void deinit();
 };
 
 

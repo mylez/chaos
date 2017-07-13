@@ -3,6 +3,7 @@
 #include <Components/RenderComponent.h>
 #include <Components/ShapeComponent.h>
 #include <Components/BoxCollisionComponent.h>
+#include <Components/StateMachineComponent.h>
 #include <Systems/MotionSystem.h>
 #include <Systems/CollisionSystem.h>
 #include <GameStates/ShooterGameState.h>
@@ -12,7 +13,6 @@ using namespace std;
 void bench(Chaos *, int);
 
 void shooter(Chaos *);
-
 int main()
 {
     Chaos chaos;
@@ -50,10 +50,10 @@ void bench(Chaos *chaos, int numEntities)
     {
         Entity *entity = new Entity();
 
-        ShapeComponent *shapeComponent = new ShapeComponent();
-        PhysicsComponent *physicsComponent = new PhysicsComponent();
-        RenderComponent *renderComponent = new RenderComponent();
-        BoxCollisionComponent *boxCollisionComponent = new BoxCollisionComponent();
+        ShapeComponent *shapeComponent = new ShapeComponent;
+        PhysicsComponent *physicsComponent = new PhysicsComponent;
+        RenderComponent *renderComponent = new RenderComponent;
+        BoxCollisionComponent *boxCollisionComponent = new BoxCollisionComponent;
 
         physicsComponent->velocity = Vec2d((rand() % 1000) / 50.0, (rand() % 1000) / 50.0);
         shapeComponent->setColor(Color(rand() % 128 + 127, rand() % 128 + 127, rand() % 128 + 127, rand() % 256));

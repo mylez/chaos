@@ -2,6 +2,8 @@
 #define CHAOS_SCRIPT_H
 
 #include <Core/Collision.h>
+#include <Core/InputEvent.h>
+#include <SDL2/SDL.h>
 #include <iostream>
 
 class Game;
@@ -18,7 +20,7 @@ private:
 public:
     unsigned int id;
 
-    bool hasInit_;
+    bool hasInit_, managed_;
 
     Entity *entity;
 
@@ -29,6 +31,7 @@ public:
     Script():
         id(++nextId_),
         hasInit_(false),
+        managed_(false),
         game(nullptr),
         entity(nullptr),
         timeElapsed(0)
@@ -39,18 +42,29 @@ public:
      * @param game
      * @param entity
      */
-    inline void doInit(Game *game, Entity *entity)
+    void performInit(Game *game, Entity *entity)
     {
-        init(entity);
+        this->entity = entity;
+        this->game = game;
+        timeElapsed = 0;
+
+        init();
         hasInit_ = true;
     }
 
     /**
      *
-     * @param entity
      */
-    virtual void init(Entity *entity)
+    virtual void init()
     {}
+
+    void performDeinit()
+    {
+        deinit();
+    }
+
+    virtual void deinit()
+    {};
 
     /**
      *
@@ -70,6 +84,20 @@ public:
      * @param collision
      */
     virtual void onCollisionExit(Collision collision)
+    {}
+
+    /**
+     *
+     * @param inputEvent
+     */
+    virtual void onInputEvent(InputEvent inputEvent)
+    {}
+
+    /**
+     *
+     * @param inputEvent
+     */
+    virtual void onInputEvent(SDL_Event inputEvent)
     {}
 
     GameState *gameState();

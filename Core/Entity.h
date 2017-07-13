@@ -37,11 +37,15 @@ public:
     BoundingBoxComponent boundingBox;
 
     // the list of components attached to this entity
-    std::map<std::type_index, Component *> components;
+    std::unordered_map<std::type_index, Component *> components;
 
     // list of indices where this entity is tracked by
     // the spatial cache
     std::vector<std::pair<int, int> > spatialCacheKeys;
+
+    // memory management - was this entity created on the
+    // heap by a core game class?
+    bool managed_;
 
     // a 64 bit bit mask of which entities are applied
     unsigned long
@@ -161,11 +165,6 @@ public:
      * @return
      */
     std::vector<Script *> getScripts();
-
-    /**
-     *
-     */
-    virtual void destroy();
 };
 
 

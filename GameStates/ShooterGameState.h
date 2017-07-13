@@ -25,40 +25,19 @@ class ShooterGameState:
     public GameState
 {
 public:
-
-    RenderingSystem renderingSystem;
-    MotionSystem motionSystem;
-    ScriptingSystem scriptingSystem;
-
-    TerrainLayerComponent terrain;
-    ShapeComponent shape1, shape2;
-    PhysicsComponent physics1, physics2, camPhysics;
-    ScriptComponent script1, script2;
-    RenderComponent render;
-    SpriteComponent sprite;
-    CameraComponent camera;
-
-    PlayerScript<SDL_SCANCODE_UP, SDL_SCANCODE_DOWN, SDL_SCANCODE_RIGHT, SDL_SCANCODE_LEFT> player1Script;
-    PlayerScript<SDL_SCANCODE_W,  SDL_SCANCODE_S,    SDL_SCANCODE_D,     SDL_SCANCODE_A> player2Script;
-
-    Entity
-        cameraEntity,
-        terrainEntity,
-        player1Entity,
-        player2Entity;
-
     /**
      *
      * @param game
      */
     void init()
     {
-        addSystem(&motionSystem);
-        addSystem(&scriptingSystem);
-        addSystem(&renderingSystem);
-        setupCamera();
+        addSystem<MotionSystem>();
+        addSystem<ScriptingSystem>();
+        addSystem<RenderingSystem>();
+
         setupPlayers();
         setupTerrain();
+        setupCamera();
     }
 
     /**
@@ -66,8 +45,10 @@ public:
      */
     void setupCamera()
     {
-        cameraEntity.addComponent(&camera);
-        addEntity(&cameraEntity);
+        auto cameraEntity = addEntity();
+        auto camera = cameraEntity->addComponent<CameraComponent>();
+        cameraEntity->name = "camera";
+        camera->backgroundColor = Color(255, 255, 255);
     }
 
     /**
@@ -76,14 +57,13 @@ public:
      */
     void setupTerrain()
     {
+        auto terrainEntity = addEntity();
+        auto terrain = terrainEntity->addComponent<TerrainLayerComponent>();
+
+        terrainEntity->name = "terrain";
         game->getAssetLibrary()->loadTexture("Terrain", "media/tile-sheets/Terrain.png");
-
-        terrainEntity.addComponent(&render);
-        terrainEntity.addComponent(&terrain);
-
-        terrain.loadTerrainData("media/tile-data/level.json");
-        terrain.drawDebugGrid = false;
-        addEntity(&terrainEntity);
+        terrainEntity->addComponent<RenderComponent>();
+        terrain->loadTerrainData("media/tile-data/level.json");
     }
 
     /**
@@ -91,29 +71,18 @@ public:
      */
     void setupPlayers()
     {
-        player1Entity.addComponent(&script1);
-        player1Entity.addComponent(&shape1);
-        player1Entity.addComponent(&physics1);
-        player1Entity.addComponent(&render);
-        script1.addScript(&player1Script);
-        shape1.setSize(Vec2d(500, 20));
-        shape1.setColor(Color(255, 0, 0));
-        physics1.friction = 0.99;
-        player1Entity.name = "player 1";
-        addEntity(&player1Entity);
-
-        //
-
-        //player2Entity.addComponent(&script2);
-        //player2Entity.addComponent(&shape2);
-        //player2Entity.addComponent(&physics2);
-        //player2Entity.addComponent(&render);
-        //script2.addScript(&player2Script);
-        //shape2.setSize(Vec2d(5, 5));
-        //shape2.setColor(Color(0, 0, 255));
-        //physics2.friction = 0.99;
-        //player2Entity.name = "player 2";
-        //addEntity(&player2Entity);
+        auto playerEntity = addEntity();
+        auto shape = playerEntity->addComponent<ShapeComponent>();
+        auto physics = playerEntity->addComponent<PhysicsComponent>();
+        auto script = playerEntity->addComponent<ScriptComponent>();
+        playerEntity->addComponent<RenderComponent>();
+        playerEntity->name = "player";
+        script->addScript<PlayerScript>();
+        playerEntity->transform.position = Vec2d(0, 0);
+        shape->setSize(Vec2d(5, 5));
+        shape->setColor(Color(255, 0, 0));
+        physics->friction = 0.99;
+        playerEntity->name = "player 1";
     }
 };
 

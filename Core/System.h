@@ -16,6 +16,8 @@ public:
 
     bool managed_;
 
+    double timeElapsed;
+
     System():
         game(nullptr),
         managed_(false),
@@ -23,6 +25,9 @@ public:
     {}
 
     virtual void init()
+    {}
+
+    virtual void deinit()
     {}
 
     virtual void update(double timeElapsed, std::vector<Entity *> entities) = 0;

@@ -9,26 +9,6 @@ const std::vector<Script *> emptyScriptVector;
 
 /**
  *
- */
-void Entity::destroy()
-{
-    return;
-
-    gameState->removeEntity(id);
-
-    for (const auto &element: components)
-    {
-        if (element.second->managed_)
-        {
-            std::cout << "deleting managed component\n";
-            delete element.second;
-        }
-    }
-}
-
-
-/**
- *
  * @return
  */
 std::vector<Script *> Entity::getScripts()

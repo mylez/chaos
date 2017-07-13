@@ -31,9 +31,11 @@ public:
 
     void loop();
 
-    void pollInputEvents();
 
     void setGameState(GameState *gameState);
+
+    void setIsRunning(bool isRunning)
+    { isRunning_ = isRunning; }
 
     GameState *getGameState()
     { return gameState_; }

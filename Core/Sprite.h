@@ -4,11 +4,16 @@
 #include <Core/Vec2i.h>
 #include <Core/Vec2d.h>
 #include <SDL2/SDL.h>
+#include <iostream>
 
 class Sprite
 {
     SDL_Texture *texture_;
+
     SDL_Rect srcRect_;
+
+    int currentFrame = 0;
+
     Vec2i
         sourcePos_,
         sourceSize_;
@@ -22,13 +27,14 @@ public:
      *
      * @param texture
      * @param pos
-     * @param size
+     * @param sourceSize
+     * @param targetSize
      */
-    Sprite(SDL_Texture *texture, Vec2i pos, Vec2i size, Vec2d targetSize)
+    Sprite(SDL_Texture *texture, Vec2i pos, Vec2i sourceSize, Vec2d targetSize)
     {
         texture_ = texture;
         sourcePos_ = pos;
-        sourceSize_ = size;
+        sourceSize_ = sourceSize;
         targetSize_ = targetSize;
     }
 
@@ -55,9 +61,9 @@ public:
      *
      * @return
      */
-    SDL_Rect getSrcRect()
+    SDL_Rect getSourceRect()
     {
-        return SDL_Rect{sourcePos_.x, sourcePos_.y, sourceSize_.x, sourceSize_.y};
+        return SDL_Rect{sourcePos_.x + sourceSize_.x * currentFrame, sourcePos_.y, sourceSize_.x, sourceSize_.y};
     }
 
     /**
@@ -95,6 +101,15 @@ public:
     Vec2d getTargetSize()
     {
         return targetSize_;
+    }
+
+    /**
+     *
+     * @param frame
+     */
+    void setFrame(int frame)
+    {
+        currentFrame = frame;
     }
 };
 

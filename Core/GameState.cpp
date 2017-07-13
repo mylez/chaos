@@ -12,7 +12,7 @@ void GameState::performUpdate(double timeElapsed)
 
     update();
 
-    for (const auto &system: systems_)
+    for (const auto &system: systems)
     {
         std::vector<Entity *> entities = filterEntitiesBySignature(system->signature);
         system->game = game;
@@ -39,7 +39,7 @@ void GameState::addEntity(Entity *entity)
  */
 void GameState::addSystem(System *system)
 {
-    systems_.push_back(system);
+    systems.push_back(system);
 }
 
 
@@ -82,7 +82,7 @@ void GameState::performInit(Game *game)
 
     init();
 
-    for (const auto &system: systems_)
+    for (const auto &system: systems)
     {
         system->game = game;
         system->init();
@@ -95,18 +95,18 @@ void GameState::performInit(Game *game)
  */
 GameState::~GameState()
 {
-    for (const auto &entity: entities)
-    {
-        entity.second->destroy();
-    }
-    for (const auto &system: systems_)
-    {
-        if (system->managed_)
-        {
-            //delete system;
-        }
-    }
-}
+    //for (const auto &entity: entities)
+    //{
+    //    entity.second->destroy();
+    //}
+    //for (const auto &system: systems)
+    //{
+    //    if (system->managed_)
+    //    {
+    //        //delete system;
+    //    }
+    //}
+}//
 
 
 /**
@@ -127,10 +127,16 @@ Entity *GameState::findEntityByName(std::string name)
     return nullptr;
 }
 
+
+/**
+ *
+ * @param position
+ * @return
+ */
 std::vector<Entity *> GameState::filterEntitiesByPosition(Vec2d position)
 {
     std::vector<Entity *> filtered;
-
+    // todo - write this
     return filtered;
 }
 
@@ -168,24 +174,69 @@ void GameState::updateSpatialCache()
     }
 }
 
-
-/**
- * todo - find out why this is slow
- *
- * @param timeElapsed
- *
-void GameState::update(double timeElapsed)
+void GameState::performDeinit()
 {
-    for (const auto &system: systems_)
+    // keep track of components that have already been
+    // deleted to prevent double-deletes
+    std::unordered_map<Component *, bool> deletedComponents;
+
+    // deinit all systems
+    for (const auto &system: systems)
     {
-        for (const auto &entity: entities_)
+        system->deinit();
+    }
+
+    // delete all components created on heap by a core object
+    for (const auto &e: entities)
+    {
+        std::cout << "entity: " << e.second-> name << "\n";
+        for (const auto &c: e.second->components)
         {
-            if ((entity->signature & system->signature) == system->signature)
+            if (!deletedComponents[c.second] && c.second)
             {
-                system->update(timeElapsed, entity, entities_);
+                if (c.second->managed_)
+                {
+                    std::cout << "deleting component: " << c.first.name() << " " << c.second << "\n";
+                    deletedComponents[c.second] = true;
+                    delete c.second;
+                }
             }
         }
     }
-}
-*/
 
+    // delete all systems created on heap by a core object
+    for (const auto &system: systems)
+    {
+        if (system->managed_)
+        {
+            std::cout << "deleting system: " << system << "\n";
+            delete system;
+        }
+    }
+
+    // delete all entities created on heap by a core object
+    for (const auto &e: entities)
+    {
+        if (e.second->managed_)
+        {
+            std::cout << "deleting entity: " << e.second << "\n";
+            delete e.second;
+        }
+    }
+
+    // custom deinit behavior defined by derived game state
+    deinit();
+}
+
+/**
+ * create a new managed_ entity on heap
+ *
+ * @return
+ */
+Entity *GameState::addEntity()
+{
+    Entity *entity = new Entity;
+    entity->managed_ = true;
+    addEntity(entity);
+    return entity;
+}

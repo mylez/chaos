@@ -39,9 +39,8 @@ void Game::loop()
         timeElapsed = timeCurrent - timePrevious;
         timePrevious = timeCurrent;
 
-        SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
+        SDL_SetRenderDrawColor(renderer_, 200, 200, 200, 255);
         SDL_RenderClear(renderer_);
-        pollInputEvents();
 
         gameState_->performUpdate(((double) timeElapsed) / 1000);
 
@@ -78,23 +77,10 @@ void Game::loop()
         SDL_RenderPresent(renderer_);
         timeSleeping = SDL_GetTicks() - timePlaceholder;
     }
-}
 
-
-/**
- *
- */
-void Game::pollInputEvents()
-{
-    SDL_Event event;
-    while (SDL_PollEvent(&event))
-    {
-        //gameState_->handleInputEvent(&event);
-        if (event.type == SDL_QUIT || (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_q))
-        {
-            isRunning_ = false;
-        }
-    }
+    // deinit the gamestate that was running
+    // before game loop was exited
+    gameState_->performDeinit();
 }
 
 
@@ -139,6 +125,7 @@ Game::~Game()
 
 void Game::setGameState(GameState *gameState)
 {
+    gameState->performDeinit();
     gameState_ = gameState;
     gameState_->game = this;
     gameState_->performInit(this);

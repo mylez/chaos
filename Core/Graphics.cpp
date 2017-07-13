@@ -260,7 +260,7 @@ void Graphics::drawSprite(Sprite *sprite, Vec2i size, Vec2i pos)
     //Vec2i dstPos = transformPosition(pos).add(Vec2i(0, size.y));
     //Vec2i dstSize = transformScale(size);
     SDL_Rect
-        srcRect = sprite->getSrcRect(),
+        srcRect = sprite->getSourceRect(),
         dstRect = {
         pos.x,
         pos.y,// - size.y / 2,

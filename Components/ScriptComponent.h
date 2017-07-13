@@ -22,7 +22,28 @@ public:
         scripts.push_back(script);
     }
 
+    /**
+     *
+     * @param id
+     */
     void removeScript(int id);
+
+    /**
+     *
+     * @tparam ScriptType
+     * @return
+     */
+    template <typename ScriptType>
+    ScriptType *addScript()
+    {
+        ScriptType *script = new ScriptType;
+        script->managed_ = true;
+        addScript(script);
+        return script;
+    }
+
+    virtual void deinit()
+    {}
 };
 
 

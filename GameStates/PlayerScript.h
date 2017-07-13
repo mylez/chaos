@@ -3,42 +3,44 @@
 
 #include <Core/Script.h>
 #include <Components/ShapeComponent.h>
+#include <SDL2/SDL.h>
 
-template <int U, int D, int R, int L>
+
 class PlayerScript:
     public Script
 {
     double t = 0;
+
+    SpriteComponent *sprite = nullptr;
+    PhysicsComponent *physics = nullptr;
+
+    /**
+     *
+     *
+     */
     void update()
     {
-        handleMovement();
+        const Uint8 *key = SDL_GetKeyboardState(NULL);
 
-        t += timeElapsed;
+        double a = 20;
 
-        if (entity->hasSpatialCacheKey(0, 1) || entity->hasSpatialCacheKey(-1, -1))
-        {
-            entity->getComponent<ShapeComponent>()->setColor(Color(255, 0, 0));
-        }
-        else
-        {
-            entity->getComponent<ShapeComponent>()->setColor(Color(0, 0, 255));
-        }
+        if(physics)physics->velocity = Vec2d(0, 0);
+
+
+        if (key[SDL_SCANCODE_UP])       { physics->velocity.y =  a; }
+        if (key[SDL_SCANCODE_DOWN])     { physics->velocity.y = -a; }
+        if (key[SDL_SCANCODE_RIGHT])    { physics->velocity.x =  a; }
+        if (key[SDL_SCANCODE_LEFT])     { physics->velocity.x = -a; }
     }
 
-    void handleMovement()
+
+    /**
+     *
+     */
+    void init()
     {
-        double a = 500;
-
-        PhysicsComponent *ph = entity->getComponent<PhysicsComponent>();
-
-        const Uint8 *keys = SDL_GetKeyboardState(NULL);
-
-        ph->acceleration = Vec2d(0, 0);
-
-        if (keys[U])    { ph->acceleration.y =  a; }
-        if (keys[D])    { ph->acceleration.y = -a; }
-        if (keys[R])    { ph->acceleration.x =  a; }
-        if (keys[L])    { ph->acceleration.x = -a; }
+        sprite = entity->getComponent<SpriteComponent>();
+        physics = entity->getComponent<PhysicsComponent>();
     }
 };
 

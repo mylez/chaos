@@ -5,7 +5,6 @@
 #include <Core/System.h>
 #include <Core/Graphics.h>
 #include <Core/AssetLibrary.h>
-
 #include <Components/CameraComponent.h>
 
 class RenderingSystem:
@@ -46,7 +45,7 @@ public:
 
     void renderShape(Entity *entity);
 
-    void renderSprite(Entity *entity);
+    void renderSprite(Entity *entity, double timeElapsed);
 
     void renderAnimation(Entity *entity);
 
@@ -55,6 +54,7 @@ public:
     Vec2d positionInCamera(Vec2d position);
 
     Vec2d positionOriginRelative(Vec2d position);
+
 };
 
 

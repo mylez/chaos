@@ -4,7 +4,6 @@
 #include <Components/ShapeComponent.h>
 #include <Components/SpriteComponent.h>
 #include <Components/TerrainLayerComponent.h>
-#include <tmxlite/Map.hpp>
 
 
 /**
@@ -35,7 +34,7 @@ void RenderingSystem::update(double timeElapsed, std::vector<Entity *> entities)
     {
         if (entity->hasComponent<SpriteComponent>())
         {
-            renderSprite(entity);
+            renderSprite(entity, timeElapsed);
         }
 
         if (entity->hasComponent<ShapeComponent>())
@@ -92,10 +91,6 @@ void RenderingSystem::renderShape(Entity *entity)
 
     graphics_->setColor(polygon->getColor());
     graphics_->fillRect(screenPosition, polygon->getSize().asVec2i());
-    //
-    //std::stringstream message;
-    //message << entity->transform.position.x << " " << entity->transform.position.y;
-    //graphics_->drawString(message.str(), screenPosition.add(Vec2i(10, -3)));
 }
 
 
@@ -103,17 +98,32 @@ void RenderingSystem::renderShape(Entity *entity)
  *
  * @param entity
  */
-void RenderingSystem::renderSprite(Entity *entity)
+void RenderingSystem::renderSprite(Entity *entity, double timeElapsed)
 {
     auto transform = entity->getComponent<TransformComponent>();
-    auto sprite = &entity->getComponent<SpriteComponent>()->sprite;
+    auto spriteComponent = entity->getComponent<SpriteComponent>();
+    auto sprite = spriteComponent->getSprite();
+
+    Vec2i screenPosition = transform->position
+            // invert y axis
+        .hadamard(1, -1)
+            // position in camera
+        .add(cameraEntity->transform.position.hadamard(-1, 1))
+            // move origin to the center of screen
+        .add(windowSize_d_.scale(.5))
+            // treat entity position as its center
+        .add(sprite.getTargetSize().scale(-.5))
+            //
+        .asVec2i();
+
     graphics_->drawSprite(
-        sprite,
-        sprite->getTargetSize()
+        &sprite,
+        sprite.getTargetSize()
             .asVec2i(),
-        positionInCamera(transform->position)
-            .asVec2i()
+        screenPosition
     );
+
+    spriteComponent->updateAnimation(timeElapsed);
 }
 
 
