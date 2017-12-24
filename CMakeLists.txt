@@ -23,12 +23,10 @@ file(GLOB chaos_SRC
         "Core/include/jsoncpp/dist/jsoncpp.cpp"
         "Core/include/SDL_FontCache/SDL_FontCache.c"
         "Core/include/zlib-1.2.11/*c"
-        "Core/include/tmx/src/*c"
 )
 
 add_executable(chaos ${chaos_SRC})
 
-target_link_libraries(chaos tmxlite)
 target_link_libraries(chaos xml2)
 target_link_libraries(chaos SDL2)
 target_link_libraries(chaos SDL2_image)

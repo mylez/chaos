@@ -7,9 +7,6 @@
 #include <Core/Error.h>
 #include <Core/include/base64/base64.h>
 #include <fstream>
-#include <boost/iostreams/filtering_stream.hpp>
-#include <boost/iostreams/filter/gzip.hpp>
-#include <tmxlite/Map.hpp>
 
 struct TerrainLayer
 {
@@ -73,8 +70,8 @@ public:
 
     bool drawDebugGrid = false;
 
-    tmx::Map
-        tmxMap;
+    //tmx::Map
+    //    tmxMap;
 
     std::string
         orientation,

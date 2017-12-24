@@ -27,7 +27,6 @@ namespace std
 }
 
 
-
 class GameState
 {
 private:

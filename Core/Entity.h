@@ -44,7 +44,7 @@ public:
     std::vector<std::pair<int, int> > spatialCacheKeys;
 
     // memory management - was this entity created on the
-    // heap by a core game class?
+    // heap by a core game object?
     bool managed_;
 
     // a 64 bit bit mask of which entities are applied

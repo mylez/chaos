@@ -24,6 +24,8 @@ public:
 
     Vec2d add(Vec2d a);
 
+    double mag() { return sqrt(x*x + y*y); }
+
     Vec2d scale(double a)
     {
         return Vec2d(a * x, a * y);

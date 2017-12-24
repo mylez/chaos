@@ -24,7 +24,10 @@
 class ShooterGameState:
     public GameState
 {
+private:
+    Entity *cameraEntity;
 public:
+
     /**
      *
      * @param game
@@ -45,7 +48,7 @@ public:
      */
     void setupCamera()
     {
-        auto cameraEntity = addEntity();
+        cameraEntity = addEntity();
         auto camera = cameraEntity->addComponent<CameraComponent>();
         cameraEntity->name = "camera";
         camera->backgroundColor = Color(255, 255, 255);
@@ -75,6 +78,7 @@ public:
         auto shape = playerEntity->addComponent<ShapeComponent>();
         auto physics = playerEntity->addComponent<PhysicsComponent>();
         auto script = playerEntity->addComponent<ScriptComponent>();
+        physics->mass = .1;
         playerEntity->addComponent<RenderComponent>();
         playerEntity->name = "player";
         script->addScript<PlayerScript>();

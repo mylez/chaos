@@ -27,10 +27,13 @@ void Game::loop()
         timeSleeping = 0,
         timePlaceholder = 0,
         avgBarWidth = 0;
+
     char fpsMsg[128];
 
     std::deque<int> barWidths;
+
     int numCycles = 10;
+
     for (int i = 0; i < numCycles; i++) barWidths.push_back(0);
 
     while (isRunning_)
@@ -39,7 +42,7 @@ void Game::loop()
         timeElapsed = timeCurrent - timePrevious;
         timePrevious = timeCurrent;
 
-        SDL_SetRenderDrawColor(renderer_, 200, 200, 200, 255);
+        SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
         SDL_RenderClear(renderer_);
 
         gameState_->performUpdate(((double) timeElapsed) / 1000);

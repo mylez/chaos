@@ -2,6 +2,7 @@
 #define CHAOS_STATEMACHINECOMPONENT_H
 
 #include <Core/Component.h>
+#include <unordered_map>
 
 /**
  *   // example of appropriate enumerations and transition table

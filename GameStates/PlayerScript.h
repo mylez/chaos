@@ -22,15 +22,17 @@ class PlayerScript:
     {
         const Uint8 *key = SDL_GetKeyboardState(NULL);
 
-        double a = 20;
+        double a = 10000;
 
-        if(physics)physics->velocity = Vec2d(0, 0);
+        Vec2d force(0, 0);
 
+        if (key[SDL_SCANCODE_UP])       { force.y = a; }
+        if (key[SDL_SCANCODE_DOWN])     { force.y = -a; }
+        if (key[SDL_SCANCODE_RIGHT])    { force.x = a; }
+        if (key[SDL_SCANCODE_LEFT])     { force.x = -a; }
 
-        if (key[SDL_SCANCODE_UP])       { physics->velocity.y =  a; }
-        if (key[SDL_SCANCODE_DOWN])     { physics->velocity.y = -a; }
-        if (key[SDL_SCANCODE_RIGHT])    { physics->velocity.x =  a; }
-        if (key[SDL_SCANCODE_LEFT])     { physics->velocity.x = -a; }
+        std::cout << force.x << " " << force.y << "\n";
+        physics->applyForce(force);
     }
 
 

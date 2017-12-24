@@ -9,20 +9,29 @@ class PhysicsComponent:
 {
 public:
     Vec2d
-        velocity = Vec2d(0, 0),
-        acceleration;
+        velocity,
+        acceleration,
+        netForce;
     double
-        friction,
-        mass;
+        friction = 1, // this is not true friction, replace with static and kinetic friction
+        staticFriction = 0,
+        kineticFriction = 0,
+        mass = 1;
     bool
         useGravity;
     PhysicsComponent():
         velocity(Vec2d(0, 0)),
         acceleration(Vec2d(0, 0)),
+        netForce(Vec2d(0, 0)),
         friction(1),
         mass(1),
         useGravity(false)
     { label = COMPONENT_PHYSICS; }
+
+    void applyForce(Vec2d f)
+    {
+        netForce = netForce.add(f);
+    }
 };
 
 #endif //CHAOS_PHYSICSCOMPONENT_H
