@@ -2,6 +2,7 @@
 #include <SDL2/SDL.h>
 #include "Graphics.h"
 #include "Sprite.h"
+#include <SDL2/SDL2_gfxPrimitives.h>
 
 
 /**
@@ -245,6 +246,7 @@ void Graphics::loadFontCache()
  */
 void Graphics::setColor(Color c)
 {
+    color_ = c;
     setColor(c.r, c.g, c.b, c.a);
 }
 
@@ -269,4 +271,30 @@ void Graphics::drawSprite(Sprite *sprite, Vec2i size, Vec2i pos)
     };
 
     SDL_RenderCopy(renderer_, sprite->getTexture(), &srcRect, &dstRect);
+}
+
+void Graphics::drawTriangle(Vec2i a, Vec2i b, Vec2i c)
+{
+    trigonRGBA(renderer_,
+               a.x, a.y,
+               b.x, b.y,
+               c.x, c.y,
+               color_.r,
+               color_.g,
+               color_.b,
+               color_.a
+    );
+}
+
+void Graphics::fillTriangle(Vec2i a, Vec2i b, Vec2i c)
+{
+    filledTrigonRGBA(renderer_,
+               a.x, a.y,
+               b.x, b.y,
+               c.x, c.y,
+               color_.r,
+               color_.g,
+               color_.b,
+               color_.a
+    );
 }

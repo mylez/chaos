@@ -91,6 +91,12 @@ void RenderingSystem::renderShape(Entity *entity)
 
     graphics_->setColor(polygon->getColor());
     graphics_->fillRect(screenPosition, polygon->getSize().asVec2i());
+    graphics_->setColor(Color(255, 0, 0));
+    graphics_->fillTriangle(
+            Vec2i(screenPosition.x, screenPosition.y + 30),
+            Vec2i(screenPosition.x + 20, screenPosition.y),
+            Vec2i(screenPosition.x - 20, screenPosition.y)
+    );
 }
 
 

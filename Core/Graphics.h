@@ -25,6 +25,8 @@ private:
     std::vector<Vec2i> offsetStack_;
     std::vector<Vec2d> scaleStack_;
 
+    Color color_;
+
     void loadFontCache();
 
 public:
@@ -41,6 +43,10 @@ public:
     void drawPoint(Vec2i pos);
 
     void drawRect(Vec2i pos, Vec2i size);
+
+    void drawTriangle(Vec2i a, Vec2i b, Vec2i c);
+
+    void fillTriangle(Vec2i a, Vec2i b, Vec2i c);
 
     void drawString(std::string text, Vec2i pos);
 

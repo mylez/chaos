@@ -19,12 +19,6 @@ void MotionSystem::update(double timeElapsed, std::vector<Entity *> entities)
 
         physics->acceleration = physics->netForce.scale(timeElapsed / physics->mass);
 
-        printf("%f, %f\n", physics->netForce.x, physics->netForce.y);
-
-        std::cout <<"acc: " << physics->acceleration.x << " " << physics->acceleration.y << "\n";
-        std::cout <<"net: " << physics->netForce.x << " " << physics->netForce.y << "\n";
-        std::cout << "\n";
-
         physics->velocity = physics->velocity.add(physics->acceleration.scale(timeElapsed));
         physics->velocity = physics->velocity.scale(physics->friction);
         transform->position = transform->position.add(physics->velocity.scale(timeElapsed));

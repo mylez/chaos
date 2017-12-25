@@ -31,7 +31,6 @@ class PlayerScript:
         if (key[SDL_SCANCODE_RIGHT])    { force.x = a; }
         if (key[SDL_SCANCODE_LEFT])     { force.x = -a; }
 
-        std::cout << force.x << " " << force.y << "\n";
         physics->applyForce(force);
     }
 

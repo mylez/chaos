@@ -17,9 +17,9 @@
 #include <Components/ScriptComponent.h>
 #include <Components/BoxCollisionComponent.h>
 #include <Components/TerrainLayerComponent.h>
+#include <Components/RenderComponent.h>
 
 #include "PlayerScript.h"
-
 
 class ShooterGameState:
     public GameState
@@ -85,7 +85,7 @@ public:
         playerEntity->transform.position = Vec2d(0, 0);
         shape->setSize(Vec2d(5, 5));
         shape->setColor(Color(255, 0, 0));
-        physics->friction = 0.99;
+        physics->friction = 0.9;
         playerEntity->name = "player 1";
     }
 };
