@@ -5,6 +5,7 @@
 
 typedef enum COORD
 {
+    CARTESIAN,
     ISOMETRIC
 } RenderCoordSystem;
 
@@ -12,13 +13,8 @@ class RenderComponent:
     public Component
 {
 public:
-    RenderCoordSystem renderCoordSystem;
-
-    RenderComponent()
-    {
-        label = COMPONENT_RENDER;
-        renderCoordSystem = COORD::ISOMETRIC;
-    }
+    RenderCoordSystem renderCoordSystem = COORD::CARTESIAN;
+    RenderComponent() { label = COMPONENT_RENDER; }
 };
 
 

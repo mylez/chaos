@@ -12,8 +12,8 @@ Vec2i::Vec2i(int _x, int _y)
 Vec2i Vec2i::add(Vec2i a)
 {
     return Vec2i(
-        x + a.x,
-        y + a.y
+            x + a.x,
+            y + a.y
     );
 }
 

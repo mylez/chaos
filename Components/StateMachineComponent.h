@@ -70,7 +70,7 @@ public:
     {
         if (canTransition(action))
         {
-            currentState = transitionTable[currentState][action];
+            goToState(transitionTable[currentState][action]);
             return true;
         }
         return false;

@@ -2,6 +2,7 @@
 #define CHAOS_COLOR_H
 #include <random>
 
+
 struct Color
 {
     int r, g, b, a;
@@ -27,7 +28,6 @@ struct Color
     {
         return Color(min + rand()%(256 - min), min + rand()%(256 - min), min + rand()%(256 - min));
     }
-
 };
 
 

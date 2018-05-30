@@ -47,6 +47,8 @@ public:
 
     void renderSprite(Entity *entity, double timeElapsed);
 
+    Vec2d worldFromScreen(Vec2i screen);
+
     void renderAnimation(Entity *entity);
 
     void renderTerrain(Entity *entity);

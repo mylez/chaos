@@ -22,6 +22,9 @@ class PlayerScript:
     {
         const Uint8 *key = SDL_GetKeyboardState(NULL);
 
+        gameState()->findEntityByName("camera")->transform.position =
+                gameState()->findEntityByName("player 1")->transform.position;
+
         double a = 10000;
 
         Vec2d force(0, 0);

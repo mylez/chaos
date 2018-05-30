@@ -19,7 +19,7 @@ public:
         mass = 1;
     bool
         useGravity;
-    PhysicsComponent():
+    PhysicsComponent()  :
         velocity(Vec2d(0, 0)),
         acceleration(Vec2d(0, 0)),
         netForce(Vec2d(0, 0)),

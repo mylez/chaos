@@ -40,6 +40,8 @@ public:
 
     void drawSprite(Sprite *sprite, Vec2i size, Vec2i pos);
 
+    void drawLine(Vec2i a, Vec2i b);
+
     void drawPoint(Vec2i pos);
 
     void drawRect(Vec2i pos, Vec2i size);

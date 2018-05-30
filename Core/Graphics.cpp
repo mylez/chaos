@@ -157,7 +157,7 @@ void Graphics::setColor(int r, int g, int b)
  */
 void Graphics::setColor(int r, int g, int b, int a)
 {
-    SDL_SetRenderDrawColor(renderer_, r, g, b, a);
+    SDL_SetRenderDrawColor(renderer_, r, g, b, 255);
 }
 
 
@@ -222,6 +222,11 @@ void Graphics::drawString(std::string text, Vec2i pos)
     //SDL_Rect box = FC_MakeRect(pos.x, pos.y, 0, 0);
     //double scale = (double)fontSize / (double)168;
     //FC_DrawBoxScale(font_, renderer_, box, FC_MakeScale(scale, scale), "%s", text.c_str());
+}
+
+void Graphics::drawLine(Vec2i a, Vec2i b)
+{
+    SDL_RenderDrawLine(renderer_, a.x, a.y, b.x, b.y);
 }
 
 

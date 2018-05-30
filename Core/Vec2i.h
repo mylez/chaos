@@ -21,8 +21,8 @@ public:
     Vec2i hadamard(Vec2i a)
     {
         return Vec2i(
-            x * a.x,
-            y * a.y
+                x * a.x,
+                y * a.y
         );
     }
 
@@ -34,8 +34,8 @@ public:
     Vec2i divide(Vec2i a)
     {
         return Vec2i(
-            x / a.x,
-            y / a.y
+                x / a.x,
+                y / a.y
         );
     }
 
@@ -47,8 +47,8 @@ public:
     Vec2i scale(int a)
     {
         return Vec2i(
-            x * a,
-            y * a
+                x * a,
+                y * a
         );
     }
 };

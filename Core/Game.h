@@ -17,6 +17,8 @@ private:
 
     SDL_Renderer *renderer_;
 
+    float disp_ddpi_, disp_hdpi_, disp_vdpi_;
+
 public:
 
     Game();
@@ -31,11 +33,12 @@ public:
 
     void loop();
 
-
     void setGameState(GameState *gameState);
 
     void setIsRunning(bool isRunning)
     { isRunning_ = isRunning; }
+
+    Vec2i getMousePosition();
 
     GameState *getGameState()
     { return gameState_; }

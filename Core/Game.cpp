@@ -96,6 +96,12 @@ Game::Game()
     IMG_Init(IMG_INIT_PNG);
     TTF_Init();
 
+    SDL_GetDisplayDPI(0, &disp_ddpi_, &disp_hdpi_, &disp_vdpi_);
+
+    std::cout << "disp ddpi: " << disp_ddpi_ << ", "
+              << "hdpi: " << disp_vdpi_ << ", "
+              << "vdpi: " << disp_ddpi_ << std::endl;
+
     SDL_DisplayMode displayMode;
     SDL_GetCurrentDisplayMode(0, &displayMode);
 
@@ -133,4 +139,11 @@ void Game::setGameState(GameState *gameState)
     gameState_->game = this;
     gameState_->performInit(this);
     //gameState->willEnter(&assetLibrary_);
+}
+
+Vec2i Game::getMousePosition()
+{
+    Vec2i mouse_pos;
+    SDL_GetMouseState(&mouse_pos.x, &mouse_pos.y);
+    return mouse_pos;
 }

@@ -1,8 +1,6 @@
 #include "Chaos/Chaos.h"
 #include <GameStates/ShooterGameState.h>
 
-#include <SDL2/SDL.h>
-#include <SDL2/gfxPrimitives.h>
 using namespace std;
 
 void shooter(Chaos *);

@@ -135,9 +135,9 @@ Entity *GameState::findEntityByName(std::string name)
  */
 std::vector<Entity *> GameState::filterEntitiesByPosition(Vec2d position)
 {
-    std::vector<Entity *> filtered;
-    // todo - write this
-    return filtered;
+    Vec2d p = position.divide(spatialCacheGridSize).floor(0).asVec2i();
+    std::pair<int, int> cacheKey(p.x, p.y);
+    return spatialCache[cacheKey];
 }
 
 
@@ -159,6 +159,11 @@ void GameState::updateSpatialCache()
             .divide(spatialCacheGridSize).floor(0).asVec2i(),
             bottomLeft = entityPosition.add(boundingPosition.add(boundingSize.scale(-.5)))
             .divide(spatialCacheGridSize).floor(0).asVec2i();
+
+        //std::cout << e.second->name << std::endl
+        // << topRight.y << ", " << bottomLeft.y
+        // << ", " << spatialCache.size()
+        // << std::endl <<std::endl;
 
         e.second->spatialCacheKeys.clear();
 

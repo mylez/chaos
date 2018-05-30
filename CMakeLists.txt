@@ -25,7 +25,7 @@ file(GLOB chaos_SRC
         "Core/include/zlib-1.2.11/*c"
 )
 
-add_executable(chaos ${chaos_SRC})
+add_executable(chaos ${chaos_SRC} Components/CursorComponent.cpp Components/CursorComponent.h)
 
 target_link_libraries(chaos xml2)
 target_link_libraries(chaos SDL2)

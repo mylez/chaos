@@ -5,6 +5,24 @@
 #include <Components/SpriteComponent.h>
 #include <Components/TerrainLayerComponent.h>
 
+/**
+ *
+        .hadamard(1, -1)    // position in camera
+        .add(cameraEntity->transform.position.hadamard(-1, 1))     // move origin to the center of screen
+        .add(windowSize_d_.scale(.5))
+
+
+ * @param screen
+ * @return
+ */
+Vec2d RenderingSystem::worldFromScreen(Vec2i screen)
+{
+    return Vec2d(screen)
+            .add(windowSize_d_.scale(-.5))
+            .add(cameraEntity->transform.position.hadamard(1, -1))
+            .hadamard(-1, 1);
+}
+
 
 /**
  *
@@ -14,6 +32,11 @@
  */
 void RenderingSystem::update(double timeElapsed, std::vector<Entity *> entities)
 {
+    //auto cord = worldFromScreen(game->getMousePosition());
+    //auto cord2 = game->getMousePosition();
+    //std::cout << cord.x << ", " << cord.y << "\n";
+    //std::cout << cord2.x << ", " << cord2.y << "\n\n";
+
     if (cameraEntity == nullptr)
     {
         Vec2i w = graphics_->getWindowSize();
@@ -42,11 +65,22 @@ void RenderingSystem::update(double timeElapsed, std::vector<Entity *> entities)
             renderShape(entity);
         }
 
-        if (entity->hasComponent<TerrainLayerComponent>())
-        {
-            renderTerrain(entity);
-        }
+        //if (entity->hasComponent<TerrainLayerComponent>())
+        //{
+        //    renderTerrain(entity);
+        //}
     }
+
+    // cursor stuff
+    // todo - fix and move
+    Vec2i mouse_pos = game->getMousePosition();
+    graphics_->setColor(Color(255, 255, 255));
+    graphics_->fillRect(mouse_pos, Vec2i(4, 4));
+    graphics_->setColor(Color(30, 30, 30));
+    graphics_->drawRect(mouse_pos, Vec2i(5, 5));
+
+    auto ents = game->gameState_->filterEntitiesByPosition(worldFromScreen(mouse_pos));
+   // if (ents.size()) std::cout << ents[0]->name << std::endl<< std::endl;
 }
 
 
@@ -56,6 +90,9 @@ void RenderingSystem::update(double timeElapsed, std::vector<Entity *> entities)
  */
 void RenderingSystem::init()
 {
+    SDL_ShowCursor(SDL_DISABLE);
+    //cursor_ = SDL_CreateCursor()
+
     std::cout << "RenderingSystem.init\n";
     assetLibrary_ = game->getAssetLibrary();
     graphics_ = game->getGraphics();
@@ -68,37 +105,32 @@ void RenderingSystem::init()
 }
 
 
+
 /**
  *
  * @param entity
  */
 void RenderingSystem::renderShape(Entity *entity)
 {
-    TransformComponent *transform = entity->getComponent<TransformComponent>();
-    ShapeComponent *polygon = entity->getComponent<ShapeComponent>();
+    auto *transform = entity->getComponent<TransformComponent>();
+    auto *polygon = entity->getComponent<ShapeComponent>();
 
     Vec2i screenPosition = transform->position
         // invert y axis
         .hadamard(1, -1)
-        // position in camera
-        .add(cameraEntity->transform.position.hadamard(-1, 1))
         // move origin to the center of screen
         .add(windowSize_d_.scale(.5))
+        // position in camera
+        .add(cameraEntity->transform.position.hadamard(-1, 1))
         // treat entity position as its center
         .add(polygon->getSize().scale(-.5))
         //
         .asVec2i();
 
-    graphics_->setColor(polygon->getColor());
-    graphics_->fillRect(screenPosition, polygon->getSize().asVec2i());
-    graphics_->setColor(Color(255, 0, 0));
-    graphics_->fillTriangle(
-            Vec2i(screenPosition.x, screenPosition.y + 30),
-            Vec2i(screenPosition.x + 20, screenPosition.y),
-            Vec2i(screenPosition.x - 20, screenPosition.y)
-    );
-}
+   graphics_->setColor(polygon->getColor());
+   graphics_->fillRect(screenPosition, polygon->getSize().asVec2i());
 
+}
 
 /**
  *
@@ -147,8 +179,8 @@ void RenderingSystem::renderAnimation(Entity *entity)
  */
 void RenderingSystem::renderTerrain(Entity *entity)
 {
-    TransformComponent *transform = entity->getComponent<TransformComponent>();
-    TerrainLayerComponent *terrain = entity->getComponent<TerrainLayerComponent>();
+    auto *transform = entity->getComponent<TransformComponent>();
+    auto *terrain = entity->getComponent<TerrainLayerComponent>();
     Vec2i tileSize(terrain->tileSets[0].tileWidth, terrain->tileSets[0].tileHeight);
 
     for (int l = 0; l < terrain->numLayers; l++)
@@ -209,26 +241,3 @@ void RenderingSystem::renderTerrain(Entity *entity)
 }
 
 
-/**
- *
- * @param position
- * @return
- */
-Vec2d RenderingSystem::positionInCamera(Vec2d position)
-{
-    return position.add(
-        cameraEntity->transform.position
-            .add(windowSize_d_.scale(0.5))
-    );
-}
-
-
-/**
- *
- * @param position
- * @return
- */
-Vec2d RenderingSystem::positionOriginRelative(Vec2d position)
-{
-    return position.hadamard(1, -1).add(Vec2d(0, windowSize_d_.y));
-}

@@ -26,8 +26,8 @@ Vec2d::Vec2d(double _x, double _y)
 Vec2d Vec2d::hadamard(Vec2d a)
 {
     return Vec2d(
-        x * a.x,
-        y * a.y
+            x * a.x,
+            y * a.y
     );
 }
 
@@ -40,8 +40,8 @@ Vec2d Vec2d::hadamard(Vec2d a)
 Vec2d Vec2d::divide(Vec2d a)
 {
     return Vec2d(
-        x / a.x,
-        y / a.y
+            x / a.x,
+            y / a.y
     );
 }
 
@@ -54,8 +54,8 @@ Vec2d Vec2d::divide(Vec2d a)
 Vec2d Vec2d::add(Vec2d a)
 {
     return Vec2d(
-        x + a.x,
-        y + a.y
+            x + a.x,
+            y + a.y
     );
 }
 
