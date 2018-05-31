@@ -13,50 +13,48 @@ class RenderingSystem:
 private:
 
     Vec2i
-        windowSize_i_;
+            windowSize_i_;
 
     Vec2d
-        windowSize_d_;
+            windowSize_d_,
+            dotsPerMeter;
 
     Graphics
-        *graphics_
-        = nullptr;
+            *graphics_
+            = nullptr;
 
     AssetLibrary
-        *assetLibrary_
-        = nullptr;
+            *assetLibrary_
+            = nullptr;
 
     Entity
-        *cameraEntity
-        = nullptr;
+            *cameraEntity
+            = nullptr;
 
     CameraComponent
-        *cameraComponent
-        = nullptr;
+            *cameraComponent
+            = nullptr;
 
 
 public:
     RenderingSystem()
     { signature = COMPONENT_TRANSFORM | COMPONENT_RENDER; }
 
-    void init();
+    void init() override;
 
-    void update(double timeElapsed, std::vector<Entity *> entities);
+    void update(double timeElapsed, std::vector<Entity *> entities) override;
 
     void renderShape(Entity *entity);
 
     void renderSprite(Entity *entity, double timeElapsed);
 
-    Vec2d worldFromScreen(Vec2i screen);
+    Vec2i worldToDisp(Vec2d p);
 
-    void renderAnimation(Entity *entity);
+    Vec2i scale_worldToDisp(Vec2d s);
 
-    void renderTerrain(Entity *entity);
+    Vec2d dispToWorld(Vec2i p_);
 
-    Vec2d positionInCamera(Vec2d position);
-
-    Vec2d positionOriginRelative(Vec2d position);
-
+    Vec2d scale_dispToWorld(Vec2i s_);
 };
 
 

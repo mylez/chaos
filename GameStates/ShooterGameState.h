@@ -16,17 +16,54 @@
 #include <Components/PhysicsComponent.h>
 #include <Components/ScriptComponent.h>
 #include <Components/BoxCollisionComponent.h>
-#include <Components/TerrainLayerComponent.h>
 #include <Components/RenderComponent.h>
 
-#include "PlayerScript.h"
+
+class PlayerScript:
+        public Script
+{
+    double t = 0;
+
+    SpriteComponent *sprite = nullptr;
+    PhysicsComponent *physics = nullptr;
+
+
+    /**
+     *
+     *
+     */
+    void update()
+    {
+        const Uint8 *key = SDL_GetKeyboardState(NULL);
+        double a = 10;
+
+        Vec2d force(0, 0);
+
+        if (key[SDL_SCANCODE_UP])       { force.y = a; }
+        if (key[SDL_SCANCODE_RIGHT])    { force.x = a; }
+        if (key[SDL_SCANCODE_DOWN])     { force.y = -a; }
+        if (key[SDL_SCANCODE_LEFT])     { force.x = -a; }
+
+        physics->applyForce(force);
+    }
+
+
+    /**
+     *
+     */
+    void init()
+    {
+        sprite = entity->getComponent<SpriteComponent>();
+        physics = entity->getComponent<PhysicsComponent>();
+    }
+};
+
 
 class ShooterGameState:
     public GameState
 {
-private:
-    Entity *cameraEntity;
 public:
+
 
     /**
      *
@@ -39,35 +76,8 @@ public:
         addSystem<RenderingSystem>();
 
         setupPlayers();
-        setupTerrain();
-        setupCamera();
     }
 
-    /**
-     *
-     */
-    void setupCamera()
-    {
-        cameraEntity = addEntity();
-        auto camera = cameraEntity->addComponent<CameraComponent>();
-        cameraEntity->name = "camera";
-        camera->backgroundColor = Color(255, 255, 255);
-    }
-
-    /**
-     *
-     * @param game
-     */
-    void setupTerrain()
-    {
-        auto terrainEntity = addEntity();
-        auto terrain = terrainEntity->addComponent<TerrainLayerComponent>();
-
-        terrainEntity->name = "terrain";
-        game->getAssetLibrary()->loadTexture("Terrain", "media/tile-sheets/Terrain.png");
-        terrainEntity->addComponent<RenderComponent>();
-        terrain->loadTerrainData("media/tile-data/level.json");
-    }
 
     /**
      *
@@ -78,14 +88,14 @@ public:
         auto shape = playerEntity->addComponent<ShapeComponent>();
         auto physics = playerEntity->addComponent<PhysicsComponent>();
         auto script = playerEntity->addComponent<ScriptComponent>();
-        physics->mass = .1;
+        physics->mass = 1;
         playerEntity->addComponent<RenderComponent>();
         playerEntity->name = "player";
         script->addScript<PlayerScript>();
         playerEntity->transform.position = Vec2d(0, 0);
-        shape->setSize(Vec2d(5, 5));
+        shape->setSize(Vec2d(1, 1));
         shape->setColor(Color(255, 0, 0));
-        physics->friction = 0.9;
+        physics->friction = 0.999;
         playerEntity->name = "player 1";
     }
 };

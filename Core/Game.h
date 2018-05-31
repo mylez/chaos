@@ -17,9 +17,9 @@ private:
 
     SDL_Renderer *renderer_;
 
-    float disp_ddpi_, disp_hdpi_, disp_vdpi_;
 
 public:
+    float dispDDPI, dispHDPI, dispVDPI;
 
     Game();
 

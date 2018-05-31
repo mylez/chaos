@@ -106,7 +106,7 @@ GameState::~GameState()
     //        //delete system;
     //    }
     //}
-}//
+}
 
 
 /**
@@ -130,18 +130,17 @@ Entity *GameState::findEntityByName(std::string name)
 
 /**
  *
- * @param position
+ * @param p
  * @return
  */
-std::vector<Entity *> GameState::filterEntitiesByPosition(Vec2d position)
+std::vector<Entity *> GameState::filterEntitiesByPosition(Vec2d p)
 {
-    Vec2d p = position.divide(spatialCacheGridSize).floor(0).asVec2i();
-    std::pair<int, int> cacheKey(p.x, p.y);
-    return spatialCache[cacheKey];
+    return querySpatialCache(p);
 }
 
 
 /**
+ *
  *
  */
 void GameState::updateSpatialCache()
@@ -179,6 +178,23 @@ void GameState::updateSpatialCache()
     }
 }
 
+
+/**
+ *
+ * @param p
+ * @return
+ */
+std::vector<Entity *> GameState::querySpatialCache(Vec2d p)
+{
+    Vec2i p_ = p.divide(spatialCacheGridSize).floor(0).asVec2i();
+    std::pair<int, int> cacheKey(p_.x, p_.y);
+    return spatialCache[cacheKey];
+}
+
+
+/**
+ *
+ */
 void GameState::performDeinit()
 {
     // keep track of components that have already been

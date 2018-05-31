@@ -96,11 +96,11 @@ Game::Game()
     IMG_Init(IMG_INIT_PNG);
     TTF_Init();
 
-    SDL_GetDisplayDPI(0, &disp_ddpi_, &disp_hdpi_, &disp_vdpi_);
+    SDL_GetDisplayDPI(0, &dispDDPI, &dispHDPI, &dispVDPI);
 
-    std::cout << "disp ddpi: " << disp_ddpi_ << ", "
-              << "hdpi: " << disp_vdpi_ << ", "
-              << "vdpi: " << disp_ddpi_ << std::endl;
+    std::cout << "disp ddpi: " << dispDDPI << ", "
+              << "hdpi: " << dispVDPI << ", "
+              << "vdpi: " << dispDDPI << std::endl;
 
     SDL_DisplayMode displayMode;
     SDL_GetCurrentDisplayMode(0, &displayMode);

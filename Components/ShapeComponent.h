@@ -13,7 +13,7 @@ private:
     Color color;
 public:
     ShapeComponent():
-        size(Vec2d(20, 20)),
+        size(Vec2d(1, 1)),
         color(Color(180, 180, 185))
     { label = COMPONENT_SHAPE; }
 

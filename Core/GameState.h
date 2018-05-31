@@ -50,7 +50,7 @@ public:
      *
      */
     GameState():
-        spatialCacheGridSize(Vec2d(320, 320))
+        spatialCacheGridSize(Vec2d(1, 1))
     {}
 
     /**
@@ -148,6 +148,8 @@ public:
      * @return
      */
     Entity *findEntityByName(std::string name);
+
+    std::vector<Entity *> querySpatialCache(Vec2d p);
 
     /**
      *
