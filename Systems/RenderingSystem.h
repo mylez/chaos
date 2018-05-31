@@ -7,17 +7,24 @@
 #include <Core/AssetLibrary.h>
 #include <Components/CameraComponent.h>
 
+
+const double
+        i_p_cm = 1/2.54,  // disp in per disp cm
+        cm_p_m = 3,             // disp cm per world meter
+        d = i_p_cm * cm_p_m;    // disp in per world meter
+
+
 class RenderingSystem:
     public System
 {
 private:
 
     Vec2i
-            windowSize_i_;
+            windowSize_i_,
+            mousePosition;
 
     Vec2d
-            windowSize_d_,
-            dotsPerMeter;
+            windowSize_d_;
 
     Graphics
             *graphics_
@@ -35,6 +42,10 @@ private:
             *cameraComponent
             = nullptr;
 
+    std::map<unsigned int, bool>
+            cursorHover,
+            currentHover;
+
 
 public:
     RenderingSystem()
@@ -47,6 +58,10 @@ public:
     void renderShape(Entity *entity);
 
     void renderSprite(Entity *entity, double timeElapsed);
+
+    void updateCursor();
+
+    void renderCursor();
 
     Vec2i worldToDisp(Vec2d p);
 

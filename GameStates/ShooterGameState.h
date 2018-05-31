@@ -94,7 +94,7 @@ public:
         script->addScript<PlayerScript>();
         playerEntity->transform.position = Vec2d(0, 0);
         shape->setSize(Vec2d(1, 1));
-        shape->setColor(Color(255, 0, 0));
+        shape->setColor(Color(0, 40, 240));
         physics->friction = 0.999;
         playerEntity->name = "player 1";
     }

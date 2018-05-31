@@ -3,11 +3,155 @@
 #include <Core/SpriteSheet.h>
 #include <Components/ShapeComponent.h>
 #include <Components/SpriteComponent.h>
+#include <Components/ScriptComponent.h>
 
-const double
-        i_p_cm = 0.3937007874,  // disp in per disp cm
-        cm_p_m = 1,             // disp cm,
-        d = i_p_cm * cm_p_m;    // disp in per world meter
+/**
+ *
+ * @param timeElapsed
+ * @param entity
+ * @param entities
+ */
+void RenderingSystem::update(double timeElapsed, std::vector<Entity *> entities)
+{
+    // update the window size in case
+    windowSize_i_ = graphics_->getWindowSize();
+    windowSize_d_ = Vec2d(windowSize_i_.x, windowSize_i_.y);
+    updateCursor();
+
+    for (const auto &entity:entities)
+    {
+        if (entity->hasComponent<SpriteComponent>())
+        { renderSprite(entity, timeElapsed); }
+
+        if (entity->hasComponent<ShapeComponent>())
+        { renderShape(entity); }
+    }
+
+    renderCursor();
+}
+
+
+/**
+ * Create a fresh RenderingSystem object after being added to a GameState
+ *
+ */
+void RenderingSystem::init()
+{
+    // references (not works cited!)
+    assetLibrary_ = game->getAssetLibrary();
+    graphics_ = game->getGraphics();
+
+    // hide system cursor
+    SDL_ShowCursor(SDL_DISABLE);
+}
+
+
+/**
+ * Draw a square with a center at the transform position of the entity.
+ *
+ * @param entity
+ */
+void RenderingSystem::renderShape(Entity *entity)
+{
+    auto transform = entity->transform;
+    auto shape = entity->getComponent<ShapeComponent>();
+    Vec2i
+            p_ = worldToDisp(transform.position.add(shape->getSize().hadamard(-.5, .5))),
+            s_ = scale_worldToDisp(shape->getSize());
+
+    graphics_->setColor(shape->getColor());
+    graphics_->fillRect(p_, s_);
+}
+
+
+/**
+ *q
+ * @param entity
+ */
+void RenderingSystem::renderSprite(Entity *entity, double timeElapsed)
+{
+    auto transform = entity->getComponent<TransformComponent>();
+    auto spriteComponent = entity->getComponent<SpriteComponent>();
+
+    Sprite sprite = spriteComponent->getSprite();
+
+    Vec2i p_ = worldToDisp(transform->position);
+
+    graphics_->drawSprite(
+        &sprite,
+        sprite.getTargetSize()
+            .asVec2i(),
+        p_
+    );
+}
+
+
+
+
+
+/**
+ *
+ */
+void RenderingSystem::updateCursor()
+{
+    mousePosition = game->getMousePosition();
+    auto p = dispToWorld(mousePosition);
+    auto entities = game->gameState_->filterEntitiesByPosition(p);
+
+    for (auto entity: entities)
+    {
+
+        if (!cursorHover[entity->id])
+        {
+            std::cout << "onCursorEnter\n";
+            // onCursorEnter
+        }
+        // onCursorHover
+        cursorHover[entity->id] = true;
+        currentHover[entity->id] = true;
+    }
+
+    std::vector<unsigned int> toDelete;
+    for (const auto& e: cursorHover)
+    {
+        if (e.second != currentHover[e.first])
+        {
+            std::cout << "onCursorExit\n";
+            // onCursorExit
+            toDelete.push_back(e.first);
+        }
+    }
+
+    for (const auto id: toDelete)
+    {
+        cursorHover.erase(id);
+    }
+
+    currentHover.clear();
+}
+
+/*
+        for (auto script: entity->getComponent<ScriptComponent>()->scripts)
+        {
+            if (!entity->cursorHover_)
+            {
+                script->onCursorEnter();
+            }
+            script->onCursorHover();
+        }
+ */
+
+/**
+ *
+ */
+void RenderingSystem::renderCursor()
+{
+    graphics_->setColor(Color(255, 255, 255));
+    graphics_->fillRect(mousePosition, Vec2i(4, 4));
+    graphics_->setColor(Color(30, 30, 30));
+    graphics_->drawRect(mousePosition, Vec2i(5, 5));
+}
+
 
 
 /**
@@ -45,94 +189,6 @@ Vec2i RenderingSystem::worldToDisp(Vec2d p)
 
 /**
  *
- * @param timeElapsed
- * @param entity
- * @param entities
- */
-void RenderingSystem::update(double timeElapsed, std::vector<Entity *> entities)
-{
-    windowSize_i_ = graphics_->getWindowSize();
-    windowSize_d_ = Vec2d(windowSize_i_.x, windowSize_i_.y);
-
-    for (const auto &entity:entities)
-    {
-        if (entity->hasComponent<SpriteComponent>())
-        {
-            renderSprite(entity, timeElapsed);
-        }
-
-        if (entity->hasComponent<ShapeComponent>())
-        {
-            renderShape(entity);
-        }
-    }
-
-    // cursor stuff todo - do right then move
-    Vec2i mouse_pos = game->getMousePosition();
-    graphics_->setColor(Color(255, 255, 255));
-    graphics_->fillRect(mouse_pos, Vec2i(4, 4));
-    graphics_->setColor(Color(30, 30, 30));
-    graphics_->drawRect(mouse_pos, Vec2i(5, 5));
-}
-
-
-/**
- * Create a fresh RenderingSystem object after being added to a GameState
- *
- */
-void RenderingSystem::init()
-{
-    // references (not works cited!)
-    assetLibrary_ = game->getAssetLibrary();
-    graphics_ = game->getGraphics();
-
-    // hide system cursor
-    SDL_ShowCursor(SDL_DISABLE);
-}
-
-
-/**
- * Draw a square with a center at the transform position of the entity.
- *
- * @param entity
- */
-void RenderingSystem::renderShape(Entity *entity)
-{
-    auto *transform = entity->getComponent<TransformComponent>();
-    auto *shape = entity->getComponent<ShapeComponent>();
-    Vec2i
-            p_ = worldToDisp(transform->position.add(shape->getSize().hadamard(-.5, .5))),
-            s_ = scale_worldToDisp(shape->getSize());
-
-    graphics_->setColor(shape->getColor());
-    graphics_->fillRect(p_, s_);
-
-}
-
-
-/**
- *q
- * @param entity
- */
-void RenderingSystem::renderSprite(Entity *entity, double timeElapsed)
-{
-    auto transform = entity->getComponent<TransformComponent>();
-    auto spriteComponent = entity->getComponent<SpriteComponent>();
-    auto sprite = spriteComponent->getSprite();
-
-    Vec2i p_ = worldToDisp(transform->position);
-
-    graphics_->drawSprite(
-        &sprite,
-        sprite.getTargetSize()
-            .asVec2i(),
-        p_
-    );
-}
-
-
-/**
- *
  * @param s_
  * @return
  */
@@ -140,7 +196,7 @@ Vec2d RenderingSystem::scale_dispToWorld(Vec2i s_)
 {
     double  dh = d*game->dispHDPI,
             dv = d*game->dispVDPI;
-    return Vec2d(s_.x/dh, s_.y/dv);
+    return {s_.x/dh, s_.y/dv};
 }
 
 
@@ -153,5 +209,5 @@ Vec2i RenderingSystem::scale_worldToDisp(Vec2d s)
 {
     double  dh = d*game->dispHDPI,
             dv = d*game->dispVDPI;
-    return Vec2i(s.x*dh, s.y*dv);
+    return Vec2d(s.x*dh, s.y*dv).asVec2i();
 }

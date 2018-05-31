@@ -88,6 +88,27 @@ public:
 
     /**
      *
+     * @param collision
+     */
+    virtual void onCursorHover()
+    {}
+
+    /**
+     *
+     * @param collision
+     */
+    virtual void onCursorEnter()
+    {}
+
+    /**
+     *
+     * @param collision
+     */
+    virtual void onCursorExit()
+    {}
+
+    /**
+     *
      * @param inputEvent
      */
     virtual void onInputEvent(InputEvent inputEvent)

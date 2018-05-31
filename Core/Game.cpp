@@ -65,10 +65,10 @@ void Game::loop()
         }
 
 
-        graphics_.setColor(50, 200, 10);
+        graphics_.setColor(50, 200, 10, 80);
         graphics_.drawRect(Vec2i(7, 7), Vec2i(200, 22));
         if (avgBarWidth <= 200) graphics_.fillRect(Vec2i(7, 7), Vec2i(200 - avgBarWidth, 22));
-        graphics_.setColor(0, 0, 0);
+        graphics_.setColor(0, 0, 0, 80);
         for (int i = 200 / 17; i < 200 - 200 / 17; i += 200 / 17)
         {
             graphics_.drawRect(Vec2i(7, 9).add(Vec2i(i, 0)), Vec2i(1, 18));
@@ -132,6 +132,10 @@ Game::~Game()
 }
 
 
+/**
+ *
+ * @param gameState
+ */
 void Game::setGameState(GameState *gameState)
 {
     gameState->performDeinit();
@@ -141,6 +145,11 @@ void Game::setGameState(GameState *gameState)
     //gameState->willEnter(&assetLibrary_);
 }
 
+
+/**
+ *
+ * @return
+ */
 Vec2i Game::getMousePosition()
 {
     Vec2i mouse_pos;

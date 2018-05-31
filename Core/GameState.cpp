@@ -135,7 +135,25 @@ Entity *GameState::findEntityByName(std::string name)
  */
 std::vector<Entity *> GameState::filterEntitiesByPosition(Vec2d p)
 {
-    return querySpatialCache(p);
+    std::vector<Entity *>
+        candidates = querySpatialCache(p),
+        matches;
+
+    for (Entity *candidate: candidates)
+    {
+         Vec2d
+            cnd_p = candidate->transform.position,
+            cnd_s = candidate->boundingBox.size;
+
+         // todo - centralize
+         if (p.x > cnd_p.x - cnd_s.x/2   &&
+             p.y > cnd_p.y - cnd_s.y/2   &&
+             p.x < (cnd_p.x + cnd_s.x/2) &&
+             p.y < (cnd_p.y + cnd_s.y/2))
+         { matches.push_back(candidate); }
+    }
+
+    return matches;
 }
 
 
@@ -158,11 +176,6 @@ void GameState::updateSpatialCache()
             .divide(spatialCacheGridSize).floor(0).asVec2i(),
             bottomLeft = entityPosition.add(boundingPosition.add(boundingSize.scale(-.5)))
             .divide(spatialCacheGridSize).floor(0).asVec2i();
-
-        //std::cout << e.second->name << std::endl
-        // << topRight.y << ", " << bottomLeft.y
-        // << ", " << spatialCache.size()
-        // << std::endl <<std::endl;
 
         e.second->spatialCacheKeys.clear();
 

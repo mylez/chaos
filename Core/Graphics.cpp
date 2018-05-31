@@ -157,7 +157,7 @@ void Graphics::setColor(int r, int g, int b)
  */
 void Graphics::setColor(int r, int g, int b, int a)
 {
-    SDL_SetRenderDrawColor(renderer_, r, g, b, 255);
+    SDL_SetRenderDrawColor(renderer_, r, g, b, a);
 }
 
 

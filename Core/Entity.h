@@ -22,6 +22,7 @@ private:
     static unsigned int nextId_;
 
 public:
+
     // track parent entity for scene graph traversal
     Entity *parent;
 
@@ -32,7 +33,7 @@ public:
     // created by every entity
     TransformComponent transform;
 
-    // every entity has a bounding boxby default, so it is
+    // every entity has a bounding box by default, so it is
     // created by every entity
     BoundingBoxComponent boundingBox;
 
@@ -45,7 +46,8 @@ public:
 
     // memory management - was this entity created on the
     // heap by a core game object?
-    bool managed_;
+    bool
+            managed_ = false;
 
     // a 64 bit bit mask of which entities are applied
     unsigned long
